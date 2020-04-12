@@ -1,5 +1,6 @@
 import envalid from "envalid";
 import _ from "lodash";
+import path from "path";
 
 import { customReporter } from "./customReporter";
 
@@ -24,10 +25,12 @@ export const getCommonConfig = _.memoize(() => {
       NODE_ENV: envalid.str({ default: "development" }),
       QUEUE_CONCURRENCY: concurrencyValidator({ default: 8 }),
       RESET: envalid.bool({ default: false }),
+      VAR_DIR: envalid.str(),
     },
     { reporter: customReporter, strict: true },
   );
   return {
     ...env,
+    varDir: path.resolve(__dirname, "../../..", env.VAR_DIR),
   };
 });

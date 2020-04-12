@@ -5,6 +5,8 @@ import { BaseFileMapping, FileMappingMaterial } from "./types";
 
 export interface LinkMapping extends BaseFileMapping {
   type: "link";
+  sourcePath: string;
+  targetPath: string;
 }
 
 export type CreateLinkMappingOptions = Omit<LinkMapping, "type">;

@@ -1,9 +1,11 @@
 import { copyMaterial } from "./=copy";
+import { downloadVideoMaterial } from "./=downloadVideo";
 import { linkMaterial } from "./=link";
 import { FileMappingMaterial } from "./types";
 
 export const fileMappingMaterialLookup = {
   copy: copyMaterial,
+  downloadVideo: downloadVideoMaterial,
   link: linkMaterial,
 };
 
