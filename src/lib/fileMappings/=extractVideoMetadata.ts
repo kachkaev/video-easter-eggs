@@ -2,11 +2,8 @@ import execa from "execa";
 import fs from "fs-extra";
 
 import { ensureProgramIsAvailable } from "../io";
+import { VideoMetadata } from "../types";
 import { BaseFileMapping, FileMappingMaterial } from "./types";
-
-export interface VideoMetadata {
-  duration: number;
-}
 
 export interface ExtractVideoMetadataMapping extends BaseFileMapping {
   type: "extractVideoMetadata";

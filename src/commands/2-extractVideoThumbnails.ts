@@ -13,8 +13,8 @@ import {
   fileMappingMaterialLookup,
   processFileMappings,
 } from "../lib/fileMappings";
-import { VideoMetadata } from "../lib/fileMappings/=extractVideoMetadata";
 import { getRelativeBasePathForTimeOffset } from "../lib/io/getRelativeBasePathForTimeOffset";
+import { VideoMetadata } from "../lib/types";
 
 const command: Command = async (context) => {
   const { logger } = context;

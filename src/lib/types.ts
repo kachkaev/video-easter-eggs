@@ -1,9 +1,17 @@
-import { VideoMetadata } from "./fileMappings/=extractVideoMetadata";
+export interface VideoMetadata {
+  duration: number;
+}
 
-export interface VideoApiData {
+export interface ProcessedVideoInfo extends VideoMetadata {
   url: string;
-  metadata: VideoMetadata;
   frameStripeHeight: number;
   tailCutoffInterval: number;
-  frameStripes: number[][];
+}
+
+export type FrameStripes = number[][];
+
+export interface VideoApiData {
+  info: ProcessedVideoInfo;
+  thumbnailDir: string;
+  frameStripes: FrameStripes;
 }

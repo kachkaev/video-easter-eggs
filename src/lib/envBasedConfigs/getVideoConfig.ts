@@ -60,8 +60,6 @@ export const getVideoConfig = _.memoize(() => {
     "combined.json",
   );
 
-  const apiDataFilePath = path.resolve(videoDir, "apiData.json");
-
   return {
     ...env,
     downloadFilePath,
@@ -71,6 +69,5 @@ export const getVideoConfig = _.memoize(() => {
     frameStipesDir,
     combinedFrameStripesFilePath,
     tailCutoffInterval: 1000, // cutting the tail to avoid a missing frame
-    apiDataFilePath,
   };
 });

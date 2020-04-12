@@ -4,12 +4,11 @@ import path from "path";
 
 import { autoStartCommandIfNeeded, Command } from "../lib/commands";
 import { getVideoConfig } from "../lib/envBasedConfigs";
-import { VideoMetadata } from "../lib/fileMappings/=extractVideoMetadata";
-import { VideoApiData } from "../lib/types";
+import { VideoApiData, VideoMetadata } from "../lib/types";
 
 const command: Command = async (context) => {
   const { logger } = context;
-  logger.log(chalk.green("Generate api data..."));
+  logger.log(chalk.green("Generating api data..."));
 
   const videoMetadata: VideoMetadata = await fs.readJson(
     getVideoConfig().downloadMetadataFilePath,
@@ -19,17 +18,20 @@ const command: Command = async (context) => {
     getVideoConfig().combinedFrameStripesFilePath,
   );
 
-  const videoApiData: VideoApiData = {
-    url: getVideoConfig().VIDEO_URL,
-    metadata: videoMetadata,
-    frameStripeHeight: getVideoConfig().FRAME_STRIPE_HEIGHT,
-    tailCutoffInterval: getVideoConfig().tailCutoffInterval,
+  const apiData: VideoApiData = {
+    info: {
+      ...videoMetadata,
+      url: getVideoConfig().VIDEO_URL,
+      frameStripeHeight: getVideoConfig().FRAME_STRIPE_HEIGHT,
+      tailCutoffInterval: getVideoConfig().tailCutoffInterval,
+    },
+    thumbnailDir: getVideoConfig().thumbnailDir,
     frameStripes,
   };
 
   await fs.writeJson(
-    path.resolve(getVideoConfig().apiDataFilePath),
-    videoApiData,
+    path.resolve(getVideoConfig().videoDir, "apiData.json"),
+    apiData,
   );
 };
 

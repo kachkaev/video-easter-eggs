@@ -4,7 +4,7 @@ const env = require("./env.config.js");
 
 const productionConfig = {
   serverRuntimeConfig: {
-    apiVideoDir: env.API_VIDEO_DIR,
+    videoApiDataFilePath: env.VIDEO_API_DATA,
   },
 };
 
