@@ -7,25 +7,17 @@ import { dumpProblems, initProblems, problemMaterialLookup } from "../problems";
 import { FileMappingProblem } from "../problems/=fileMapping";
 import { detectIfCanBeSkipped } from "./detectIfCanBeSkipped";
 import { dumpFileMapping } from "./dumpFileMapping";
-import { fileMappingMaterialLookup } from "./materials";
-import {
-  BaseFileMapping,
-  FileMappingMaterial,
-  ProcessingResult,
-} from "./types";
+import { getFileMappingMaterial } from "./materials";
+import { BaseFileMapping, ProcessingResult } from "./types";
 
 const orderFileMappingsToReduceCaptionLogs = (
   fileMappings: BaseFileMapping[],
 ) =>
   _.orderBy(fileMappings, (fileMapping) => {
-    const fileMappingMaterial: FileMappingMaterial | undefined =
-      fileMappingMaterialLookup[`${fileMapping.type}`];
-
-    if (!fileMappingMaterial) {
-      throw new Error(`Unknown file mapping type ${fileMapping.type}`);
-    }
-
-    return [fileMappingMaterial.priority, fileMapping.sourcePath].join("|");
+    return [
+      getFileMappingMaterial(fileMapping.type).priority,
+      fileMapping.sourcePath,
+    ].join("|");
   });
 
 const styleIfNotZero = (arg: number, style: ChalkFunction): string =>
@@ -36,12 +28,7 @@ const processFileMapping = async (
   logger: Console,
   previouslyLoggedDataMapping?: BaseFileMapping,
 ): Promise<void> => {
-  const fileMappingMaterial: FileMappingMaterial | undefined =
-    fileMappingMaterialLookup[`${fileMapping.type}`];
-
-  if (!fileMappingMaterial) {
-    throw new Error(`Unknown file mapping type ${fileMapping.type}`);
-  }
+  const fileMappingMaterial = getFileMappingMaterial(fileMapping.type);
 
   const logCaption =
     !previouslyLoggedDataMapping ||
