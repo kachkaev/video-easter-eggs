@@ -1,5 +1,6 @@
 import chalk from "chalk";
 import fs from "fs-extra";
+import path from "path";
 
 import {
   autoStartCommandIfNeeded,
@@ -13,6 +14,7 @@ import {
   processFileMappings,
 } from "../lib/fileMappings";
 import { VideoMetadata } from "../lib/fileMappings/=extractVideoMetadata";
+import { getRelativeBasePathForTimeOffset } from "../lib/getRelativeBasePathForTimeOffset";
 
 const command: Command = async (context) => {
   const { logger } = context;
@@ -27,22 +29,26 @@ const command: Command = async (context) => {
   );
 
   const fileMappings: BaseFileMapping[] = [];
-  const timeOffsetMax = videoMetadata.duration - 1000; // cutting the tail to avoid a missing frame
+  const maxTimeOffset =
+    videoMetadata.duration - getVideoConfig().tailCutoffInterval;
   const chunkInterval = getVideoConfig().VIDEO_THUMBNAIL_INTERVAL * 60 * 15;
-  let timeOffsetStart = 0;
-  while (timeOffsetStart < timeOffsetMax) {
-    const nextTimeOffsetStart = timeOffsetStart + chunkInterval;
+  let timeOffset = 0;
+  while (timeOffset < maxTimeOffset) {
+    const nextTimeOffset = timeOffset + chunkInterval;
     fileMappings.push(
       fileMappingMaterialLookup.extractVideoThumbnails.createFileMapping({
         sourcePath: getVideoConfig().downloadFilePath,
-        getTargetPath: (timeOffset) =>
-          getVideoConfig().getThumbnailFilePath(timeOffset),
-        timeOffsetStart,
+        getTargetPath: (currentTimeOffset: number) =>
+          path.resolve(
+            getVideoConfig().thumbnailDir,
+            `${getRelativeBasePathForTimeOffset(currentTimeOffset)}.jpg`,
+          ),
+        timeOffsetStart: timeOffset,
         timeOffsetInterval: getVideoConfig().VIDEO_THUMBNAIL_INTERVAL,
-        timeOffsetEnd: Math.min(nextTimeOffsetStart, timeOffsetMax) - 1,
+        timeOffsetEnd: Math.min(nextTimeOffset, maxTimeOffset) - 1,
       }),
     );
-    timeOffsetStart = nextTimeOffsetStart;
+    timeOffset = nextTimeOffset;
   }
 
   const processingResult = await processFileMappings(fileMappings, logger);

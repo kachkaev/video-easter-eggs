@@ -1,6 +1,5 @@
 import envalid from "envalid";
 import _ from "lodash";
-import { Duration } from "luxon";
 import path from "path";
 
 import { customReporter } from "./customReporter";
@@ -51,18 +50,14 @@ export const getVideoConfig = _.memoize(() => {
   );
 
   const thumbnailDir = path.resolve(videoDir, "thumbnails");
-  const getThumbnailFilePath = (timeOffset: number) => {
-    const timeOffsetAsDuration = Duration.fromMillis(timeOffset);
-    return path.resolve(
-      thumbnailDir,
-      timeOffsetAsDuration.toFormat("hh-xx-xx"),
-      `${timeOffsetAsDuration.toFormat("hh-mm-ss.SSS")}.jpg`,
-    );
-  };
 
   const frameStipesDir = path.resolve(
     videoDir,
     `frameStipes_${env.FRAME_STRIPE_HEIGHT}`,
+  );
+  const combinedFrameStripesFilePath = path.resolve(
+    frameStipesDir,
+    "combined.json",
   );
 
   return {
@@ -71,7 +66,8 @@ export const getVideoConfig = _.memoize(() => {
     downloadMetadataFilePath,
     videoDir,
     thumbnailDir,
-    getThumbnailFilePath,
     frameStipesDir,
+    combinedFrameStripesFilePath,
+    tailCutoffInterval: 1000, // cutting the tail to avoid a missing frame
   };
 });

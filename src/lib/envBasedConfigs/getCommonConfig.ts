@@ -24,13 +24,19 @@ export const getCommonConfig = _.memoize(() => {
     {
       NODE_ENV: envalid.str({ default: "development" }),
       QUEUE_CONCURRENCY: concurrencyValidator({ default: 8 }),
+      PUBLIC_DIR: envalid.str({
+        default: "public",
+      }),
       RESET: envalid.bool({ default: false }),
-      VAR_DIR: envalid.str(),
+      VAR_DIR: envalid.str({
+        default: "var",
+      }),
     },
     { reporter: customReporter, strict: true },
   );
   return {
     ...env,
+    publicDir: path.resolve(__dirname, "../../..", env.PUBLIC_DIR),
     varDir: path.resolve(__dirname, "../../..", env.VAR_DIR),
   };
 });
