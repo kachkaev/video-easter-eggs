@@ -15,10 +15,13 @@ import {
 
 const command: Command = async (context) => {
   const { logger } = context;
-  logger.log(chalk.green("Downloading the video..."));
+  logger.log(
+    chalk.green("Downloading the video and extracting its metadata..."),
+  );
 
   if (getCommonConfig().RESET) {
     await fs.remove(getVideoConfig().downloadFilePath);
+    await fs.remove(getVideoConfig().downloadMetadataFilePath);
   }
 
   const fileMappings: BaseFileMapping[] = [
@@ -26,6 +29,10 @@ const command: Command = async (context) => {
       sourcePath: getVideoConfig().VIDEO_URL,
       targetPath: getVideoConfig().downloadFilePath,
       height: getVideoConfig().VIDEO_HEIGHT,
+    }),
+    fileMappingMaterialLookup.extractVideoMetadata.createFileMapping({
+      sourcePath: getVideoConfig().downloadFilePath,
+      targetPath: getVideoConfig().downloadMetadataFilePath,
     }),
   ];
 

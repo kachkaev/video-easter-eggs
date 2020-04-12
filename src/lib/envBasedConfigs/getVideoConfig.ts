@@ -29,6 +29,9 @@ export const getVideoConfig = _.memoize(() => {
         default: 144,
         choices: [144, 240],
       }),
+      VIDEO_THUMBNAIL_INTERVAL: envalid.num({
+        default: 1000,
+      }),
     },
     { reporter: customReporter, strict: true },
   );
@@ -39,21 +42,27 @@ export const getVideoConfig = _.memoize(() => {
     `${env.VIDEO_ID}_${env.VIDEO_HEIGHT}`,
   );
   const downloadFilePath = path.resolve(videoDir, `download.mp4`);
+  const downloadMetadataFilePath = path.resolve(
+    videoDir,
+    `downloadMetadata.json`,
+  );
 
   const thumbnailDir = path.resolve(videoDir, "thumbnails");
   const getThumbnailFilePath = (timeOffset: number) => {
     const timeOffsetAsDuration = Duration.fromMillis(timeOffset);
-    path.resolve(
+    return path.resolve(
       thumbnailDir,
       timeOffsetAsDuration.toFormat("hh-xx-xx"),
-      `${timeOffsetAsDuration.toFormat("hh-mm-ss-SSS")}.jpg`,
+      `${timeOffsetAsDuration.toFormat("hh-mm-ss.SSS")}.jpg`,
     );
   };
 
   return {
     ...env,
     downloadFilePath,
+    downloadMetadataFilePath,
     videoDir,
+    thumbnailDir,
     getThumbnailFilePath,
   };
 });
