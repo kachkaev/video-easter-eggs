@@ -19,7 +19,7 @@ const command: Command = async (context) => {
     getVideoConfig().downloadMetadataFilePath,
   );
 
-  const combinedData: unknown[] = [];
+  const frameStripes: unknown[] = [];
 
   const maxTimeOffset =
     videoMetadata.duration - getVideoConfig().tailCutoffInterval;
@@ -28,7 +28,7 @@ const command: Command = async (context) => {
     timeOffset < maxTimeOffset;
     timeOffset += getVideoConfig().VIDEO_THUMBNAIL_INTERVAL
   ) {
-    combinedData.push(
+    frameStripes.push(
       await fs.readJson(
         path.resolve(
           getVideoConfig().frameStipesDir,
@@ -40,7 +40,7 @@ const command: Command = async (context) => {
 
   await fs.writeJson(
     getVideoConfig().combinedFrameStripesFilePath,
-    combinedData,
+    frameStripes,
   );
 };
 

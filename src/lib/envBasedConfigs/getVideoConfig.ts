@@ -38,10 +38,11 @@ export const getVideoConfig = _.memoize(() => {
     { reporter: customReporter, strict: true },
   );
 
+  const videoDirName = `${env.VIDEO_ID}_${env.VIDEO_HEIGHT}`;
   const videoDir = path.resolve(
     getCommonConfig().varDir,
     "videos",
-    `${env.VIDEO_ID}_${env.VIDEO_HEIGHT}`,
+    videoDirName,
   );
   const downloadFilePath = path.resolve(videoDir, `download.mp4`);
   const downloadMetadataFilePath = path.resolve(
@@ -60,6 +61,12 @@ export const getVideoConfig = _.memoize(() => {
     "combined.json",
   );
 
+  const publicDataDir = path.resolve(
+    getCommonConfig().publicDir,
+    "videos",
+    videoDirName,
+  );
+
   return {
     ...env,
     downloadFilePath,
@@ -69,5 +76,6 @@ export const getVideoConfig = _.memoize(() => {
     frameStipesDir,
     combinedFrameStripesFilePath,
     tailCutoffInterval: 1000, // cutting the tail to avoid a missing frame
+    publicDataDir,
   };
 });
