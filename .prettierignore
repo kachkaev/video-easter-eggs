@@ -1,0 +1,17 @@
+## extensions
+*.*
+!*.js
+!*.json
+!*.md
+!*.ts
+!*.tsx
+!*.yml
+
+## same as in .gitignore
+/.next/
+/node_modules/
+
+/.env
+
+.~lock.*
+*.log
