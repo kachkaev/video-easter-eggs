@@ -8,6 +8,7 @@
 ## same as in .gitignore
 /.next/
 /node_modules/
+/var/
 
 /.env
 
