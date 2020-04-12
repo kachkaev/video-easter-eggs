@@ -27,16 +27,22 @@ const command: Command = async (context) => {
   );
 
   const fileMappings: BaseFileMapping[] = [];
-  let timeOffset = 0;
-  while (timeOffset < videoMetadata.duration) {
+  const timeOffsetMax = videoMetadata.duration - 1000; // cutting the tail to avoid a missing frame
+  const chunkInterval = getVideoConfig().VIDEO_THUMBNAIL_INTERVAL * 60 * 30;
+  let timeOffsetStart = 0;
+  while (timeOffsetStart < timeOffsetMax) {
+    const nextTimeOffsetStart = timeOffsetStart + chunkInterval;
     fileMappings.push(
-      fileMappingMaterialLookup.extractVideoThumbnail.createFileMapping({
+      fileMappingMaterialLookup.extractVideoThumbnails.createFileMapping({
         sourcePath: getVideoConfig().downloadFilePath,
-        targetPath: getVideoConfig().getThumbnailFilePath(timeOffset),
-        timeOffset,
+        getTargetPath: (timeOffset) =>
+          getVideoConfig().getThumbnailFilePath(timeOffset),
+        timeOffsetStart,
+        timeOffsetInterval: getVideoConfig().VIDEO_THUMBNAIL_INTERVAL,
+        timeOffsetEnd: Math.min(nextTimeOffsetStart, timeOffsetMax) - 1,
       }),
     );
-    timeOffset += getVideoConfig().VIDEO_THUMBNAIL_INTERVAL;
+    timeOffsetStart = nextTimeOffsetStart;
   }
 
   const processingResult = await processFileMappings(fileMappings, logger);

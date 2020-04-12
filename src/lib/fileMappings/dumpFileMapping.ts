@@ -12,12 +12,17 @@ export const dumpFileMapping = ({
   styleTargetFilePath?: (filePath: string) => string;
   logCaption?: boolean;
 }): string => {
+  const fileMappingMaterial = getFileMappingMaterial(fileMapping.type);
   const lines: string[] = [];
   if (logCaption) {
     lines.push("");
-    lines.push(getFileMappingMaterial(fileMapping.type).caption);
+    lines.push(fileMappingMaterial.caption);
   }
   lines.push(`┌ ${styleSourceFilePath(fileMapping.sourcePath)}`);
-  lines.push(`└ ${styleTargetFilePath(fileMapping.targetPath)}`);
+  lines.push(
+    `└ ${styleTargetFilePath(
+      fileMappingMaterial.displayTargetPath(fileMapping),
+    )}`,
+  );
   return lines.join("\n");
 };

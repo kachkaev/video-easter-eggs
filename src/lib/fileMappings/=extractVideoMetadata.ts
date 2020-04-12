@@ -10,6 +10,8 @@ export interface VideoMetadata {
 
 export interface ExtractVideoMetadataMapping extends BaseFileMapping {
   type: "extractVideoMetadata";
+  sourcePath: string;
+  targetPath: string;
 }
 
 export type CreateExtractVideoMetadataMappingOptions = Omit<
@@ -27,6 +29,7 @@ export const extractVideoMetadataMaterial: FileMappingMaterial<
     type: "extractVideoMetadata",
     ...options,
   }),
+  displayTargetPath: (fileMapping) => fileMapping.targetPath,
   extractExpectedFilePaths: (fileMapping) => [fileMapping.targetPath],
   probe: async (reportProblem) => {
     await ensureProgramIsAvailable("ffprobe", reportProblem, {

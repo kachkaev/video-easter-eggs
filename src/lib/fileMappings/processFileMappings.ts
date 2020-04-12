@@ -56,7 +56,14 @@ export const processFileMappings = async (
       fileMappingsBySourcePath[fileMapping.sourcePath] = [];
     }
     fileMappingsBySourcePath[fileMapping.sourcePath].push(fileMapping);
-    targetPathLookup[fileMapping.targetPath] = true;
+
+    (
+      await getFileMappingMaterial(fileMapping.type).extractExpectedFilePaths(
+        fileMapping,
+      )
+    ).forEach((expectedTargetPath) => {
+      targetPathLookup[expectedTargetPath] = true;
+    });
   }
 
   const processingQueue = new PQueue({
@@ -102,11 +109,18 @@ export const processFileMappings = async (
         } else {
           skippedFileMappings.push(fileMapping);
         }
-        const dependentFileMappings =
-          fileMappingsBySourcePath[fileMapping.targetPath];
-        if (dependentFileMappings) {
-          unblockedFileMappings.push(...dependentFileMappings);
-        }
+
+        (
+          await getFileMappingMaterial(
+            fileMapping.type,
+          ).extractExpectedFilePaths(fileMapping)
+        ).forEach((expectedTargetPath) => {
+          const dependentFileMappings =
+            fileMappingsBySourcePath[expectedTargetPath];
+          if (dependentFileMappings) {
+            unblockedFileMappings.push(...dependentFileMappings);
+          }
+        });
       });
     });
     await processingQueue.onIdle();

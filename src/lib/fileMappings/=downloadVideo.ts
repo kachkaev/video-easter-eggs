@@ -7,6 +7,7 @@ import { BaseFileMapping, FileMappingMaterial } from "./types";
 
 export interface DownloadVideoMapping extends BaseFileMapping {
   type: "downloadVideo";
+  targetPath: string;
   height: number;
 }
 
@@ -25,6 +26,7 @@ export const downloadVideoMaterial: FileMappingMaterial<
     type: "downloadVideo",
     ...options,
   }),
+  displayTargetPath: (fileMapping) => fileMapping.targetPath,
   extractExpectedFilePaths: (fileMapping) => [fileMapping.targetPath],
   probe: async (reportProblem) => {
     await ensureProgramIsAvailable("youtube-dl", reportProblem, {

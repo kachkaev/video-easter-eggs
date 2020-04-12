@@ -5,7 +5,6 @@ import { BaseFileMapping, FileMappingMaterial } from "./types";
 
 export interface LinkMapping extends BaseFileMapping {
   type: "link";
-  sourcePath: string;
   targetPath: string;
 }
 
@@ -21,6 +20,7 @@ export const linkMaterial: FileMappingMaterial<
     type: "link",
     ...options,
   }),
+  displayTargetPath: (fileMapping) => fileMapping.targetPath,
   extractExpectedFilePaths: (fileMapping) => [fileMapping.targetPath],
   process: async (fileMapping) => {
     await fs.remove(fileMapping.targetPath);

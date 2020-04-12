@@ -4,7 +4,6 @@ import { FileMappingProblem } from "../problems/=fileMapping";
 export interface BaseFileMapping {
   type: unknown;
   sourcePath: string;
-  targetPath: string;
 }
 
 export interface FileMappingMaterial<
@@ -12,6 +11,7 @@ export interface FileMappingMaterial<
   CreateOptions = unknown
 > {
   caption: string;
+  displayTargetPath: (fileMapping: FileMapping) => string;
   createFileMapping: (options: CreateOptions) => FileMapping;
   extractExpectedFilePaths: (
     fileMapping: FileMapping,
