@@ -22,8 +22,10 @@ const command: Command = async (context) => {
     info: {
       ...videoMetadata,
       url: getVideoConfig().VIDEO_URL,
+      processedDuration:
+        videoMetadata.duration - getVideoConfig().tailCutoffInterval,
       frameStripeHeight: getVideoConfig().FRAME_STRIPE_HEIGHT,
-      tailCutoffInterval: getVideoConfig().tailCutoffInterval,
+      thumbnailInterval: getVideoConfig().VIDEO_THUMBNAIL_INTERVAL,
     },
     thumbnailDir: getVideoConfig().thumbnailDir,
     frameStripes,

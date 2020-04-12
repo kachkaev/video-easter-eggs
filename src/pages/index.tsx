@@ -1,22 +1,27 @@
 import { GetServerSideProps, NextPage } from "next";
+import dynamic from "next/dynamic";
 import React from "react";
 
 import { getVideoApiData } from "../lib/api";
-import PageContentsForIndex from "../lib/components/PageContentsForIndex";
-import { ProcessedVideoInfo } from "../lib/types";
+import { VideoInfo } from "../lib/types";
+
+const PageContentsForIndex = dynamic(
+  () => import("../lib/components/PageContentsForIndex"),
+  { ssr: false },
+);
 
 interface IndexPageProps {
-  processedVideoInfo: ProcessedVideoInfo;
+  videoInfo: VideoInfo;
 }
 
-const IndexPage: NextPage<IndexPageProps> = ({ processedVideoInfo }) => {
-  return <PageContentsForIndex processedVideoInfo={processedVideoInfo} />;
+const IndexPage: NextPage<IndexPageProps> = ({ videoInfo }) => {
+  return <PageContentsForIndex videoInfo={videoInfo} />;
 };
 
 export const getServerSideProps: GetServerSideProps<IndexPageProps> = async () => {
-  const processedVideoInfo = (await getVideoApiData()).info;
+  const videoInfo = (await getVideoApiData()).info;
   return {
-    props: { processedVideoInfo },
+    props: { videoInfo },
   };
 };
 

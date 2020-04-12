@@ -6,7 +6,7 @@ import { getVideoApiData } from "../../lib/api";
 import { getRelativeBasePathForTimeOffset } from "../../lib/io/getRelativeBasePathForTimeOffset";
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
-  const timeOffset = Number.parseInt(`${req.query.timeOffset}`, 10) || -1;
+  const timeOffset = Number.parseInt(`${req.query.timeOffset}`, 10) || 0;
   const imagePath = path.resolve(
     (await getVideoApiData()).thumbnailDir,
     `${getRelativeBasePathForTimeOffset(timeOffset)}.jpg`,

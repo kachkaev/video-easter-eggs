@@ -2,16 +2,17 @@ export interface VideoMetadata {
   duration: number;
 }
 
-export interface ProcessedVideoInfo extends VideoMetadata {
+export interface VideoInfo extends VideoMetadata {
   url: string;
   frameStripeHeight: number;
-  tailCutoffInterval: number;
+  thumbnailInterval: number;
+  processedDuration: number;
 }
 
 export type FrameStripes = number[][];
 
 export interface VideoApiData {
-  info: ProcessedVideoInfo;
+  info: VideoInfo;
   thumbnailDir: string;
   frameStripes: FrameStripes;
 }
