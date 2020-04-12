@@ -3,12 +3,13 @@ import fs from "fs-extra";
 import path from "path";
 
 import { autoStartCommandIfNeeded, Command } from "../lib/commands";
-import { getCommonConfig, getVideoConfig } from "../lib/envBasedConfigs";
+import { getVideoConfig } from "../lib/envBasedConfigs";
 import { VideoMetadata } from "../lib/fileMappings/=extractVideoMetadata";
+import { VideoApiData } from "../lib/types";
 
 const command: Command = async (context) => {
   const { logger } = context;
-  logger.log(chalk.green("Generate public data..."));
+  logger.log(chalk.green("Generate api data..."));
 
   const videoMetadata: VideoMetadata = await fs.readJson(
     getVideoConfig().downloadMetadataFilePath,
@@ -18,27 +19,17 @@ const command: Command = async (context) => {
     getVideoConfig().combinedFrameStripesFilePath,
   );
 
-  const publicThumbnailDir = path.resolve(
-    getVideoConfig().publicDataDir,
-    "thumbnails",
-  );
-
-  const publicVideoData = {
+  const videoApiData: VideoApiData = {
     url: getVideoConfig().VIDEO_URL,
-    thumbnailBaseUrl: `/${path.relative(
-      getCommonConfig().publicDir,
-      publicThumbnailDir,
-    )}`,
     metadata: videoMetadata,
+    frameStripeHeight: getVideoConfig().FRAME_STRIPE_HEIGHT,
     tailCutoffInterval: getVideoConfig().tailCutoffInterval,
     frameStripes,
   };
 
-  await fs.ensureDir(getVideoConfig().publicDataDir);
-  await fs.ensureSymlink(getVideoConfig().thumbnailDir, publicThumbnailDir);
   await fs.writeJson(
-    path.resolve(getVideoConfig().publicDataDir, "data.json"),
-    publicVideoData,
+    path.resolve(getVideoConfig().apiDataFilePath),
+    videoApiData,
   );
 };
 

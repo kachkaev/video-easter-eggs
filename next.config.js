@@ -2,7 +2,11 @@
 
 const env = require("./env.config.js");
 
-const productionConfig = {};
+const productionConfig = {
+  serverRuntimeConfig: {
+    apiVideoDir: env.API_VIDEO_DIR,
+  },
+};
 
 module.exports = (phase, rest) =>
   phase === require("next/constants").PHASE_PRODUCTION_SERVER

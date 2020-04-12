@@ -5,7 +5,7 @@ import path from "path";
 import { autoStartCommandIfNeeded, Command } from "../lib/commands";
 import { getVideoConfig } from "../lib/envBasedConfigs";
 import { VideoMetadata } from "../lib/fileMappings/=extractVideoMetadata";
-import { getRelativeBasePathForTimeOffset } from "../lib/getRelativeBasePathForTimeOffset";
+import { getRelativeBasePathForTimeOffset } from "../lib/io/getRelativeBasePathForTimeOffset";
 
 const command: Command = async (context) => {
   const { logger } = context;
