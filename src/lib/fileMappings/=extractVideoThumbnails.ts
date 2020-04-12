@@ -42,9 +42,11 @@ export const extractVideoThumbnailsMaterial: FileMappingMaterial<
   }),
 
   displayTargetPath: (fileMapping) =>
-    `${fileMapping.getTargetPath(fileMapping.timeOffsetStart)} (N=${getNFrames(
-      fileMapping,
-    )} every ${fileMapping.timeOffsetInterval} ms)`,
+    `${fileMapping.getTargetPath(
+      fileMapping.timeOffsetStart,
+    )} (N frames: ${getNFrames(fileMapping)}, one each ${
+      fileMapping.timeOffsetInterval
+    }ms)`,
 
   extractExpectedFilePaths: (fileMapping) => {
     const filePaths: string[] = [];

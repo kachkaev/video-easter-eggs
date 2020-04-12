@@ -4,6 +4,7 @@
   "scripts": {
     "build": "next build",
     "dev": "next dev",
+    "exe": "ts-node-dev --ignore-watch=. --transpile-only --project=tsconfig.build.json --compiler-options '{\"noEmit\":true}'",
     "exe:dev": "ts-node-dev --watch=.env,next.config.js,package.json,tsconfig*,yarn.lock --ignore-watch=.next --transpile-only --project=tsconfig.build.json --compiler-options '{\"noEmit\":true}'",
     "exe:prod": "NODE_ENV=production node",
     "fix": "yarn fix:eslint; yarn fix:prettier; yarn fix:yarn-deduplicate",

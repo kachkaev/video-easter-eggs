@@ -19,6 +19,9 @@ export const getVideoConfig = _.memoize(() => {
   const env = envalid.cleanEnv(
     process.env,
     {
+      FRAME_STRIPE_HEIGHT: envalid.num({
+        default: 10,
+      }),
       VIDEO_URL: envalid.str({
         desc: "URL of the video to process",
       }),
@@ -57,6 +60,11 @@ export const getVideoConfig = _.memoize(() => {
     );
   };
 
+  const frameStipesDir = path.resolve(
+    videoDir,
+    `frameStipes_${env.FRAME_STRIPE_HEIGHT}`,
+  );
+
   return {
     ...env,
     downloadFilePath,
@@ -64,5 +72,6 @@ export const getVideoConfig = _.memoize(() => {
     videoDir,
     thumbnailDir,
     getThumbnailFilePath,
+    frameStipesDir,
   };
 });

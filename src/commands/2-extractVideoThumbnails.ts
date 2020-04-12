@@ -28,7 +28,7 @@ const command: Command = async (context) => {
 
   const fileMappings: BaseFileMapping[] = [];
   const timeOffsetMax = videoMetadata.duration - 1000; // cutting the tail to avoid a missing frame
-  const chunkInterval = getVideoConfig().VIDEO_THUMBNAIL_INTERVAL * 60 * 30;
+  const chunkInterval = getVideoConfig().VIDEO_THUMBNAIL_INTERVAL * 60 * 15;
   let timeOffsetStart = 0;
   while (timeOffsetStart < timeOffsetMax) {
     const nextTimeOffsetStart = timeOffsetStart + chunkInterval;
