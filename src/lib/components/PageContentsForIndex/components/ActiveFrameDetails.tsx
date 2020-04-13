@@ -3,6 +3,7 @@ import React from "react";
 import styled from "styled-components";
 
 import { VideoInfo } from "../../../types";
+import { generateThumbnailUrl, generateVideoUrl } from "../../../ui";
 
 const Wrapper = styled.div`
   position: sticky;
@@ -34,21 +35,20 @@ const TimeStamp = styled.div`
   padding-left: 10px;
   font-size: 20px;
   vertical-align: top;
+  font-variant-numeric: tabular-nums;
 `;
 
 const ActiveFrameDetails: React.FunctionComponent<{
   videoInfo: VideoInfo;
   activeTimeOffset: number;
 }> = ({ videoInfo, activeTimeOffset }) => {
-  const href = `${videoInfo.url}&t=${Math.floor(activeTimeOffset / 1000)}`;
-  const imgSrc = `/api/videoThumbnail?timeOffset=${activeTimeOffset}`;
   const activeTime = Duration.fromMillis(activeTimeOffset);
   return (
     <Wrapper>
-      <ImgA href={href}>
-        <Img src={imgSrc} />
+      <ImgA href={generateVideoUrl(videoInfo, activeTimeOffset)}>
+        <Img src={generateThumbnailUrl(videoInfo, activeTimeOffset)} />
       </ImgA>
-      <TimeStamp>{activeTime.toFormat("hh:mm:ss")}</TimeStamp>
+      <TimeStamp>{activeTime.toFormat("hh:mm:ss.SSS")}</TimeStamp>
     </Wrapper>
   );
 };

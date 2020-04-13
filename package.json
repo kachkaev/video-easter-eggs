@@ -53,6 +53,7 @@
     "prettier": "^2.0.2",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
+    "react-hotkeys-hook": "^2.1.1",
     "react-query": "^1.2.1",
     "styled-components": "^5.0.1",
     "styled-normalize": "^8.0.7",

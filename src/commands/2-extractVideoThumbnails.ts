@@ -31,7 +31,7 @@ const command: Command = async (context) => {
   const fileMappings: BaseFileMapping[] = [];
   const maxTimeOffset =
     videoMetadata.duration - getVideoConfig().tailCutoffInterval;
-  const chunkInterval = getVideoConfig().VIDEO_THUMBNAIL_INTERVAL * 60 * 15;
+  const chunkInterval = getVideoConfig().VIDEO_THUMBNAIL_INTERVAL * 60 * 60;
   let timeOffset = 0;
   while (timeOffset < maxTimeOffset) {
     const nextTimeOffset = timeOffset + chunkInterval;

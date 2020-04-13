@@ -32,7 +32,7 @@ export const getVideoConfig = _.memoize(() => {
         choices: [144, 240],
       }),
       VIDEO_THUMBNAIL_INTERVAL: envalid.num({
-        default: 1000,
+        default: 500,
       }),
     },
     { reporter: customReporter, strict: true },
@@ -41,7 +41,7 @@ export const getVideoConfig = _.memoize(() => {
   const videoDir = path.resolve(
     getCommonConfig().varDir,
     "videos",
-    `${env.VIDEO_ID}_${env.VIDEO_HEIGHT}`,
+    `${env.VIDEO_ID}--h${env.VIDEO_HEIGHT}px`,
   );
   const downloadFilePath = path.resolve(videoDir, `download.mp4`);
   const downloadMetadataFilePath = path.resolve(
@@ -53,7 +53,7 @@ export const getVideoConfig = _.memoize(() => {
 
   const frameStipesDir = path.resolve(
     videoDir,
-    `frameStipes_${env.FRAME_STRIPE_HEIGHT}`,
+    `frameStipes--h${env.FRAME_STRIPE_HEIGHT}px`,
   );
   const combinedFrameStripesFilePath = path.resolve(
     frameStipesDir,
