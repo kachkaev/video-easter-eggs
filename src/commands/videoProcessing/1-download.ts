@@ -5,13 +5,17 @@ import {
   autoStartCommandIfNeeded,
   Command,
   CommandError,
-} from "../lib/commands";
-import { getCommonConfig, getVideoConfig } from "../lib/envBasedConfigs";
+} from "../../lib/commands";
+import {
+  getCommonConfig,
+  getVideoProcessingConfig,
+} from "../../lib/envBasedConfigs";
 import {
   BaseFileMapping,
   fileMappingMaterialLookup,
   processFileMappings,
-} from "../lib/fileMappings";
+} from "../../lib/fileMappings";
+import { videoResourceMaterialLookup } from "../../lib/videoResources";
 
 const command: Command = async (context) => {
   const { logger } = context;
@@ -19,20 +23,27 @@ const command: Command = async (context) => {
     chalk.green("Downloading the video and extracting its metadata..."),
   );
 
+  const { videoDir } = getVideoProcessingConfig();
+  const videoConfig = await videoResourceMaterialLookup.config.get(videoDir);
+
   if (getCommonConfig().RESET) {
-    await fs.remove(getVideoConfig().downloadFilePath);
-    await fs.remove(getVideoConfig().downloadMetadataFilePath);
+    await fs.remove(videoResourceMaterialLookup.download.getPath(videoDir));
+    await fs.remove(
+      videoResourceMaterialLookup.extractedMetadata.getPath(videoDir),
+    );
   }
 
   const fileMappings: BaseFileMapping[] = [
     fileMappingMaterialLookup.downloadVideo.createFileMapping({
-      sourcePath: getVideoConfig().VIDEO_URL,
-      targetPath: getVideoConfig().downloadFilePath,
-      height: getVideoConfig().VIDEO_HEIGHT,
+      sourcePath: videoConfig.url,
+      targetPath: videoResourceMaterialLookup.download.getPath(videoDir),
+      height: videoConfig.framePreviewHeight,
     }),
     fileMappingMaterialLookup.extractVideoMetadata.createFileMapping({
-      sourcePath: getVideoConfig().downloadFilePath,
-      targetPath: getVideoConfig().downloadMetadataFilePath,
+      sourcePath: videoResourceMaterialLookup.download.getPath(videoDir),
+      targetPath: videoResourceMaterialLookup.extractedMetadata.getPath(
+        videoDir,
+      ),
     }),
   ];
 

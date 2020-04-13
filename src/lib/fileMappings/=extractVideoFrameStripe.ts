@@ -5,26 +5,26 @@ import path from "path";
 import { ensureProgramIsAvailable } from "../io";
 import { BaseFileMapping, FileMappingMaterial } from "./types";
 
-export interface ExtractFrameStripeMapping extends BaseFileMapping {
-  type: "extractFrameStripe";
+export interface ExtractVideoFrameStripeMapping extends BaseFileMapping {
+  type: "extractVideoFrameStripe";
   targetPath: string;
   height: number;
 }
 
-export type CreateExtractFrameStripeMappingOptions = Omit<
-  ExtractFrameStripeMapping,
+export type CreateExtractVideoFrameStripeMappingOptions = Omit<
+  ExtractVideoFrameStripeMapping,
   "type"
 >;
 
-export const extractFrameStripeMaterial: FileMappingMaterial<
-  ExtractFrameStripeMapping,
-  CreateExtractFrameStripeMappingOptions
+export const extractVideoFrameStripeMaterial: FileMappingMaterial<
+  ExtractVideoFrameStripeMapping,
+  CreateExtractVideoFrameStripeMappingOptions
 > = {
   priority: 1,
   caption: "Extracting frame stripes",
 
   createFileMapping: (options) => ({
-    type: "extractFrameStripe",
+    type: "extractVideoFrameStripe",
     ...options,
   }),
 

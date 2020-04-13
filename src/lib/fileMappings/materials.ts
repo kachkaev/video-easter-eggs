@@ -1,17 +1,17 @@
 import { copyMaterial } from "./=copy";
 import { downloadVideoMaterial } from "./=downloadVideo";
-import { extractFrameStripeMaterial } from "./=extractFrameStripe";
+import { extractVideoFramePreviewsMaterial } from "./=extractVideoFramePreviews";
+import { extractVideoFrameStripeMaterial } from "./=extractVideoFrameStripe";
 import { extractVideoMetadataMaterial } from "./=extractVideoMetadata";
-import { extractVideoThumbnailsMaterial } from "./=extractVideoThumbnails";
 import { linkMaterial } from "./=link";
 import { FileMappingMaterial } from "./types";
 
 export const fileMappingMaterialLookup = {
   copy: copyMaterial,
   downloadVideo: downloadVideoMaterial,
-  extractFrameStripe: extractFrameStripeMaterial,
+  extractVideoFrameStripe: extractVideoFrameStripeMaterial,
   extractVideoMetadata: extractVideoMetadataMaterial,
-  extractVideoThumbnails: extractVideoThumbnailsMaterial,
+  extractVideoFramePreview: extractVideoFramePreviewsMaterial,
   link: linkMaterial,
 };
 

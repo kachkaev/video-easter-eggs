@@ -1,2 +1,2 @@
 export * from "./getCommonConfig";
-export * from "./getVideoConfig";
+export * from "./getVideoProcessingConfig";

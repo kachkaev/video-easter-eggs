@@ -2,24 +2,40 @@ import React from "react";
 import { useQuery } from "react-query";
 import styled from "styled-components";
 
-import { FrameStripes, VideoInfo } from "../../../types";
+import { FrameStripe, VideoInfo } from "../../../videoResources/types";
 
-const getFrameStripes = async (
+const getThumbnailStripes = async (
   _,
-  firstFrameOffset: number,
-  frameCount: number,
-) =>
-  await (
+  videoId: string,
+  timeOffsetStart: number,
+  timeOffsetInterval: number,
+  frameSamplingInterval: number,
+) => {
+  const firstFrameOffset = Math.floor(timeOffsetStart / frameSamplingInterval);
+  const frameCount = Math.floor(timeOffsetInterval / frameSamplingInterval);
+  return await (
     await fetch(
-      `/api/videoFrameStripes?firstFrameOffset=${firstFrameOffset}&frameCount=${frameCount}`,
+      `/api/videos/${videoId}?firstFrameOffset=${firstFrameOffset}&frameCount=${frameCount}`,
     )
   ).json();
-
-const useFrameStripes = (firstFrameOffset: number, frameCount: number) => {
-  const result = useQuery<FrameStripes, [string, number, number]>(
-    ["frameStripes", firstFrameOffset, frameCount],
-    getFrameStripes,
-    { refetchOnWindowFocus: false, cacheTime: Number.MAX_SAFE_INTEGER },
+};
+const useThumbnailStripes = (
+  videoInfo: VideoInfo,
+  timeOffsetStart: number,
+  timeOffsetInterval: number,
+) => {
+  const result = useQuery<
+    FrameStripe[],
+    [string, string, number, number, number]
+  >(
+    [
+      "thumbnailStripes",
+      videoInfo.id,
+      timeOffsetStart,
+      timeOffsetInterval,
+      videoInfo.frameSamplingInterval,
+    ],
+    getThumbnailStripes,
   );
 
   return result.data || [];
@@ -36,20 +52,16 @@ const TimelineSegment: React.FunctionComponent<{
   timeOffsetStart: number;
   videoInfo: VideoInfo;
 }> = ({ frameStripeWidth, videoInfo, timeOffsetInterval, timeOffsetStart }) => {
-  const firstFrameOffset = Math.floor(
-    timeOffsetStart / videoInfo.thumbnailInterval,
-  );
-
-  const frameCount = Math.floor(
-    timeOffsetInterval / videoInfo.thumbnailInterval,
-  );
-
-  const canvasWidth = frameCount * frameStripeWidth;
-  const canvasHeight = videoInfo.frameStripeHeight;
-
   const canvasRef = React.useRef<HTMLCanvasElement>(null);
 
-  const frameStripes = useFrameStripes(firstFrameOffset, frameCount);
+  const thumbnailStripes = useThumbnailStripes(
+    videoInfo,
+    timeOffsetStart,
+    timeOffsetInterval,
+  );
+
+  const canvasWidth = thumbnailStripes.length * frameStripeWidth;
+  const canvasHeight = videoInfo.frameStripeHeight;
 
   React.useEffect(() => {
     const canvas = canvasRef.current;
@@ -59,7 +71,7 @@ const TimelineSegment: React.FunctionComponent<{
     }
 
     ctx.clearRect(0, 0, canvasWidth, canvasHeight);
-    frameStripes.forEach((frameStripe, frameIndex) => {
+    thumbnailStripes.forEach((frameStripe, frameIndex) => {
       frameStripe.forEach((colorHex, colorIndex) => {
         ctx.fillStyle = `#${colorHex}`;
         ctx.fillRect(
@@ -70,7 +82,7 @@ const TimelineSegment: React.FunctionComponent<{
         );
       });
     });
-  }, [frameStripes, canvasWidth, frameStripeWidth, canvasHeight]);
+  }, [thumbnailStripes, canvasWidth, frameStripeWidth, canvasHeight]);
 
   return <Canvas width={canvasWidth} height={canvasHeight} ref={canvasRef} />;
 };

@@ -2,8 +2,8 @@ import React from "react";
 import { useHotkeys } from "react-hotkeys-hook";
 import styled from "styled-components";
 
-import { VideoInfo } from "../../types";
 import { generateVideoUrl } from "../../ui";
+import { VideoInfo } from "../../videoResources/types";
 import GlobalStyle from "../PageLayout/components/GlobalStyle";
 import ActiveFrameDetails from "./components/ActiveFrameDetails";
 import TimelineSegment from "./components/TimelineSegment";
@@ -45,7 +45,7 @@ const PageContentsForIndex: React.FunctionComponent<{
   useHotkeys("left,shift+left,right,shift+right", (event) => {
     event.preventDefault();
     const delta =
-      (event.shiftKey ? 10000 : videoInfo.thumbnailInterval) *
+      (event.shiftKey ? 10000 : videoInfo.frameSamplingInterval) *
       (event.key === "ArrowLeft" ? -1 : 1);
     setActiveTimeOffset((timeOffset) =>
       Math.min(Math.max(timeOffset + delta, 0), videoInfo.processedDuration),
@@ -66,7 +66,7 @@ const PageContentsForIndex: React.FunctionComponent<{
           newSegment.timeOffsetStart +
             Math.min(
               activeTimeOffsetWithinActiveSegment,
-              newSegment.timeOffsetInterval - videoInfo.thumbnailInterval,
+              newSegment.timeOffsetInterval - videoInfo.frameSamplingInterval,
             ),
         );
       }

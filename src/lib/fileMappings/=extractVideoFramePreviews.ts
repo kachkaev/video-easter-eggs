@@ -10,34 +10,34 @@ import { BaseFileMapping, FileMappingMaterial } from "./types";
 
 const generateTempDir = util.promisify<DirOptions, string>(tmp.dir);
 
-const getNFrames = (fileMapping: ExtractVideoThumbnailsMapping) =>
+const getNFrames = (fileMapping: ExtractVideoFramePreviewsMapping) =>
   Math.floor(
     (fileMapping.timeOffsetEnd - fileMapping.timeOffsetStart) /
       fileMapping.timeOffsetInterval,
   ) + 1;
 
-export interface ExtractVideoThumbnailsMapping extends BaseFileMapping {
-  type: "extractVideoThumbnails";
+export interface ExtractVideoFramePreviewsMapping extends BaseFileMapping {
+  type: "extractVideoFramePreviews";
   getTargetPath: (timeOffset: number) => string;
   timeOffsetStart: number;
   timeOffsetEnd: number;
   timeOffsetInterval: number;
 }
 
-export type CreateExtractVideoThumbnailsMappingOptions = Omit<
-  ExtractVideoThumbnailsMapping,
+export type CreateExtractVideoFramePreviewsMappingOptions = Omit<
+  ExtractVideoFramePreviewsMapping,
   "type"
 >;
 
-export const extractVideoThumbnailsMaterial: FileMappingMaterial<
-  ExtractVideoThumbnailsMapping,
-  CreateExtractVideoThumbnailsMappingOptions
+export const extractVideoFramePreviewsMaterial: FileMappingMaterial<
+  ExtractVideoFramePreviewsMapping,
+  CreateExtractVideoFramePreviewsMappingOptions
 > = {
   priority: 1,
-  caption: "Extracting video thumbnails",
+  caption: "Extracting video frame previews",
 
   createFileMapping: (options) => ({
-    type: "extractVideoThumbnails",
+    type: "extractVideoFramePreviews",
     ...options,
   }),
 
@@ -62,7 +62,7 @@ export const extractVideoThumbnailsMaterial: FileMappingMaterial<
 
   probe: async (reportProblem) => {
     await ensureProgramIsAvailable("ffmpeg", reportProblem, {
-      commandPurposes: "extract video thumbnail",
+      commandPurposes: "extract video frame previews",
     });
   },
 

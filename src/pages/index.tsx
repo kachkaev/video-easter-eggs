@@ -2,8 +2,8 @@ import { GetServerSideProps, NextPage } from "next";
 import dynamic from "next/dynamic";
 import React from "react";
 
-import { getVideoApiData } from "../lib/api";
-import { VideoInfo } from "../lib/types";
+import { getVideoApiData } from "../lib/io/api";
+import { VideoInfo } from "../lib/videoResources/types";
 
 const PageContentsForIndex = dynamic(
   () => import("../lib/components/PageContentsForIndex"),

@@ -2,7 +2,7 @@ import execa from "execa";
 import fs from "fs-extra";
 
 import { ensureProgramIsAvailable } from "../io";
-import { VideoMetadata } from "../types";
+import { ExtractedVideoMetadata } from "../videoResources/types";
 import { BaseFileMapping, FileMappingMaterial } from "./types";
 
 export interface ExtractVideoMetadataMapping extends BaseFileMapping {
@@ -45,7 +45,7 @@ export const extractVideoMetadataMaterial: FileMappingMaterial<
       "default=noprint_wrappers=1:nokey=1",
       fileMapping.sourcePath,
     ]);
-    const videoMetadata: VideoMetadata = {
+    const videoMetadata: ExtractedVideoMetadata = {
       duration: Number.parseFloat(stdout) * 1000,
     };
     await fs.writeJson(fileMapping.targetPath, videoMetadata);

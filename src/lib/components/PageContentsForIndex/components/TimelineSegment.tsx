@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-import { VideoInfo } from "../../../types";
+import { VideoInfo } from "../../../videoResources/types";
 import TimelineSegmentCanvas from "./TimelineSegmentCanvas";
 
 const Wrapper = styled.div`
@@ -33,7 +33,7 @@ const TimelineSegment: React.FunctionComponent<{
   videoInfo,
 }) => {
   const canvasWidth =
-    Math.floor(timeOffsetInterval / videoInfo.thumbnailInterval) *
+    Math.floor(timeOffsetInterval / videoInfo.frameSamplingInterval) *
     frameStripeWidth;
 
   const canvasHeight = videoInfo.frameStripeHeight;
@@ -43,7 +43,8 @@ const TimelineSegment: React.FunctionComponent<{
     activeTimeOffset >= timeOffsetStart &&
     activeTimeOffset < timeOffsetStart + timeOffsetInterval
       ? Math.floor(
-          (activeTimeOffset - timeOffsetStart) / videoInfo.thumbnailInterval,
+          (activeTimeOffset - timeOffsetStart) /
+            videoInfo.frameSamplingInterval,
         )
       : undefined;
 
@@ -53,7 +54,7 @@ const TimelineSegment: React.FunctionComponent<{
       if (onActiveTimeOffsetChange) {
         onActiveTimeOffsetChange(
           timeOffsetStart +
-            Math.floor(x / frameStripeWidth) * videoInfo.thumbnailInterval,
+            Math.floor(x / frameStripeWidth) * videoInfo.frameSamplingInterval,
         );
       }
     },
@@ -61,7 +62,7 @@ const TimelineSegment: React.FunctionComponent<{
       frameStripeWidth,
       onActiveTimeOffsetChange,
       timeOffsetStart,
-      videoInfo.thumbnailInterval,
+      videoInfo.frameSamplingInterval,
     ],
   );
 

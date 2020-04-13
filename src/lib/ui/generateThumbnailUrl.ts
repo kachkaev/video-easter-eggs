@@ -1,4 +1,4 @@
-import { VideoInfo } from "../types";
+import { VideoInfo } from "../videoResources/types";
 
 export const generateThumbnailUrl = (
   videoInfo: VideoInfo,
