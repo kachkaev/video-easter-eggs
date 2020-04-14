@@ -1,5 +1,9 @@
 # Video easter eggs
 
+<!-- [![GitHub Workflow Status (checks)](https://img.shields.io/github/workflow/status/kachkaev/video-easter-eggs/Checks?label=checks)](https://github.com/kachkaev/video-easter-eggs/actions?query=workflow%3AChecks) -->
+
+[video-easter-eggs.now.sh](https://video-easter-eggs.now.sh)
+
 > ⚠️ ⚠️ ⚠️ Work in progress ⚠️ ⚠️ ⚠️
 
 🔎 A visual analytics tool to find easter eggs in videos.
