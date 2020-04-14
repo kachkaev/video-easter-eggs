@@ -34,13 +34,13 @@ const command: Command = async (context) => {
   }
   const fileMappings: BaseFileMapping[] = [];
   const maxTimeOffset =
-    extractedMetadata.duration - (videoConfig.tailCutoffInterval || 0);
-  const chunkInterval = videoConfig.frameSamplingInterval * 60 * 60;
+    extractedMetadata.duration - (videoConfig.tailCutoffDuration || 0);
+  const chunkInterval = videoConfig.frameSamplingInterval * 60;
   let timeOffset = 0;
   while (timeOffset < maxTimeOffset) {
     const nextTimeOffset = timeOffset + chunkInterval;
     fileMappings.push(
-      fileMappingMaterialLookup.extractVideoFramePreview.createFileMapping({
+      fileMappingMaterialLookup.extractVideoFramePreviews.createFileMapping({
         sourcePath: videoResourceMaterialLookup.download.getPath(videoDir),
         getTargetPath: (currentTimeOffset: number) =>
           videoResourceMaterialLookup.framePreviews.getPath(

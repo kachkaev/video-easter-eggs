@@ -2,17 +2,16 @@ import React from "react";
 import { useHotkeys } from "react-hotkeys-hook";
 import styled from "styled-components";
 
-import { generateVideoUrl } from "../../ui";
-import { VideoInfo } from "../../videoResources/types";
-import GlobalStyle from "../PageLayout/components/GlobalStyle";
-import ActiveFrameDetails from "./components/ActiveFrameDetails";
-import TimelineSegment from "./components/TimelineSegment";
+import { generateVideoUrl } from "../../../ui";
+import { VideoInfo } from "../../../videoResources/types";
+import ActiveFrameDetails from "./ActiveFrameDetails";
+import TimelineSegment from "./TimelineSegment";
 
 const SegmentsWrapper = styled.div`
   padding: 20px;
 `;
 
-const PageContentsForIndex: React.FunctionComponent<{
+const VideoVaUi: React.FunctionComponent<{
   videoInfo: VideoInfo;
 }> = ({ videoInfo }) => {
   const [activeTimeOffset, setActiveTimeOffset] = React.useState(0);
@@ -91,7 +90,6 @@ const PageContentsForIndex: React.FunctionComponent<{
 
   return (
     <>
-      <GlobalStyle />
       <ActiveFrameDetails
         videoInfo={videoInfo}
         activeTimeOffset={activeTimeOffset}
@@ -119,4 +117,4 @@ const PageContentsForIndex: React.FunctionComponent<{
   );
 };
 
-export default PageContentsForIndex;
+export default VideoVaUi;

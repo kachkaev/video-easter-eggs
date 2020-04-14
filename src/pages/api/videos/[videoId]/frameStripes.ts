@@ -10,8 +10,8 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     Number.parseInt(`${req.query.firstFrameOffset}`, 10) || 0;
   const frameCount = Number.parseInt(`${req.query.frameCount}`, 10) || -1;
 
-  const selectedThumbnailStripes = (
+  const selectedFrameStripes = (
     await videoResourceMaterialLookup.joinedFrameStripes.get(videoDir)
   ).slice(firstFrameOffset, firstFrameOffset + frameCount);
-  res.json(selectedThumbnailStripes);
+  res.json(selectedFrameStripes);
 };

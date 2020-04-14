@@ -10,7 +10,7 @@ import {
 
 const command: Command = async (context) => {
   const { logger } = context;
-  logger.log(chalk.green("Combining frame stripes..."));
+  logger.log(chalk.green("Joining frame stripes..."));
 
   const { videoDir } = getVideoProcessingConfig();
   const videoConfig = await videoResourceMaterialLookup.config.get(videoDir);
@@ -21,7 +21,7 @@ const command: Command = async (context) => {
   const frameStripes: FrameStripe[] = [];
 
   const maxTimeOffset =
-    extractedMetadata.duration - (videoConfig.tailCutoffInterval || 0);
+    extractedMetadata.duration - (videoConfig.tailCutoffDuration || 0);
   for (
     let timeOffset = 0;
     timeOffset < maxTimeOffset;

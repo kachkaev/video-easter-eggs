@@ -9,8 +9,8 @@ module.exports = envalid.cleanEnv(
       default: false,
       desc: "analyze bundles during app build",
     }),
-    VIDEO_API_DATA: envalid.str({
-      desc: "Path to apiData.json",
+    VIDEOS_DIR: envalid.str({
+      desc: "Path to a directory with videos",
     }),
   },
   { strict: true },

@@ -4,7 +4,7 @@ import styled from "styled-components";
 
 import { FrameStripe, VideoInfo } from "../../../videoResources/types";
 
-const getThumbnailStripes = async (
+const getFrameStripes = async (
   _,
   videoId: string,
   timeOffsetStart: number,
@@ -15,11 +15,11 @@ const getThumbnailStripes = async (
   const frameCount = Math.floor(timeOffsetInterval / frameSamplingInterval);
   return await (
     await fetch(
-      `/api/videos/${videoId}?firstFrameOffset=${firstFrameOffset}&frameCount=${frameCount}`,
+      `/api/videos/${videoId}/frameStripes?firstFrameOffset=${firstFrameOffset}&frameCount=${frameCount}`,
     )
   ).json();
 };
-const useThumbnailStripes = (
+const useFrameStripes = (
   videoInfo: VideoInfo,
   timeOffsetStart: number,
   timeOffsetInterval: number,
@@ -29,13 +29,13 @@ const useThumbnailStripes = (
     [string, string, number, number, number]
   >(
     [
-      "thumbnailStripes",
+      "frameStripes",
       videoInfo.id,
       timeOffsetStart,
       timeOffsetInterval,
       videoInfo.frameSamplingInterval,
     ],
-    getThumbnailStripes,
+    getFrameStripes,
   );
 
   return result.data || [];
@@ -54,13 +54,13 @@ const TimelineSegment: React.FunctionComponent<{
 }> = ({ frameStripeWidth, videoInfo, timeOffsetInterval, timeOffsetStart }) => {
   const canvasRef = React.useRef<HTMLCanvasElement>(null);
 
-  const thumbnailStripes = useThumbnailStripes(
+  const frameStripes = useFrameStripes(
     videoInfo,
     timeOffsetStart,
     timeOffsetInterval,
   );
 
-  const canvasWidth = thumbnailStripes.length * frameStripeWidth;
+  const canvasWidth = frameStripes.length * frameStripeWidth;
   const canvasHeight = videoInfo.frameStripeHeight;
 
   React.useEffect(() => {
@@ -71,7 +71,7 @@ const TimelineSegment: React.FunctionComponent<{
     }
 
     ctx.clearRect(0, 0, canvasWidth, canvasHeight);
-    thumbnailStripes.forEach((frameStripe, frameIndex) => {
+    frameStripes.forEach((frameStripe, frameIndex) => {
       frameStripe.forEach((colorHex, colorIndex) => {
         ctx.fillStyle = `#${colorHex}`;
         ctx.fillRect(
@@ -82,7 +82,7 @@ const TimelineSegment: React.FunctionComponent<{
         );
       });
     });
-  }, [thumbnailStripes, canvasWidth, frameStripeWidth, canvasHeight]);
+  }, [frameStripes, canvasWidth, frameStripeWidth, canvasHeight]);
 
   return <Canvas width={canvasWidth} height={canvasHeight} ref={canvasRef} />;
 };

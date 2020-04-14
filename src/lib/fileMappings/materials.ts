@@ -11,7 +11,7 @@ export const fileMappingMaterialLookup = {
   downloadVideo: downloadVideoMaterial,
   extractVideoFrameStripe: extractVideoFrameStripeMaterial,
   extractVideoMetadata: extractVideoMetadataMaterial,
-  extractVideoFramePreview: extractVideoFramePreviewsMaterial,
+  extractVideoFramePreviews: extractVideoFramePreviewsMaterial,
   link: linkMaterial,
 };
 

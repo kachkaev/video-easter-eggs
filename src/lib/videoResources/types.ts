@@ -4,7 +4,7 @@ export interface VideoConfig {
   frameSamplingInterval: number;
   framePreviewHeight: number;
   frameStripeHeight: number;
-  tailCutoffInterval?: number; // cutting the tail to avoid a missing frame
+  tailCutoffDuration?: number; // cutting the tail to avoid a missing frame
 }
 
 export interface VideoSectionCoordinates {
@@ -25,6 +25,7 @@ export interface ExtractedVideoMetadata {
 
 export interface VideoInfo extends VideoConfig, ExtractedVideoMetadata {
   id: string;
+  processedDuration: number;
   annotations: LabeledAnnotation[];
 }
 

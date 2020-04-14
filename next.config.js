@@ -4,7 +4,7 @@ const env = require("./env.config.js");
 
 const productionConfig = {
   serverRuntimeConfig: {
-    videoApiDataFilePath: env.VIDEO_API_DATA,
+    videosDir: env.VIDEOS_DIR,
   },
 };
 
@@ -21,6 +21,15 @@ module.exports = (phase, rest) =>
         ],
         {
           ...productionConfig,
+          experimental: {
+            redirects: () => [
+              {
+                source: "/",
+                destination: "/lalahey",
+                permanent: false,
+              },
+            ],
+          },
           reactStrictMode: true,
           typescript: {
             ignoreDevErrors: true,

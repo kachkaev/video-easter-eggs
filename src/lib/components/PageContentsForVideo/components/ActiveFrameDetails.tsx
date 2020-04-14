@@ -2,7 +2,7 @@ import { Duration } from "luxon";
 import React from "react";
 import styled from "styled-components";
 
-import { generateThumbnailUrl, generateVideoUrl } from "../../../ui";
+import { generateFramePreviewUrl, generateVideoUrl } from "../../../ui";
 import { VideoInfo } from "../../../videoResources/types";
 
 const Wrapper = styled.div`
@@ -46,7 +46,7 @@ const ActiveFrameDetails: React.FunctionComponent<{
   return (
     <Wrapper>
       <ImgA href={generateVideoUrl(videoInfo, activeTimeOffset)}>
-        <Img src={generateThumbnailUrl(videoInfo, activeTimeOffset)} />
+        <Img src={generateFramePreviewUrl(videoInfo, activeTimeOffset)} />
       </ImgA>
       <TimeStamp>{activeTime.toFormat("hh:mm:ss.SSS")}</TimeStamp>
     </Wrapper>

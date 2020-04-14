@@ -1,2 +1,2 @@
-export * from "./generateThumbnailUrl";
+export * from "./generateFramePreviewUrl";
 export * from "./generateVideoUrl";
