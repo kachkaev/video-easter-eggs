@@ -71,6 +71,16 @@ Keyboard shortcuts
 
 ## TODO
 
-- video ids
-- api routes accepting video ids
-- index page
+- index page + API route to get all video infos
+
+- segments
+
+  - implement automatic splitting of video into segments
+  - display segments from videoInfo in the UI
+
+- easter eggs
+
+  - show the list of annotated segments
+
+- UI
+  - virtualize list
