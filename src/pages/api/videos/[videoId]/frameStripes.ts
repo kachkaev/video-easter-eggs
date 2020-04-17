@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
 
-import { getResourceStorageType } from "../../../../lib/io/api";
+import { getApiResourceStorage } from "../../../../lib/io/api";
 import { videoResourceMaterialLookup } from "../../../../lib/resources/videos";
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
@@ -11,7 +11,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
   const selectedFrameStripes = (
     await videoResourceMaterialLookup.joinedFrameStripes.get(
-      getResourceStorageType(),
+      getApiResourceStorage(),
       videoId,
     )
   ).slice(firstFrameOffset, firstFrameOffset + frameCount);

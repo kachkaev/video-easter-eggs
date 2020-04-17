@@ -1,9 +1,7 @@
 import envalid from "envalid";
 import _ from "lodash";
-import path from "path";
 
 import { customReporter } from "./customReporter";
-import { getCommonConfig } from "./getCommonConfig";
 
 export const nonEmptyStringValidator = envalid.makeValidator<string>(
   (input) => {
@@ -25,10 +23,7 @@ export const getVideoProcessingConfig = _.memoize(() => {
     { reporter: customReporter, strict: true },
   );
 
-  const videosDir = path.resolve(getCommonConfig().varDir, "videos");
-
   return {
     ...env,
-    videosDir,
   };
 });

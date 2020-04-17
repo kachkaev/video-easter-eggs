@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
 
-import { getResourceStorageType } from "../../../../lib/io/api";
+import { getApiResourceStorage } from "../../../../lib/io/api";
 import {
   VideoInfo,
   videoResourceMaterialLookup,
@@ -10,11 +10,11 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
   const videoId = `${req.query.videoId}`;
 
   const config = await videoResourceMaterialLookup.config.get(
-    getResourceStorageType(),
+    getApiResourceStorage(),
     videoId,
   );
   const extractedMetadata = await videoResourceMaterialLookup.extractedMetadata.get(
-    getResourceStorageType(),
+    getApiResourceStorage(),
     videoId,
   );
 

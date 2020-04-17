@@ -1,21 +1,34 @@
+import { readFromBinary } from "../../io";
 import {
-  resolvePathToTimeOffsetDependentVideoResource,
-  resolveRelativePathToVideoResource,
+  getResolvedPathToTimeOffsetDependentVideoResource,
+  getResolvedPathToVideoResource,
 } from "./helpers";
-import { TimeOffsetDependentVideoResourceMaterial } from "./types";
-
-const getRelativeDirPath = (videoId: string) =>
-  resolveRelativePathToVideoResource(videoId, "framePreviews");
+import {
+  GetResolvedDirPath,
+  GetTimeOffsetDependentResolvedPath,
+  TimeOffsetDependentVideoResourceMaterial,
+} from "./types";
 
 const extension = "jpg";
 
+const getResolvedDirPath: GetResolvedDirPath = (storage, videoId) =>
+  getResolvedPathToVideoResource(storage, videoId, "framePreviews");
+
+const getResolvedPath: GetTimeOffsetDependentResolvedPath = (
+  storage,
+  videoId,
+  timeOffset,
+) =>
+  getResolvedPathToTimeOffsetDependentVideoResource(
+    getResolvedDirPath(storage, videoId),
+    timeOffset,
+    extension,
+  );
+
 export const framePreviewsMaterial: TimeOffsetDependentVideoResourceMaterial = {
   extension,
-  getRelativeDirPath,
-  getRelativePath: (videoId, timeOffset) =>
-    resolvePathToTimeOffsetDependentVideoResource(
-      getRelativeDirPath(videoId),
-      timeOffset,
-      extension,
-    ),
+  getResolvedDirPath,
+  getResolvedPath,
+  get: (storage, videoId, timeOffset) =>
+    readFromBinary(storage, getResolvedPath(storage, videoId, timeOffset)),
 };

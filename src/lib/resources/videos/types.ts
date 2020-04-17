@@ -1,4 +1,4 @@
-import { ResourceStorageType } from "../../resourceStorages";
+import { ResourceStorageMaterial } from "../../resourceStorages";
 
 export interface VideoConfig {
   url: string;
@@ -33,21 +33,39 @@ export interface VideoInfo extends VideoConfig, ExtractedVideoMetadata {
 
 export type FrameStripe = number[];
 
+export type GetResolvedPath = (
+  storage: ResourceStorageMaterial,
+  videoId: string,
+) => string;
+
+export type GetResolvedDirPath = GetResolvedPath;
+
+export type GetTimeOffsetDependentResolvedPath = (
+  storage: ResourceStorageMaterial,
+  videoId: string,
+  timeOffset: number,
+) => string;
+
 export interface VideoResourceMaterial {
-  getRelativePath: (videoId: string) => string;
+  getResolvedPath: GetResolvedPath;
 }
 
 export interface TimeOffsetDependentVideoResourceMaterial<Value = unknown> {
   extension: string;
-  getRelativeDirPath: (videoId: string) => string;
-  getRelativePath: (videoId: string, timeOffset: number) => string;
+  getResolvedDirPath: GetResolvedDirPath;
+  getResolvedPath: GetTimeOffsetDependentResolvedPath;
+  get: (
+    storage: ResourceStorageMaterial,
+    videoId: string,
+    timeOffset: number,
+  ) => Promise<Value>;
 }
 
 export interface VideoResourceMaterialWithValue<Value = unknown>
   extends VideoResourceMaterial {
-  get: (storage: ResourceStorageType, videoId: string) => Promise<Value>;
+  get: (storage: ResourceStorageMaterial, videoId: string) => Promise<Value>;
   put: (
-    storage: ResourceStorageType,
+    storage: ResourceStorageMaterial,
     videoDir: string,
     value: Value,
   ) => Promise<void>;

@@ -1,7 +1,16 @@
 import { localResourceStorageMaterial } from "./=local";
+import { ResourceStorageMaterial } from "./types";
 
-export const resourceStorageMaterialLookup = {
+export const resourceStorageLookup = {
   local: localResourceStorageMaterial,
 };
 
-export type ResourceStorageType = keyof typeof resourceStorageMaterialLookup;
+export const getResourceStorage = (
+  resourceStorageType: unknown,
+): ResourceStorageMaterial => {
+  const result = resourceStorageLookup[`${resourceStorageType}`];
+  if (!result) {
+    throw new Error("Unsupported resource storage type");
+  }
+  return result;
+};

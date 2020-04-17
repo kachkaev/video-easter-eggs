@@ -1,15 +1,20 @@
 import { Duration } from "luxon";
 import path from "path";
 
-export const resolveRelativePathToResource = (...paths: string[]) =>
-  path.join(...paths);
+import { ResourceStorageMaterial } from "../../resourceStorages";
 
-export const resolveRelativePathToVideoResource = (
+export const resolveRelativePathToResource = (
+  storage: ResourceStorageMaterial,
+  ...paths: string[]
+) => storage.resolvePath(path.join(...paths));
+
+export const getResolvedPathToVideoResource = (
+  storage: ResourceStorageMaterial,
   videoId: string,
   relativePath: string,
-) => resolveRelativePathToResource("videos", videoId, relativePath);
+) => resolveRelativePathToResource(storage, "videos", videoId, relativePath);
 
-export const resolvePathToTimeOffsetDependentVideoResource = (
+export const getResolvedPathToTimeOffsetDependentVideoResource = (
   relativeDirPath: string,
   timeOffset: number,
   extension: string,

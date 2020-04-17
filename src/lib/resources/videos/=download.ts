@@ -1,7 +1,7 @@
-import { resolveRelativePathToVideoResource } from "./helpers";
+import { getResolvedPathToVideoResource } from "./helpers";
 import { VideoResourceMaterial } from "./types";
 
 export const downloadMaterial: VideoResourceMaterial = {
-  getRelativePath: (videoDir: string) =>
-    resolveRelativePathToVideoResource(videoDir, "download.mp4"),
+  getResolvedPath: (storage, videoDir) =>
+    getResolvedPathToVideoResource(storage, videoDir, "download.mp4"),
 };

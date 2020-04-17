@@ -1,15 +1,20 @@
 import { readFromJson, writeToJson } from "../../io";
-import { resolveRelativePathToVideoResource } from "./helpers";
-import { FrameStripe, VideoResourceMaterialWithValue } from "./types";
+import { getResolvedPathToVideoResource } from "./helpers";
+import {
+  FrameStripe,
+  GetResolvedPath,
+  VideoResourceMaterialWithValue,
+} from "./types";
 
-export const getRelativePath = (videoId: string) =>
-  resolveRelativePathToVideoResource(videoId, "joinedFrameStripes.json");
+export const getResolvedPath: GetResolvedPath = (storage, videoId) =>
+  getResolvedPathToVideoResource(storage, videoId, "joinedFrameStripes.json");
 
 export const joinedFrameStripesMaterial: VideoResourceMaterialWithValue<
   FrameStripe[]
 > = {
-  getRelativePath,
-  get: (storage, videoId) => readFromJson(storage, getRelativePath(videoId)),
+  getResolvedPath,
+  get: (storage, videoId) =>
+    readFromJson(storage, getResolvedPath(storage, videoId)),
   put: (storage, videoId, value) =>
-    writeToJson(storage, getRelativePath(videoId), value),
+    writeToJson(storage, getResolvedPath(storage, videoId), value),
 };

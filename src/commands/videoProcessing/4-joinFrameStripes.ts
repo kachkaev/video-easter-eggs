@@ -1,5 +1,4 @@
 import chalk from "chalk";
-import fs from "fs-extra";
 
 import { autoStartCommandIfNeeded, Command } from "../../lib/commands";
 import { getVideoProcessingConfig } from "../../lib/envBasedConfigs";
@@ -7,7 +6,7 @@ import {
   FrameStripe,
   videoResourceMaterialLookup,
 } from "../../lib/resources/videos";
-import { resourceStorageMaterialLookup } from "../../lib/resourceStorages";
+import { resourceStorageLookup } from "../../lib/resourceStorages";
 
 const command: Command = async (context) => {
   const { logger } = context;
@@ -15,11 +14,11 @@ const command: Command = async (context) => {
 
   const videoId = getVideoProcessingConfig().VIDEO_ID;
   const videoConfig = await videoResourceMaterialLookup.config.get(
-    "local",
+    resourceStorageLookup.local,
     videoId,
   );
   const extractedMetadata = await videoResourceMaterialLookup.extractedMetadata.get(
-    "local",
+    resourceStorageLookup.local,
     videoId,
   );
 
@@ -33,19 +32,16 @@ const command: Command = async (context) => {
     timeOffset += videoConfig.frameSamplingInterval
   ) {
     frameStripes.push(
-      await fs.readJson(
-        resourceStorageMaterialLookup.local.resolvePath(
-          videoResourceMaterialLookup.frameStripes.getRelativePath(
-            videoId,
-            timeOffset,
-          ),
-        ),
+      await videoResourceMaterialLookup.frameStripes.get(
+        resourceStorageLookup.local,
+        videoId,
+        timeOffset,
       ),
     );
   }
 
   await videoResourceMaterialLookup.joinedFrameStripes.put(
-    "local",
+    resourceStorageLookup.local,
     videoId,
     frameStripes,
   );

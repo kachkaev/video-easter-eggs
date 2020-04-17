@@ -16,7 +16,7 @@ import {
   processFileMappings,
 } from "../../lib/fileMappings";
 import { videoResourceMaterialLookup } from "../../lib/resources/videos";
-import { resourceStorageMaterialLookup } from "../../lib/resourceStorages";
+import { resourceStorageLookup } from "../../lib/resourceStorages";
 
 const command: Command = async (context) => {
   const { logger } = context;
@@ -25,16 +25,19 @@ const command: Command = async (context) => {
   );
 
   const videoId = getVideoProcessingConfig().VIDEO_ID;
+
   const videoConfig = await videoResourceMaterialLookup.config.get(
-    "local",
+    resourceStorageLookup.local,
     videoId,
   );
 
-  const resolvedDownloadPath = resourceStorageMaterialLookup.local.resolvePath(
-    videoResourceMaterialLookup.download.getRelativePath(videoId),
+  const resolvedDownloadPath = videoResourceMaterialLookup.download.getResolvedPath(
+    resourceStorageLookup.local,
+    videoId,
   );
-  const resolvedMetadataPath = resourceStorageMaterialLookup.local.resolvePath(
-    videoResourceMaterialLookup.extractedMetadata.getRelativePath(videoId),
+  const resolvedMetadataPath = videoResourceMaterialLookup.extractedMetadata.getResolvedPath(
+    resourceStorageLookup.local,
+    videoId,
   );
 
   if (getCommonConfig().RESET) {

@@ -16,7 +16,7 @@ import {
   processFileMappings,
 } from "../../lib/fileMappings";
 import { videoResourceMaterialLookup } from "../../lib/resources/videos";
-import { resourceStorageMaterialLookup } from "../../lib/resourceStorages";
+import { resourceStorageLookup } from "../../lib/resourceStorages";
 
 const command: Command = async (context) => {
   const { logger } = context;
@@ -25,26 +25,27 @@ const command: Command = async (context) => {
   const videoId = getVideoProcessingConfig().VIDEO_ID;
 
   const videoConfig = await videoResourceMaterialLookup.config.get(
-    "local",
+    resourceStorageLookup.local,
     videoId,
   );
   const extractedMetadata = await videoResourceMaterialLookup.extractedMetadata.get(
-    "local",
+    resourceStorageLookup.local,
     videoId,
   );
 
-  const resolvedDownloadPath = resourceStorageMaterialLookup.local.resolvePath(
-    videoResourceMaterialLookup.download.getRelativePath(videoId),
+  const resolvedDownloadPath = videoResourceMaterialLookup.download.getResolvedPath(
+    resourceStorageLookup.local,
+    videoId,
   );
-  const resolvedFramePreviewDirPath = resourceStorageMaterialLookup.local.resolvePath(
-    videoResourceMaterialLookup.framePreviews.getRelativeDirPath(videoId),
+  const resolvedFramePreviewDirPath = videoResourceMaterialLookup.framePreviews.getResolvedDirPath(
+    resourceStorageLookup.local,
+    videoId,
   );
   const getResolvedFramePreviewPath = (currentTimeOffset: number) =>
-    resourceStorageMaterialLookup.local.resolvePath(
-      videoResourceMaterialLookup.framePreviews.getRelativePath(
-        videoId,
-        currentTimeOffset,
-      ),
+    videoResourceMaterialLookup.framePreviews.getResolvedPath(
+      resourceStorageLookup.local,
+      videoId,
+      currentTimeOffset,
     );
 
   if (getCommonConfig().RESET) {

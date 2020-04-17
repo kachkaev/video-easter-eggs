@@ -1,6 +1,5 @@
 import envalid from "envalid";
 import _ from "lodash";
-import path from "path";
 
 import { customReporter } from "./customReporter";
 
@@ -32,10 +31,7 @@ export const getCommonConfig = _.memoize(() => {
     { reporter: customReporter, strict: true },
   );
 
-  const varDir = path.resolve(__dirname, "../../..", env.VAR_DIR);
-
   return {
     ...env,
-    varDir,
   };
 });

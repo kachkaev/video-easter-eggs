@@ -1,4 +1,6 @@
 import getConfig from "next/config";
 
-export const getResourceStorageType = () =>
-  getConfig().serverRuntimeConfig.resourceStorageType;
+import { getResourceStorage } from "../../resourceStorages";
+
+export const getApiResourceStorage = () =>
+  getResourceStorage(getConfig().serverRuntimeConfig.resourceStorageType);

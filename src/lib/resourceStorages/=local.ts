@@ -5,5 +5,5 @@ import { ResourceStorageMaterial } from "./types";
 
 export const localResourceStorageMaterial: ResourceStorageMaterial = {
   resolvePath: (relativeResourcePath) =>
-    path.resolve(getCommonConfig().varDir, relativeResourcePath),
+    path.resolve(getCommonConfig().VAR_DIR, relativeResourcePath),
 };

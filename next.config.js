@@ -4,7 +4,7 @@ const env = require("./env.config.js");
 
 const productionConfig = {
   serverRuntimeConfig: {
-    videosDir: env.VAR_DIR,
+    resourceStorageType: "local",
   },
 };
 

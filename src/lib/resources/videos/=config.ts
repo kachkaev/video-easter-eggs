@@ -1,13 +1,18 @@
 import { readFromYaml, writeToYaml } from "../../io";
-import { resolveRelativePathToVideoResource } from "./helpers";
-import { VideoConfig, VideoResourceMaterialWithValue } from "./types";
+import { getResolvedPathToVideoResource } from "./helpers";
+import {
+  GetResolvedPath,
+  VideoConfig,
+  VideoResourceMaterialWithValue,
+} from "./types";
 
-export const getRelativePath = (videoId: string) =>
-  resolveRelativePathToVideoResource(videoId, "config.yml");
+export const getResolvedPath: GetResolvedPath = (storage, videoId) =>
+  getResolvedPathToVideoResource(storage, videoId, "config.yml");
 
 export const configMaterial: VideoResourceMaterialWithValue<VideoConfig> = {
-  getRelativePath,
-  get: (storage, videoId) => readFromYaml(storage, getRelativePath(videoId)),
+  getResolvedPath,
+  get: (storage, videoId) =>
+    readFromYaml(storage, getResolvedPath(storage, videoId)),
   put: (storage, videoId, value) =>
-    writeToYaml(storage, getRelativePath(videoId), value),
+    writeToYaml(storage, getResolvedPath(storage, videoId), value),
 };

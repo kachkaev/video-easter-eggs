@@ -1,21 +1,35 @@
+import { readFromJson } from "../../io";
 import {
-  resolvePathToTimeOffsetDependentVideoResource,
-  resolveRelativePathToVideoResource,
+  getResolvedPathToTimeOffsetDependentVideoResource,
+  getResolvedPathToVideoResource,
 } from "./helpers";
-import { TimeOffsetDependentVideoResourceMaterial } from "./types";
-
-const getRelativeDirPath = (videoId: string) =>
-  resolveRelativePathToVideoResource(videoId, "frameStripes");
+import {
+  FrameStripe,
+  GetResolvedDirPath,
+  GetTimeOffsetDependentResolvedPath,
+  TimeOffsetDependentVideoResourceMaterial,
+} from "./types";
 
 const extension = "json";
 
-export const frameStripesMaterial: TimeOffsetDependentVideoResourceMaterial = {
+const getResolvedDirPath: GetResolvedDirPath = (storage, videoId) =>
+  getResolvedPathToVideoResource(storage, videoId, "frameStripes");
+
+const getResolvedPath: GetTimeOffsetDependentResolvedPath = (
+  storage,
+  videoId,
+  timeOffset,
+) =>
+  getResolvedPathToTimeOffsetDependentVideoResource(
+    getResolvedDirPath(storage, videoId),
+    timeOffset,
+    extension,
+  );
+
+export const frameStripesMaterial: TimeOffsetDependentVideoResourceMaterial<FrameStripe> = {
   extension,
-  getRelativeDirPath,
-  getRelativePath: (videoId, timeOffset) =>
-    resolvePathToTimeOffsetDependentVideoResource(
-      getRelativeDirPath(videoId),
-      timeOffset,
-      extension,
-    ),
+  getResolvedDirPath,
+  getResolvedPath,
+  get: (storage, videoId, timeOffset) =>
+    readFromJson(storage, getResolvedPath(storage, videoId, timeOffset)),
 };
