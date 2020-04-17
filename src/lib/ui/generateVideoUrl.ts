@@ -1,4 +1,4 @@
-import { VideoInfo } from "../videoResources/types";
+import { VideoInfo } from "../resources/videos/types";
 
 export const generateVideoUrl = (videoInfo: VideoInfo, timeOffset?: number) => {
   let result = videoInfo.url;

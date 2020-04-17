@@ -25,10 +25,10 @@ export const getVideoProcessingConfig = _.memoize(() => {
     { reporter: customReporter, strict: true },
   );
 
-  const videoDir = path.resolve(getCommonConfig().videosDir, env.VIDEO_ID);
+  const videosDir = path.resolve(getCommonConfig().varDir, "videos");
 
   return {
     ...env,
-    videoDir,
+    videosDir,
   };
 });

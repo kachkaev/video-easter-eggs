@@ -2,8 +2,8 @@ import React from "react";
 import { useHotkeys } from "react-hotkeys-hook";
 import styled from "styled-components";
 
+import { VideoInfo } from "../../../resources/videos/types";
 import { generateVideoUrl } from "../../../ui";
-import { VideoInfo } from "../../../videoResources/types";
 import ActiveFrameDetails from "./ActiveFrameDetails";
 import TimelineSegment from "./TimelineSegment";
 

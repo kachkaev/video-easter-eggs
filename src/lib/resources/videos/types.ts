@@ -1,3 +1,5 @@
+import { ResourceStorageType } from "../../resourceStorages";
+
 export interface VideoConfig {
   url: string;
   shortTitle: string;
@@ -12,7 +14,7 @@ export interface VideoSectionCoordinates {
   timeInterval: number;
 }
 
-type LabeledAnnotationType = "easterEgg" | "section";
+export type LabeledAnnotationType = "easterEgg" | "section";
 
 export interface LabeledAnnotation extends VideoSectionCoordinates {
   type: LabeledAnnotationType;
@@ -31,18 +33,22 @@ export interface VideoInfo extends VideoConfig, ExtractedVideoMetadata {
 
 export type FrameStripe = number[];
 
-export interface SimpleVideoResourceMaterial {
-  getPath: (videoDir: string) => string;
+export interface VideoResourceMaterial {
+  getRelativePath: (videoId: string) => string;
 }
 
 export interface TimeOffsetDependentVideoResourceMaterial<Value = unknown> {
   extension: string;
-  getDirPath: (videoDir: string) => string;
-  getPath: (videoDir: string, timeOffset: number) => string;
+  getRelativeDirPath: (videoId: string) => string;
+  getRelativePath: (videoId: string, timeOffset: number) => string;
 }
 
-export interface VideoResourceMaterial<Value = unknown> {
-  getPath: (videoDir: string) => string;
-  get: (videoDir: string) => Promise<Value>;
-  set: (videoDir: string, value: Value) => Promise<void>;
+export interface VideoResourceMaterialWithValue<Value = unknown>
+  extends VideoResourceMaterial {
+  get: (storage: ResourceStorageType, videoId: string) => Promise<Value>;
+  put: (
+    storage: ResourceStorageType,
+    videoDir: string,
+    value: Value,
+  ) => Promise<void>;
 }

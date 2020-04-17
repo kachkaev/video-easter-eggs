@@ -1,20 +1,20 @@
 import {
   resolvePathToTimeOffsetDependentVideoResource,
-  resolvePathToVideoResource,
+  resolveRelativePathToVideoResource,
 } from "./helpers";
 import { TimeOffsetDependentVideoResourceMaterial } from "./types";
 
-const getDirPath = (videoDir: string) =>
-  resolvePathToVideoResource(videoDir, "framePreviews");
+const getRelativeDirPath = (videoId: string) =>
+  resolveRelativePathToVideoResource(videoId, "framePreviews");
 
 const extension = "jpg";
 
 export const framePreviewsMaterial: TimeOffsetDependentVideoResourceMaterial = {
   extension,
-  getDirPath,
-  getPath: (videoDir, timeOffset) =>
+  getRelativeDirPath,
+  getRelativePath: (videoId, timeOffset) =>
     resolvePathToTimeOffsetDependentVideoResource(
-      getDirPath(videoDir),
+      getRelativeDirPath(videoId),
       timeOffset,
       extension,
     ),

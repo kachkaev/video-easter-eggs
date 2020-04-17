@@ -2,6 +2,8 @@ import fs from "fs-extra";
 import { safeDump, safeLoad, safeLoadAll } from "js-yaml";
 import LRUCache from "lru-cache";
 
+import { ResourceStorageType } from "./materials";
+
 const lruCache = new LRUCache<string, unknown>(1000);
 
 const getValueFromCache = async <Value = unknown>(
@@ -15,35 +17,44 @@ const getValueFromCache = async <Value = unknown>(
 };
 
 export const readFromYaml = async <Value = unknown>(
-  pathToFile: string,
+  storage: ResourceStorageType,
+  relativePathToFile: string,
 ): Promise<Value> =>
-  getValueFromCache(pathToFile, async () =>
-    safeLoad(await fs.readFile(pathToFile, "utf8")),
+  getValueFromCache(relativePathToFile, async () =>
+    safeLoad(await fs.readFile(relativePathToFile, "utf8")),
   );
 
 export const readAllFromYaml = async <Value = unknown>(
-  pathToFile: string,
+  storage: ResourceStorageType,
+  relativePathToFile: string,
 ): Promise<Value[]> =>
-  getValueFromCache(pathToFile, async () =>
-    safeLoadAll(await fs.readFile(pathToFile, "utf8")),
+  getValueFromCache(relativePathToFile, async () =>
+    safeLoadAll(await fs.readFile(relativePathToFile, "utf8")),
   );
 
 export const readFromJson = async <Value = unknown>(
-  pathToFile: string,
+  storage: ResourceStorageType,
+  relativePathToFile: string,
 ): Promise<Value> =>
-  getValueFromCache(pathToFile, async () => await fs.readJson(pathToFile));
+  getValueFromCache(
+    relativePathToFile,
+    async () => await fs.readJson(relativePathToFile),
+  );
 
 export const writeToYaml = async <Value = unknown>(
-  pathToFile: string,
+  storage: ResourceStorageType,
+  relativePathToFile: string,
   contents: Value,
-): Promise<void> => await fs.writeFile(pathToFile, safeDump(contents), "utf8");
+): Promise<void> =>
+  await fs.writeFile(relativePathToFile, safeDump(contents), "utf8");
 
 export const writeAllToYaml = async <Value = unknown>(
-  pathToFile: string,
+  storage: ResourceStorageType,
+  relativePathToFile: string,
   contents: Value[],
 ): Promise<void> =>
   await fs.writeFile(
-    pathToFile,
+    relativePathToFile,
     contents
       .map((currentContents) => safeDump(currentContents))
       .join("\n---\n"),
@@ -51,6 +62,7 @@ export const writeAllToYaml = async <Value = unknown>(
   );
 
 export const writeToJson = async <Value = unknown>(
-  pathToFile: string,
+  storage: ResourceStorageType,
+  relativePathToFile: string,
   contents: Value,
-): Promise<void> => fs.writeJson(pathToFile, contents);
+): Promise<void> => fs.writeJson(relativePathToFile, contents);

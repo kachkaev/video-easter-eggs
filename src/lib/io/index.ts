@@ -1,2 +1,2 @@
 export * from "./ensureProgramIsAvailable";
-export * from "./readAndWriteHelpers";
+export * from "../resourceStorages/readAndWriteHelpers";

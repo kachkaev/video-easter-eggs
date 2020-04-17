@@ -25,17 +25,17 @@ export const getCommonConfig = _.memoize(() => {
       NODE_ENV: envalid.str({ default: "development" }),
       QUEUE_CONCURRENCY: concurrencyValidator({ default: 8 }),
       RESET: envalid.bool({ default: false }),
-      VIDEOS_DIR: envalid.str({
-        default: "var/videos",
+      VAR_DIR: envalid.str({
+        default: "var",
       }),
     },
     { reporter: customReporter, strict: true },
   );
 
-  const videosDir = path.resolve(__dirname, "../../..", env.VIDEOS_DIR);
+  const varDir = path.resolve(__dirname, "../../..", env.VAR_DIR);
 
   return {
     ...env,
-    videosDir,
+    varDir,
   };
 });

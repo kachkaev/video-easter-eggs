@@ -1,6 +1,6 @@
 import { useQuery } from "react-query";
 
-import { FrameStripe, VideoInfo } from "../../videoResources/types";
+import { FrameStripe, VideoInfo } from "../../resources/videos/types";
 
 const getFrameStripes = async (
   _,

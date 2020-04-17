@@ -4,7 +4,7 @@ const env = require("./env.config.js");
 
 const productionConfig = {
   serverRuntimeConfig: {
-    videosDir: env.VIDEOS_DIR,
+    videosDir: env.VAR_DIR,
   },
 };
 

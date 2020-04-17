@@ -1,6 +1,6 @@
 import { useQuery } from "react-query";
 
-import { VideoInfo } from "../../videoResources/types";
+import { VideoInfo } from "../../resources/videos/types";
 
 const getVideoInfo = async (_, videoId: string) => {
   return await (await fetch(`/api/videos/${videoId}/info`)).json();

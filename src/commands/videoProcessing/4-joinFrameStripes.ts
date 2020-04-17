@@ -6,16 +6,21 @@ import { getVideoProcessingConfig } from "../../lib/envBasedConfigs";
 import {
   FrameStripe,
   videoResourceMaterialLookup,
-} from "../../lib/videoResources";
+} from "../../lib/resources/videos";
+import { resourceStorageMaterialLookup } from "../../lib/resourceStorages";
 
 const command: Command = async (context) => {
   const { logger } = context;
   logger.log(chalk.green("Joining frame stripes..."));
 
-  const { videoDir } = getVideoProcessingConfig();
-  const videoConfig = await videoResourceMaterialLookup.config.get(videoDir);
+  const videoId = getVideoProcessingConfig().VIDEO_ID;
+  const videoConfig = await videoResourceMaterialLookup.config.get(
+    "local",
+    videoId,
+  );
   const extractedMetadata = await videoResourceMaterialLookup.extractedMetadata.get(
-    videoDir,
+    "local",
+    videoId,
   );
 
   const frameStripes: FrameStripe[] = [];
@@ -29,13 +34,19 @@ const command: Command = async (context) => {
   ) {
     frameStripes.push(
       await fs.readJson(
-        videoResourceMaterialLookup.frameStripes.getPath(videoDir, timeOffset),
+        resourceStorageMaterialLookup.local.resolvePath(
+          videoResourceMaterialLookup.frameStripes.getRelativePath(
+            videoId,
+            timeOffset,
+          ),
+        ),
       ),
     );
   }
 
-  await videoResourceMaterialLookup.joinedFrameStripes.set(
-    videoDir,
+  await videoResourceMaterialLookup.joinedFrameStripes.put(
+    "local",
+    videoId,
     frameStripes,
   );
 };

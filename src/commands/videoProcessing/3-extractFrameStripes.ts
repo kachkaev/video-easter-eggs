@@ -13,30 +13,36 @@ import {
   fileMappingMaterialLookup,
   processFileMappings,
 } from "../../lib/fileMappings";
-import { videoResourceMaterialLookup } from "../../lib/videoResources";
+import { videoResourceMaterialLookup } from "../../lib/resources/videos";
+import { resourceStorageMaterialLookup } from "../../lib/resourceStorages";
 
 const command: Command = async (context) => {
   const { logger } = context;
   logger.log(chalk.green("Extracting frame stripes..."));
 
-  const { videoDir } = getVideoProcessingConfig();
+  const videoId = getVideoProcessingConfig().VIDEO_ID;
 
-  const foundFramePreviews = await globby(
-    videoResourceMaterialLookup.framePreviews.getDirPath(videoDir),
-    {
-      onlyFiles: true,
-      expandDirectories: {
-        extensions: [videoResourceMaterialLookup.framePreviews.extension],
-      },
-    },
+  const resolvedFramePreviewDirPath = resourceStorageMaterialLookup.local.resolvePath(
+    videoResourceMaterialLookup.framePreviews.getRelativeDirPath(videoId),
   );
+  const resolvedFrameStripeDirPath = resourceStorageMaterialLookup.local.resolvePath(
+    videoResourceMaterialLookup.framePreviews.getRelativeDirPath(videoId),
+  );
+
+  const foundFramePreviews = await globby(resolvedFramePreviewDirPath, {
+    onlyFiles: true,
+    expandDirectories: {
+      extensions: [videoResourceMaterialLookup.framePreviews.extension],
+    },
+  });
 
   const framePreviewExtensionRegexp = new RegExp(
     `${videoResourceMaterialLookup.framePreviews.extension}$`,
   );
 
   const { frameStripeHeight } = await videoResourceMaterialLookup.config.get(
-    videoDir,
+    "local",
+    videoId,
   );
 
   const fileMappings: BaseFileMapping[] = foundFramePreviews.map(
@@ -44,9 +50,9 @@ const command: Command = async (context) => {
       fileMappingMaterialLookup.extractVideoFrameStripe.createFileMapping({
         sourcePath: framePreviewPath,
         targetPath: path.resolve(
-          videoResourceMaterialLookup.frameStripes.getDirPath(videoDir),
+          resolvedFrameStripeDirPath,
           path.relative(
-            videoResourceMaterialLookup.framePreviews.getDirPath(videoDir),
+            resolvedFramePreviewDirPath,
             framePreviewPath.replace(
               framePreviewExtensionRegexp,
               videoResourceMaterialLookup.frameStripes.extension,

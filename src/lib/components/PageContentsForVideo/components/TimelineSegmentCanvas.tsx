@@ -2,7 +2,7 @@ import React from "react";
 import { useQuery } from "react-query";
 import styled from "styled-components";
 
-import { FrameStripe, VideoInfo } from "../../../videoResources/types";
+import { FrameStripe, VideoInfo } from "../../../resources/videos/types";
 
 const getFrameStripes = async (
   _,

@@ -1,18 +1,21 @@
 import { NextApiRequest, NextApiResponse } from "next";
 
-import { getVideoDir } from "../../../../lib/io/api";
+import { getResourceStorageType } from "../../../../lib/io/api";
 import {
   VideoInfo,
   videoResourceMaterialLookup,
-} from "../../../../lib/videoResources";
+} from "../../../../lib/resources/videos";
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   const videoId = `${req.query.videoId}`;
-  const videoDir = getVideoDir(videoId);
 
-  const config = await videoResourceMaterialLookup.config.get(videoDir);
+  const config = await videoResourceMaterialLookup.config.get(
+    getResourceStorageType(),
+    videoId,
+  );
   const extractedMetadata = await videoResourceMaterialLookup.extractedMetadata.get(
-    videoDir,
+    getResourceStorageType(),
+    videoId,
   );
 
   const info: VideoInfo = {

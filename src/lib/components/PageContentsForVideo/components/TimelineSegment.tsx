@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-import { VideoInfo } from "../../../videoResources/types";
+import { VideoInfo } from "../../../resources/videos/types";
 import TimelineSegmentCanvas from "./TimelineSegmentCanvas";
 
 const Wrapper = styled.div`

@@ -15,7 +15,8 @@ import {
   fileMappingMaterialLookup,
   processFileMappings,
 } from "../../lib/fileMappings";
-import { videoResourceMaterialLookup } from "../../lib/videoResources";
+import { videoResourceMaterialLookup } from "../../lib/resources/videos";
+import { resourceStorageMaterialLookup } from "../../lib/resourceStorages";
 
 const command: Command = async (context) => {
   const { logger } = context;
@@ -23,27 +24,33 @@ const command: Command = async (context) => {
     chalk.green("Downloading the video and extracting its metadata..."),
   );
 
-  const { videoDir } = getVideoProcessingConfig();
-  const videoConfig = await videoResourceMaterialLookup.config.get(videoDir);
+  const videoId = getVideoProcessingConfig().VIDEO_ID;
+  const videoConfig = await videoResourceMaterialLookup.config.get(
+    "local",
+    videoId,
+  );
+
+  const resolvedDownloadPath = resourceStorageMaterialLookup.local.resolvePath(
+    videoResourceMaterialLookup.download.getRelativePath(videoId),
+  );
+  const resolvedMetadataPath = resourceStorageMaterialLookup.local.resolvePath(
+    videoResourceMaterialLookup.extractedMetadata.getRelativePath(videoId),
+  );
 
   if (getCommonConfig().RESET) {
-    await fs.remove(videoResourceMaterialLookup.download.getPath(videoDir));
-    await fs.remove(
-      videoResourceMaterialLookup.extractedMetadata.getPath(videoDir),
-    );
+    await fs.remove(resolvedDownloadPath);
+    await fs.remove(resolvedMetadataPath);
   }
 
   const fileMappings: BaseFileMapping[] = [
     fileMappingMaterialLookup.downloadVideo.createFileMapping({
       sourcePath: videoConfig.url,
-      targetPath: videoResourceMaterialLookup.download.getPath(videoDir),
+      targetPath: resolvedDownloadPath,
       height: videoConfig.framePreviewHeight,
     }),
     fileMappingMaterialLookup.extractVideoMetadata.createFileMapping({
-      sourcePath: videoResourceMaterialLookup.download.getPath(videoDir),
-      targetPath: videoResourceMaterialLookup.extractedMetadata.getPath(
-        videoDir,
-      ),
+      sourcePath: resolvedDownloadPath,
+      targetPath: resolvedMetadataPath,
     }),
   ];
 

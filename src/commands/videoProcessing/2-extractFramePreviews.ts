@@ -15,23 +15,42 @@ import {
   fileMappingMaterialLookup,
   processFileMappings,
 } from "../../lib/fileMappings";
-import { videoResourceMaterialLookup } from "../../lib/videoResources";
+import { videoResourceMaterialLookup } from "../../lib/resources/videos";
+import { resourceStorageMaterialLookup } from "../../lib/resourceStorages";
 
 const command: Command = async (context) => {
   const { logger } = context;
   logger.log(chalk.green("Extracting frame previews..."));
 
-  const { videoDir } = getVideoProcessingConfig();
-  const videoConfig = await videoResourceMaterialLookup.config.get(videoDir);
+  const videoId = getVideoProcessingConfig().VIDEO_ID;
+
+  const videoConfig = await videoResourceMaterialLookup.config.get(
+    "local",
+    videoId,
+  );
   const extractedMetadata = await videoResourceMaterialLookup.extractedMetadata.get(
-    videoDir,
+    "local",
+    videoId,
   );
 
-  if (getCommonConfig().RESET) {
-    await fs.remove(
-      videoResourceMaterialLookup.framePreviews.getDirPath(videoDir),
+  const resolvedDownloadPath = resourceStorageMaterialLookup.local.resolvePath(
+    videoResourceMaterialLookup.download.getRelativePath(videoId),
+  );
+  const resolvedFramePreviewDirPath = resourceStorageMaterialLookup.local.resolvePath(
+    videoResourceMaterialLookup.framePreviews.getRelativeDirPath(videoId),
+  );
+  const getResolvedFramePreviewPath = (currentTimeOffset: number) =>
+    resourceStorageMaterialLookup.local.resolvePath(
+      videoResourceMaterialLookup.framePreviews.getRelativePath(
+        videoId,
+        currentTimeOffset,
+      ),
     );
+
+  if (getCommonConfig().RESET) {
+    await fs.remove(resolvedFramePreviewDirPath);
   }
+
   const fileMappings: BaseFileMapping[] = [];
   const maxTimeOffset =
     extractedMetadata.duration - (videoConfig.tailCutoffDuration || 0);
@@ -41,12 +60,8 @@ const command: Command = async (context) => {
     const nextTimeOffset = timeOffset + chunkInterval;
     fileMappings.push(
       fileMappingMaterialLookup.extractVideoFramePreviews.createFileMapping({
-        sourcePath: videoResourceMaterialLookup.download.getPath(videoDir),
-        getTargetPath: (currentTimeOffset: number) =>
-          videoResourceMaterialLookup.framePreviews.getPath(
-            videoDir,
-            currentTimeOffset,
-          ),
+        sourcePath: resolvedDownloadPath,
+        getTargetPath: getResolvedFramePreviewPath,
         timeOffsetStart: timeOffset,
         timeOffsetInterval: videoConfig.frameSamplingInterval,
         timeOffsetEnd: Math.min(nextTimeOffset, maxTimeOffset) - 1,
