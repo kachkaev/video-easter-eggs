@@ -50,6 +50,7 @@ const useFrameStripes = (
 const Canvas = styled.canvas`
   background: #ccc;
   position: absolute;
+  pointer-events: none;
 `;
 
 export interface TimelineSectionBackgroundProps

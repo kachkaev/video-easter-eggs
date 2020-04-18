@@ -24,6 +24,7 @@ const HourMark = styled.div`
   padding-right: 10px;
   text-align: right;
   box-sizing: border-box;
+  cursor: default;
 `;
 
 const HourTick = styled.div`
@@ -39,7 +40,7 @@ const ActiveFrame = styled.div`
   background: red;
   pointer-events: none;
   background: red;
-  opacity: 0.5;
+  opacity: 0.8;
   height: 100%;
   position: absolute;
 `;
@@ -69,9 +70,8 @@ const TimelineSection: React.FunctionComponent<{
 }) => {
   const { timeOffset, timeDuration } = videoInfo.labeledSections[index];
 
-  const currentHour = Duration.fromMillis(
-    timeOffset + timeDuration - 1,
-  ).toFormat("hh");
+  const timeEnd = timeOffset + timeDuration - 1;
+  const currentHour = Duration.fromMillis(timeEnd).toFormat("hh");
   const prevHour = Duration.fromMillis(timeOffset).toFormat("hh");
 
   const maxWidth =
@@ -92,13 +92,20 @@ const TimelineSection: React.FunctionComponent<{
         )
       : undefined;
 
+  const handleHourMarkClick: React.MouseEventHandler = React.useCallback(() => {
+    onActiveTimeOffsetChange(
+      Math.floor(timeEnd / 60 / 60 / 1000) * 60 * 60 * 1000,
+    );
+  }, [onActiveTimeOffsetChange, timeEnd]);
+
   const handleWrapperMouseDown: React.MouseEventHandler = React.useCallback(
     (e) => {
       const x = e.nativeEvent.offsetX;
-      if (x < sectionWidth + hourMarkWidth) {
+      if (x >= hourMarkWidth && x < sectionWidth + hourMarkWidth) {
         onActiveTimeOffsetChange(
           timeOffset +
-            Math.floor(x / frameStripeWidth) * videoInfo.frameSamplingInterval,
+            Math.floor((x - hourMarkWidth) / frameStripeWidth) *
+              videoInfo.frameSamplingInterval,
         );
       }
     },
@@ -122,7 +129,7 @@ const TimelineSection: React.FunctionComponent<{
     >
       {index === 0 || currentHour !== prevHour ? (
         <>
-          <HourMark>{currentHour}</HourMark>
+          <HourMark onClick={handleHourMarkClick}>{currentHour}</HourMark>
           <HourTick />
         </>
       ) : null}
