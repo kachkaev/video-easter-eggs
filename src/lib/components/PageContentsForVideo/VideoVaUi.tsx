@@ -1,15 +1,30 @@
 import React from "react";
 import { useHotkeys } from "react-hotkeys-hook";
+import { useSize } from "react-use";
+import { FixedSizeList } from "react-window";
 import styled from "styled-components";
 
-import { VideoInfo } from "../../../resources/videos/types";
-import { generateVideoUrl } from "../../../ui";
+import { VideoInfo } from "../../resources/videos/types";
+import { generateVideoUrl } from "../../ui";
 import ActiveFrameDetails from "./ActiveFrameDetails";
-import TimelineSegment from "./TimelineSegment";
+import TimelineSection from "./TimelineSection";
+
+const Wrapper = styled.div`
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+
+  flex-direction: column;
+`;
 
 const LabeledSectionsWrapper = styled.div`
-  padding: 20px;
+  flex-grow: 1;
 `;
+
+const frameStripeWidth = 2;
 
 const VideoVaUi: React.FunctionComponent<{
   videoInfo: VideoInfo;
@@ -17,6 +32,16 @@ const VideoVaUi: React.FunctionComponent<{
   const [activeTimeOffset, setActiveTimeOffset] = React.useState(0);
 
   const { labeledSections } = videoInfo;
+
+  const maxLabeledSectionDuration = React.useMemo(() => {
+    let result = labeledSections[0].timeDuration;
+    labeledSections.forEach((labeledSection) => {
+      if (labeledSection.timeDuration > result) {
+        result = labeledSection.timeDuration;
+      }
+    });
+    return result;
+  }, [labeledSections]);
 
   const activeSegmentIndex = labeledSections.findIndex(
     (section) =>
@@ -71,32 +96,51 @@ const VideoVaUi: React.FunctionComponent<{
     [activeTimeOffset, videoInfo],
   );
 
+  const [timeline] = useSize(
+    ({ width, height }) => (
+      <LabeledSectionsWrapper>
+        <FixedSizeList
+          itemCount={labeledSections.length}
+          height={height}
+          itemSize={videoInfo.frameStripeHeight}
+          width={width}
+        >
+          {({ index, style }) => {
+            const labeledSection = labeledSections[index];
+            return (
+              <TimelineSection
+                style={style}
+                key={labeledSection.timeOffset}
+                videoInfo={videoInfo}
+                timeOffset={labeledSection.timeOffset}
+                timeDuration={labeledSection.timeDuration}
+                timeDurationForWidth={maxLabeledSectionDuration}
+                frameStripeWidth={frameStripeWidth}
+                activeTimeOffset={
+                  activeTimeOffset >= labeledSection.timeOffset &&
+                  activeTimeOffset <
+                    labeledSection.timeOffset + labeledSection.timeDuration
+                    ? activeTimeOffset
+                    : undefined
+                }
+                onActiveTimeOffsetChange={setActiveTimeOffset}
+              />
+            );
+          }}
+        </FixedSizeList>
+      </LabeledSectionsWrapper>
+    ),
+    { width: 0, height: 0 },
+  );
+
   return (
-    <>
+    <Wrapper>
       <ActiveFrameDetails
         videoInfo={videoInfo}
         activeTimeOffset={activeTimeOffset}
       />
-      <LabeledSectionsWrapper>
-        {labeledSections.map((labeledSection) => (
-          <TimelineSegment
-            key={labeledSection.timeOffset}
-            videoInfo={videoInfo}
-            timeOffset={labeledSection.timeOffset}
-            timeDuration={labeledSection.timeDuration}
-            frameStripeWidth={2}
-            activeTimeOffset={
-              activeTimeOffset >= labeledSection.timeOffset &&
-              activeTimeOffset <
-                labeledSection.timeOffset + labeledSection.timeDuration
-                ? activeTimeOffset
-                : undefined
-            }
-            onActiveTimeOffsetChange={setActiveTimeOffset}
-          />
-        ))}
-      </LabeledSectionsWrapper>
-    </>
+      {timeline}
+    </Wrapper>
   );
 };
 

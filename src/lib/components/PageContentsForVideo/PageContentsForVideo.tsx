@@ -1,7 +1,7 @@
 import React from "react";
 
 import { useVideoInfo } from "../../ui/apiHooks";
-import VideoVaUi from "./components/VideoVaUi";
+import VideoVaUi from "./VideoVaUi";
 
 const PageContentsForIndex: React.FunctionComponent<{
   videoId: string;

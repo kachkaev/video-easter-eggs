@@ -2,8 +2,8 @@ import { Duration } from "luxon";
 import React from "react";
 import styled from "styled-components";
 
-import { VideoInfo } from "../../../resources/videos/types";
-import { generateFramePreviewUrl, generateVideoUrl } from "../../../ui";
+import { VideoInfo } from "../../resources/videos/types";
+import { generateFramePreviewUrl, generateVideoUrl } from "../../ui";
 
 const Wrapper = styled.div`
   position: sticky;

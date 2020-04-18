@@ -2,7 +2,7 @@ import React from "react";
 import { useQuery } from "react-query";
 import styled from "styled-components";
 
-import { FrameStripe, VideoInfo } from "../../../resources/videos/types";
+import { FrameStripe, VideoInfo } from "../../resources/videos/types";
 
 const getFrameStripes = async (
   _,
@@ -46,7 +46,7 @@ const Canvas = styled.canvas`
   position: absolute;
 `;
 
-const TimelineSegment: React.FunctionComponent<{
+const TimelineSectionBackground: React.FunctionComponent<{
   frameStripeWidth: number;
   timeDuration: number;
   timeOffset: number;
@@ -83,4 +83,4 @@ const TimelineSegment: React.FunctionComponent<{
   return <Canvas width={canvasWidth} height={canvasHeight} ref={canvasRef} />;
 };
 
-export default React.memo(TimelineSegment);
+export default React.memo(TimelineSectionBackground);

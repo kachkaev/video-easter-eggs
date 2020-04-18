@@ -1,8 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 
-import { VideoInfo } from "../../../resources/videos/types";
-import TimelineSegmentCanvas from "./TimelineSegmentCanvas";
+import { VideoInfo } from "../../resources/videos/types";
+import TimelineSectionCanvas from "./TimelineSectionBackground";
 
 const Wrapper = styled.div`
   position: relative;
@@ -17,22 +17,29 @@ const ActiveFrame = styled.div`
   position: absolute;
 `;
 
-const TimelineSegment: React.FunctionComponent<{
+const TimelineSection: React.FunctionComponent<{
   activeTimeOffset?: number;
   frameStripeWidth: number;
   onActiveTimeOffsetChange?: (value: number) => void;
+  style: React.CSSProperties;
   timeDuration: number;
+  timeDurationForWidth: number;
   timeOffset: number;
   videoInfo: VideoInfo;
 }> = ({
   activeTimeOffset,
   frameStripeWidth,
   onActiveTimeOffsetChange,
+  style,
   timeDuration,
+  timeDurationForWidth,
   timeOffset,
   videoInfo,
 }) => {
-  const canvasWidth =
+  const maxWidth =
+    Math.floor(timeDurationForWidth / videoInfo.frameSamplingInterval) *
+    frameStripeWidth;
+  const sectionWidth =
     Math.floor(timeDuration / videoInfo.frameSamplingInterval) *
     frameStripeWidth;
 
@@ -50,7 +57,7 @@ const TimelineSegment: React.FunctionComponent<{
   const handleWrapperMouseDown: React.MouseEventHandler = React.useCallback(
     (e) => {
       const x = e.nativeEvent.offsetX;
-      if (onActiveTimeOffsetChange) {
+      if (onActiveTimeOffsetChange && x < sectionWidth) {
         onActiveTimeOffsetChange(
           timeOffset +
             Math.floor(x / frameStripeWidth) * videoInfo.frameSamplingInterval,
@@ -62,6 +69,7 @@ const TimelineSegment: React.FunctionComponent<{
       onActiveTimeOffsetChange,
       timeOffset,
       videoInfo.frameSamplingInterval,
+      sectionWidth,
     ],
   );
 
@@ -69,11 +77,12 @@ const TimelineSegment: React.FunctionComponent<{
     <Wrapper
       onMouseDown={handleWrapperMouseDown}
       style={{
-        width: canvasWidth,
+        ...style,
+        width: maxWidth,
         height: canvasHeight,
       }}
     >
-      <TimelineSegmentCanvas
+      <TimelineSectionCanvas
         videoInfo={videoInfo}
         frameStripeWidth={frameStripeWidth}
         timeOffset={timeOffset}
@@ -91,4 +100,4 @@ const TimelineSegment: React.FunctionComponent<{
   );
 };
 
-export default React.memo(TimelineSegment);
+export default React.memo(TimelineSection);
