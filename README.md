@@ -1,23 +1,9 @@
 # Video easter eggs
 
-<!-- [![GitHub Workflow Status (checks)](https://img.shields.io/github/workflow/status/kachkaev/video-easter-eggs/Checks?label=checks)](https://github.com/kachkaev/video-easter-eggs/actions?query=workflow%3AChecks) -->
-
-[video-easter-eggs.now.sh](https://video-easter-eggs.now.sh)
-
-> ⚠️ ⚠️ ⚠️ Work in progress ⚠️ ⚠️ ⚠️
+[![GitHub Workflow Status (checks)](https://img.shields.io/github/workflow/status/kachkaev/video-easter-eggs/Checks?label=checks)](https://github.com/kachkaev/video-easter-eggs/actions?query=workflow%3AChecks)
 
 🔎 A visual analytics tool to find easter eggs in videos.
-Inspired by https://www.youtube.com/watch?v=6g82FwQfpGc
-
-![screenshot](./screenshot.png)
-
-## Features
-
-Keyboard shortcuts
-
-- **← →** jump 1 frame (or 10 seconds with **shift**)
-- **↓↑** jump 1 segment (or 5 segments with **shift**)
-- **Enter** open video at current time in new tab
+Inspired by https://www.youtube.com/watch?v=6g82FwQfpGc, deployed to [video-easter-eggs.now.sh](https://video-easter-eggs.now.sh)
 
 ## Working locally
 
@@ -32,33 +18,26 @@ Keyboard shortcuts
 1.  Run the probe command to detect missing software
 
     ```sh
-    yarn exe:dev src/commands/prope.ts
+    yarn exe src/commands/prope.ts
     ```
 
 ### Processing a video
 
 1.  Copy `.env.dist` to `.env`, specify custom `VIDEO_ID` (e.g. `myTestVideo`).
 
-1.  Create `var/videos/myTestVideo/config.yml`:
-
-    ```yml
-    url: https://www.youtube.com/watch?v=??
-    shortTitle: ??
-    frameSamplingInterval: 500
-    framePreviewHeight: 144
-    frameStripeHeight: 10
-    tailCutoffDuration: 1000
-    ```
+1.  Create `var/videos/myTestVideo/config.yml` by following an example in the `var` directory.
 
 1.  Run commands:
 
     ```sh
-    yarn exe:dev src/commands/videoProcessing/1-download.ts
-    yarn exe:dev src/commands/videoProcessing/2-extractFramePreviews.ts
-    yarn exe:dev src/commands/videoProcessing/3-extractFrameStripes.ts
-    yarn exe:dev src/commands/videoProcessing/4-joinFrameStripes.ts
-    yarn exe:dev src/commands/videoProcessing/4-extractLabeledSections.ts
+    yarn exe src/commands/videoProcessing/1-download.ts
+    yarn exe src/commands/videoProcessing/2-extractFramePreviews.ts
+    yarn exe src/commands/videoProcessing/3-extractFrameStripes.ts
+    yarn exe src/commands/videoProcessing/4-joinFrameStripes.ts
+    yarn exe src/commands/videoProcessing/5-extractLabeledSections.ts
     ```
+
+1.  Run a local server and manually populate `var/videos/myTestVideo/labeledEasterEggs.yml`
 
 ### Running a local server
 
@@ -74,26 +53,26 @@ Keyboard shortcuts
     http://localhost:3000/myTestVideo
     ```
 
+### Generating easter egg summary
+
+This command can be used to pre-generate a comment to the video:
+
+```sh
+yarn exe src/commands/s3/uploadVideoRelatedResources.ts
+```
+
+Once you’ve commented, you can specify the link to your comment in `var/videos/myTestVideo/config.yml` so that it was displayed in the UI.
+
 ### Deployment
 
 1.  Upload video-related resources to s3
 
     ```
-    yarn exe:dev src/commands/s3/uploadVideoRelatedResources.ts
+    yarn exe src/commands/s3/uploadVideoRelatedResources.ts
     ```
 
-## TODO
+## Todo
 
-- index page + API route to get all video infos
+- Show the list of annotated segments
 
-- segments
-
-  - implement automatic splitting of video into segments
-  - display segments from videoInfo in the UI
-
-- easter eggs
-
-  - show the list of annotated segments
-
-- UI
-  - virtualize list
+- Add index page + API route to get all video infos
