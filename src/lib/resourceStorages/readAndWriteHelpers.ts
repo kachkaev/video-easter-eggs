@@ -18,60 +18,58 @@ const getValueFromCache = async <Value = unknown>(
 
 export const readFromBinary = async (
   storage: ResourceStorageMaterial,
-  relativePathToFile: string,
+  resolvedResourcePath: string,
 ): Promise<Buffer> =>
   getValueFromCache(
-    relativePathToFile,
-    async () => await fs.readFile(relativePathToFile),
+    resolvedResourcePath,
+    async () => await storage.getResource(resolvedResourcePath),
   );
 
 export const readFromYaml = async <Value = unknown>(
   storage: ResourceStorageMaterial,
-  relativePathToFile: string,
+  resolvedResourcePath: string,
 ): Promise<Value> =>
-  getValueFromCache(relativePathToFile, async () =>
-    safeLoad(await fs.readFile(relativePathToFile, "utf8")),
+  getValueFromCache(resolvedResourcePath, async () =>
+    safeLoad(await storage.getResource(resolvedResourcePath, true)),
   );
 
 export const readAllFromYaml = async <Value = unknown>(
   storage: ResourceStorageMaterial,
-  relativePathToFile: string,
+  resolvedResourcePath: string,
 ): Promise<Value[]> =>
-  getValueFromCache(relativePathToFile, async () =>
-    safeLoadAll(await fs.readFile(relativePathToFile, "utf8")),
+  getValueFromCache(resolvedResourcePath, async () =>
+    safeLoadAll(await storage.getResource(resolvedResourcePath, true)),
   );
 
 export const readFromJson = async <Value = unknown>(
   storage: ResourceStorageMaterial,
-  relativePathToFile: string,
+  resolvedResourcePath: string,
 ): Promise<Value> =>
-  getValueFromCache(
-    relativePathToFile,
-    async () => await fs.readJson(relativePathToFile),
+  getValueFromCache(resolvedResourcePath, async () =>
+    JSON.parse(await storage.getResource(resolvedResourcePath, true)),
   );
 
 export const writeToYaml = async <Value = unknown>(
   storage: ResourceStorageMaterial,
-  relativePathToFile: string,
+  resolvedResourcePath: string,
   contents: Value,
 ): Promise<void> =>
-  await fs.writeFile(relativePathToFile, safeDump(contents), "utf8");
+  await storage.putResource(resolvedResourcePath, safeDump(contents));
 
 export const writeAllToYaml = async <Value = unknown>(
   storage: ResourceStorageMaterial,
-  relativePathToFile: string,
+  resolvedResourcePath: string,
   contents: Value[],
 ): Promise<void> =>
-  await fs.writeFile(
-    relativePathToFile,
+  await storage.putResource(
+    resolvedResourcePath,
     contents
       .map((currentContents) => safeDump(currentContents))
       .join("\n---\n"),
-    "utf8",
   );
 
 export const writeToJson = async <Value = unknown>(
   storage: ResourceStorageMaterial,
-  relativePathToFile: string,
+  resolvedResourcePath: string,
   contents: Value,
-): Promise<void> => fs.writeJson(relativePathToFile, contents);
+): Promise<void> => fs.writeJson(resolvedResourcePath, contents);

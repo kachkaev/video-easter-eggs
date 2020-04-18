@@ -11,6 +11,7 @@ module.exports = envalid.cleanEnv(
     }),
     VAR_DIR: envalid.str({
       desc: "Path to a directory with variable data (videos and localstack)",
+      default: "",
     }),
   },
   { strict: true },
