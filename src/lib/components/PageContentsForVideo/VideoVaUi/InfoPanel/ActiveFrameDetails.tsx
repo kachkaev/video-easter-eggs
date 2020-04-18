@@ -4,6 +4,7 @@ import styled from "styled-components";
 
 import { VideoInfo } from "../../../../resources/videos/types";
 import { generateFramePreviewUrl, generateVideoUrl } from "../../../../ui";
+import { timeFormat } from "../styling";
 import PlayIcon from "./PlayIcon";
 
 const Wrapper = styled.div`
@@ -22,11 +23,6 @@ const A = styled.a`
     color: #000;
     text-decoration: none;
   }
-`;
-
-const Milliseconds = styled.div`
-  font-size: 0.7em;
-  color: #888;
 `;
 
 const StyledPlayIcon = styled(PlayIcon)`
@@ -68,10 +64,9 @@ const ActiveFrameDetails: React.FunctionComponent<{
         rel="noopener noreferrer"
       >
         <Img src={generateFramePreviewUrl(videoInfo, activeTimeOffset)} />
-        <TimeStamp>{activeTime.toFormat("hh:mm:ss.SSS")}</TimeStamp>
+        <TimeStamp>{activeTime.toFormat(timeFormat)}</TimeStamp>
         <StyledPlayIcon />
       </A>
-      <Milliseconds>{activeTimeOffset} ms</Milliseconds>
     </Wrapper>
   );
 };

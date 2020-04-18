@@ -1,8 +1,11 @@
+import copy from "copy-to-clipboard";
+import { Duration } from "luxon";
 import React from "react";
 import { useHotkeys } from "react-hotkeys-hook";
 
 import { VideoInfo } from "../../../resources/videos";
 import { generateVideoUrl } from "../../../ui";
+import { timeFormat } from "./styling";
 
 interface HotKeysProps {
   activeTimeOffset: number;
@@ -68,6 +71,28 @@ const HotKeys: React.FunctionComponent<HotKeysProps> = ({
     {},
     [activeTimeOffset, videoInfo],
   );
+
+  useHotkeys(
+    "cmd+shift+c",
+    (event) => {
+      event.preventDefault();
+      const activeTime = Duration.fromMillis(activeTimeOffset);
+      copy(activeTime.toFormat(timeFormat));
+    },
+    {},
+    [activeTimeOffset],
+  );
+
+  useHotkeys(
+    "cmd+ctrl+shift+c",
+    (event) => {
+      event.preventDefault();
+      copy(`${activeTimeOffset}`);
+    },
+    {},
+    [activeTimeOffset],
+  );
+
   return null;
 };
 
