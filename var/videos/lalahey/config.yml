@@ -1,0 +1,15 @@
+
+url: https://www.youtube.com/watch?v=6g82FwQfpGc
+urlOfCommentWithTimestamps: https://www.youtube.com/watch?v=6g82FwQfpGc&lc=UgxHdOkskJ_2D5rx-YN4AaABAg
+shortTitle: Лалахэй
+
+frameSamplingInterval: 500
+framePreviewHeight: 144
+frameStripeHeight: 10
+tailCutoffDuration: 1000
+
+sectionLabeling:
+  minExpectedSectionDuration: 60000
+  frameStripeDifferenceTolerance: 10
+  referenceFrameTimeOffset: 54500
+  referenceFrameTimeOffsetWithinSection: 29500
