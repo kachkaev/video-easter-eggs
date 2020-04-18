@@ -9,9 +9,8 @@ module.exports = envalid.cleanEnv(
       default: false,
       desc: "analyze bundles during app build",
     }),
-    VAR_DIR: envalid.str({
-      desc: "Path to a directory with variable data (videos and localstack)",
-      default: "",
+    API_RESOURCE_STORAGE_TYPE: envalid.str({
+      choices: ["local", "s3"],
     }),
   },
   { strict: true },

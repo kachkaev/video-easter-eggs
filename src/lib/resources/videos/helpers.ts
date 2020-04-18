@@ -15,13 +15,13 @@ export const getResolvedPathToVideoResource = (
 ) => resolveRelativePathToResource(storage, "videos", videoId, relativePath);
 
 export const getResolvedPathToTimeOffsetDependentVideoResource = (
-  relativeDirPath: string,
+  resolvedDirPath: string,
   timeOffset: number,
   extension: string,
 ) => {
   const timeOffsetAsDuration = Duration.fromMillis(timeOffset);
-  return path.resolve(
-    relativeDirPath,
+  return path.join(
+    resolvedDirPath,
     timeOffsetAsDuration.toFormat("hh-xx-xx"),
     timeOffsetAsDuration.toFormat("hh-mm-xx"),
     `${timeOffsetAsDuration.toFormat("hh-mm-ss.SSS")}.${extension}`,

@@ -4,6 +4,7 @@ import { extractVideoFramePreviewsMaterial } from "./=extractVideoFramePreviews"
 import { extractVideoFrameStripeMaterial } from "./=extractVideoFrameStripe";
 import { extractVideoMetadataMaterial } from "./=extractVideoMetadata";
 import { linkMaterial } from "./=link";
+import { s3UploadMaterial } from "./=s3Upload";
 import { FileMappingMaterial } from "./types";
 
 export const fileMappingMaterialLookup = {
@@ -13,6 +14,7 @@ export const fileMappingMaterialLookup = {
   extractVideoMetadata: extractVideoMetadataMaterial,
   extractVideoFramePreviews: extractVideoFramePreviewsMaterial,
   link: linkMaterial,
+  s3Upload: s3UploadMaterial,
 };
 
 export const getFileMappingMaterial = (

@@ -73,6 +73,14 @@ Keyboard shortcuts
     http://localhost:3000/myTestVideo
     ```
 
+### Deployment
+
+1.  Upload video-related resources to s3
+
+    ```
+    yarn exe:dev src/commands/s3/uploadVideoRelatedResources.ts
+    ```
+
 ## TODO
 
 - index page + API route to get all video infos

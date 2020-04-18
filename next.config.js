@@ -4,7 +4,7 @@ const env = require("./env.config.js");
 
 const productionConfig = {
   serverRuntimeConfig: {
-    resourceStorageType: "local",
+    apiResourceStorageType: env.API_RESOURCE_STORAGE_TYPE,
   },
 };
 
