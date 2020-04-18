@@ -26,6 +26,10 @@ const VideoVaUi: React.FunctionComponent<{
 }> = ({ videoInfo }) => {
   const [activeTimeOffset, setActiveTimeOffset] = React.useState(0);
 
+  React.useEffect(() => {
+    document.title = videoInfo.shortTitle;
+  }, [videoInfo]);
+
   return (
     <Wrapper>
       <HotKeys

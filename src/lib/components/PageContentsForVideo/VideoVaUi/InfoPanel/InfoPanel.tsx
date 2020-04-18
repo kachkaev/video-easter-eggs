@@ -8,7 +8,7 @@ import DetailsOnDemand from "./DetailsOnDemand";
 
 const Wrapper = styled.div`
   position: sticky;
-  padding: 10px 15px;
+  padding: 0 15px;
   top: 0;
   left: 0;
   right: 0;
@@ -18,11 +18,13 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   z-index: 1;
-  /* width: 200px; */
+  width: 160px;
+  min-width: 160px;
 
   ${mobileMedia} {
+    width: auto;
+    min-width: auto;
     flex-direction: row;
-    /* height: 200px; */
   }
 `;
 

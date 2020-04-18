@@ -9,8 +9,9 @@ import PlayIcon from "./PlayIcon";
 
 const Wrapper = styled.div`
   flex-grow: 0;
-  height: 150px;
-  width: 132px;
+  max-width: 160px;
+  padding-top: 10px;
+  padding-bottom: 10px;
 `;
 
 const A = styled.a`
