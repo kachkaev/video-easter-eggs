@@ -4,12 +4,18 @@ import styled from "styled-components";
 
 import { FrameStripe, VideoInfo } from "../../resources/videos/types";
 
+type QueryKey = [
+  string,
+  {
+    videoId: string;
+    timeOffset: number;
+    timeDuration: number;
+    frameSamplingInterval: number;
+  },
+];
+
 const getFrameStripes = async (
-  _,
-  videoId: string,
-  timeOffset: number,
-  timeDuration: number,
-  frameSamplingInterval: number,
+  ...[, { videoId, timeOffset, timeDuration, frameSamplingInterval }]: QueryKey
 ) => {
   const firstFrameOffset = Math.floor(timeOffset / frameSamplingInterval);
   const frameCount = Math.floor(timeDuration / frameSamplingInterval);
@@ -19,24 +25,24 @@ const getFrameStripes = async (
     )
   ).json();
 };
+
 const useFrameStripes = (
   videoInfo: VideoInfo,
   timeOffset: number,
   timeDuration: number,
 ) => {
-  const result = useQuery<
-    FrameStripe[],
-    [string, string, number, number, number]
-  >(
-    [
+  const result = useQuery<FrameStripe[], QueryKey>({
+    queryKey: [
       "frameStripes",
-      videoInfo.id,
-      timeOffset,
-      timeDuration,
-      videoInfo.frameSamplingInterval,
+      {
+        timeDuration,
+        timeOffset,
+        frameSamplingInterval: videoInfo.frameSamplingInterval,
+        videoId: videoInfo.id,
+      },
     ],
-    getFrameStripes,
-  );
+    queryFn: getFrameStripes,
+  });
 
   return result.data || [];
 };

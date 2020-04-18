@@ -7,7 +7,7 @@ import styled from "styled-components";
 import { VideoInfo } from "../../resources/videos/types";
 import { generateVideoUrl } from "../../ui";
 import ActiveFrameDetails from "./ActiveFrameDetails";
-import TimelineSection from "./TimelineSection";
+import TimelineSection, { TimelineSectionData } from "./TimelineSection";
 
 const Wrapper = styled.div`
   position: absolute;
@@ -96,37 +96,25 @@ const VideoVaUi: React.FunctionComponent<{
     [activeTimeOffset, videoInfo],
   );
 
+  const timelineSectionData: TimelineSectionData = {
+    activeTimeOffset,
+    frameStripeWidth,
+    onActiveTimeOffsetChange: setActiveTimeOffset,
+    maxLabeledSectionDuration,
+    videoInfo,
+  };
+
   const [timeline] = useSize(
     ({ width, height }) => (
       <LabeledSectionsWrapper>
         <FixedSizeList
+          itemData={timelineSectionData}
           itemCount={labeledSections.length}
           height={height}
           itemSize={videoInfo.frameStripeHeight}
           width={width}
         >
-          {({ index, style }) => {
-            const labeledSection = labeledSections[index];
-            return (
-              <TimelineSection
-                style={style}
-                key={labeledSection.timeOffset}
-                videoInfo={videoInfo}
-                timeOffset={labeledSection.timeOffset}
-                timeDuration={labeledSection.timeDuration}
-                timeDurationForWidth={maxLabeledSectionDuration}
-                frameStripeWidth={frameStripeWidth}
-                activeTimeOffset={
-                  activeTimeOffset >= labeledSection.timeOffset &&
-                  activeTimeOffset <
-                    labeledSection.timeOffset + labeledSection.timeDuration
-                    ? activeTimeOffset
-                    : undefined
-                }
-                onActiveTimeOffsetChange={setActiveTimeOffset}
-              />
-            );
-          }}
+          {TimelineSection}
         </FixedSizeList>
       </LabeledSectionsWrapper>
     ),

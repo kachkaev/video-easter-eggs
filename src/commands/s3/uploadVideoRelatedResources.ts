@@ -68,7 +68,7 @@ const command: Command = async (context) => {
   const maxTimeOffset =
     extractedMetadata.duration - (videoConfig.tailCutoffDuration || 0);
   for (
-    let timeOffset = (13 * 60 + 10) * 60 * 1000;
+    let timeOffset = 0;
     timeOffset < maxTimeOffset;
     timeOffset += videoConfig.frameSamplingInterval
   ) {

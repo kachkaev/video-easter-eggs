@@ -2,7 +2,33 @@ import React from "react";
 import styled from "styled-components";
 
 import { VideoInfo } from "../../resources/videos/types";
-import TimelineSectionCanvas from "./TimelineSectionBackground";
+import TimelineSectionBackground from "./TimelineSectionBackground";
+
+// const ListItem = React.useMemo(
+//   () => ({ index, style }) => {
+//     const labeledSection = labeledSections[index];
+//     return (
+//       <TimelineSection
+//         style={style}
+//         key={labeledSection.timeOffset}
+//         frameStripeWidth={frameStripeWidth}
+//         maxLabeledSectionDuration={maxLabeledSectionDuration}
+//         timeDuration={labeledSection.timeDuration}
+//         timeOffset={labeledSection.timeOffset}
+//         videoInfo={videoInfo}
+//         activeTimeOffset={
+//           activeTimeOffset >= labeledSection.timeOffset &&
+//           activeTimeOffset <
+//             labeledSection.timeOffset + labeledSection.timeDuration
+//             ? activeTimeOffset
+//             : undefined
+//         }
+//         onActiveTimeOffsetChange={setActiveTimeOffset}
+//       />
+//     );
+//   },
+//   [activeTimeOffset, labeledSections, maxLabeledSectionDuration, videoInfo],
+// );
 
 const Wrapper = styled.div`
   position: relative;
@@ -17,27 +43,33 @@ const ActiveFrame = styled.div`
   position: absolute;
 `;
 
-const TimelineSection: React.FunctionComponent<{
-  activeTimeOffset?: number;
+export interface TimelineSectionData {
+  activeTimeOffset: number;
   frameStripeWidth: number;
-  onActiveTimeOffsetChange?: (value: number) => void;
-  style: React.CSSProperties;
-  timeDuration: number;
-  timeDurationForWidth: number;
-  timeOffset: number;
+  maxLabeledSectionDuration: number;
+  onActiveTimeOffsetChange: (value: number) => void;
   videoInfo: VideoInfo;
+}
+
+const TimelineSection: React.FunctionComponent<{
+  style: React.CSSProperties;
+  index: number;
+  data: TimelineSectionData;
 }> = ({
-  activeTimeOffset,
-  frameStripeWidth,
-  onActiveTimeOffsetChange,
   style,
-  timeDuration,
-  timeDurationForWidth,
-  timeOffset,
-  videoInfo,
+  index,
+  data: {
+    activeTimeOffset,
+    frameStripeWidth,
+    maxLabeledSectionDuration,
+    onActiveTimeOffsetChange,
+    videoInfo,
+  },
 }) => {
+  const { timeOffset, timeDuration } = videoInfo.labeledSections[index];
+
   const maxWidth =
-    Math.floor(timeDurationForWidth / videoInfo.frameSamplingInterval) *
+    Math.floor(maxLabeledSectionDuration / videoInfo.frameSamplingInterval) *
     frameStripeWidth;
   const sectionWidth =
     Math.floor(timeDuration / videoInfo.frameSamplingInterval) *
@@ -57,7 +89,7 @@ const TimelineSection: React.FunctionComponent<{
   const handleWrapperMouseDown: React.MouseEventHandler = React.useCallback(
     (e) => {
       const x = e.nativeEvent.offsetX;
-      if (onActiveTimeOffsetChange && x < sectionWidth) {
+      if (x < sectionWidth) {
         onActiveTimeOffsetChange(
           timeOffset +
             Math.floor(x / frameStripeWidth) * videoInfo.frameSamplingInterval,
@@ -82,7 +114,7 @@ const TimelineSection: React.FunctionComponent<{
         height: canvasHeight,
       }}
     >
-      <TimelineSectionCanvas
+      <TimelineSectionBackground
         videoInfo={videoInfo}
         frameStripeWidth={frameStripeWidth}
         timeOffset={timeOffset}
