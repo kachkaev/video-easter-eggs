@@ -2,7 +2,7 @@ import React from "react";
 import { useQuery } from "react-query";
 import styled from "styled-components";
 
-import { FrameStripe, VideoInfo } from "../../resources/videos/types";
+import { FrameStripe, VideoInfo } from "../../../../resources/videos/types";
 
 type QueryKey = [
   string,
@@ -52,12 +52,21 @@ const Canvas = styled.canvas`
   position: absolute;
 `;
 
-const TimelineSectionBackground: React.FunctionComponent<{
+export interface TimelineSectionBackgroundProps
+  extends React.CanvasHTMLAttributes<HTMLCanvasElement> {
   frameStripeWidth: number;
   timeDuration: number;
   timeOffset: number;
   videoInfo: VideoInfo;
-}> = ({ frameStripeWidth, videoInfo, timeDuration, timeOffset }) => {
+}
+
+const TimelineSectionBackground: React.FunctionComponent<TimelineSectionBackgroundProps> = ({
+  frameStripeWidth,
+  videoInfo,
+  timeDuration,
+  timeOffset,
+  ...rest
+}) => {
   const canvasRef = React.useRef<HTMLCanvasElement>(null);
 
   const frameStripes = useFrameStripes(videoInfo, timeOffset, timeDuration);
@@ -86,7 +95,14 @@ const TimelineSectionBackground: React.FunctionComponent<{
     });
   }, [frameStripes, canvasWidth, frameStripeWidth, canvasHeight]);
 
-  return <Canvas width={canvasWidth} height={canvasHeight} ref={canvasRef} />;
+  return (
+    <Canvas
+      {...rest}
+      width={canvasWidth}
+      height={canvasHeight}
+      ref={canvasRef}
+    />
+  );
 };
 
 export default React.memo(TimelineSectionBackground);

@@ -1,8 +1,8 @@
 import React from "react";
 import { useHotkeys } from "react-hotkeys-hook";
 
-import { VideoInfo } from "../../resources/videos";
-import { generateVideoUrl } from "../../ui";
+import { VideoInfo } from "../../../resources/videos";
+import { generateVideoUrl } from "../../../ui";
 
 interface HotKeysProps {
   activeTimeOffset: number;

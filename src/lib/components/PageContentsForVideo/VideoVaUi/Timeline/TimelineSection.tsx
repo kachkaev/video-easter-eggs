@@ -1,37 +1,38 @@
+import { Duration } from "luxon";
 import React from "react";
 import styled from "styled-components";
 
-import { VideoInfo } from "../../resources/videos/types";
+import { VideoInfo } from "../../../../resources/videos/types";
 import TimelineSectionBackground from "./TimelineSectionBackground";
-
-// const ListItem = React.useMemo(
-//   () => ({ index, style }) => {
-//     const labeledSection = labeledSections[index];
-//     return (
-//       <TimelineSection
-//         style={style}
-//         key={labeledSection.timeOffset}
-//         frameStripeWidth={frameStripeWidth}
-//         maxLabeledSectionDuration={maxLabeledSectionDuration}
-//         timeDuration={labeledSection.timeDuration}
-//         timeOffset={labeledSection.timeOffset}
-//         videoInfo={videoInfo}
-//         activeTimeOffset={
-//           activeTimeOffset >= labeledSection.timeOffset &&
-//           activeTimeOffset <
-//             labeledSection.timeOffset + labeledSection.timeDuration
-//             ? activeTimeOffset
-//             : undefined
-//         }
-//         onActiveTimeOffsetChange={setActiveTimeOffset}
-//       />
-//     );
-//   },
-//   [activeTimeOffset, labeledSections, maxLabeledSectionDuration, videoInfo],
-// );
 
 const Wrapper = styled.div`
   position: relative;
+`;
+
+const hourMarkWidth = 50;
+const hourTickWidth = 6;
+const underlineHeight = 2;
+
+const HourMark = styled.div`
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: ${hourMarkWidth}px;
+  font-size: 20px;
+  line-height: 14px;
+  color: #999;
+  padding-right: 10px;
+  text-align: right;
+  box-sizing: border-box;
+`;
+
+const HourTick = styled.div`
+  position: absolute;
+  left: ${hourMarkWidth - hourTickWidth}px;
+  width: ${hourTickWidth}px;
+  top: 0;
+  height: ${underlineHeight}px;
+  background: #999;
 `;
 
 const ActiveFrame = styled.div`
@@ -47,7 +48,7 @@ export interface TimelineSectionData {
   activeTimeOffset: number;
   frameStripeWidth: number;
   maxLabeledSectionDuration: number;
-  onActiveTimeOffsetChange: (value: number) => void;
+  onActiveTimeOffsetChange: React.Dispatch<React.SetStateAction<number>>;
   videoInfo: VideoInfo;
 }
 
@@ -67,6 +68,11 @@ const TimelineSection: React.FunctionComponent<{
   },
 }) => {
   const { timeOffset, timeDuration } = videoInfo.labeledSections[index];
+
+  const currentHour = Duration.fromMillis(
+    timeOffset + timeDuration - 1,
+  ).toFormat("hh");
+  const prevHour = Duration.fromMillis(timeOffset).toFormat("hh");
 
   const maxWidth =
     Math.floor(maxLabeledSectionDuration / videoInfo.frameSamplingInterval) *
@@ -89,7 +95,7 @@ const TimelineSection: React.FunctionComponent<{
   const handleWrapperMouseDown: React.MouseEventHandler = React.useCallback(
     (e) => {
       const x = e.nativeEvent.offsetX;
-      if (x < sectionWidth) {
+      if (x < sectionWidth + hourMarkWidth) {
         onActiveTimeOffsetChange(
           timeOffset +
             Math.floor(x / frameStripeWidth) * videoInfo.frameSamplingInterval,
@@ -110,20 +116,29 @@ const TimelineSection: React.FunctionComponent<{
       onMouseDown={handleWrapperMouseDown}
       style={{
         ...style,
-        width: maxWidth,
+        width: maxWidth + hourMarkWidth,
         height: canvasHeight,
       }}
     >
+      {index === 0 || currentHour !== prevHour ? (
+        <>
+          <HourMark>{currentHour}</HourMark>
+          <HourTick />
+        </>
+      ) : null}
       <TimelineSectionBackground
         videoInfo={videoInfo}
         frameStripeWidth={frameStripeWidth}
         timeOffset={timeOffset}
         timeDuration={timeDuration}
+        style={{
+          left: hourMarkWidth,
+        }}
       />
       {typeof cappedActiveFrame === "number" ? (
         <ActiveFrame
           style={{
-            left: cappedActiveFrame * frameStripeWidth,
+            left: cappedActiveFrame * frameStripeWidth + hourMarkWidth,
             width: frameStripeWidth,
           }}
         />
