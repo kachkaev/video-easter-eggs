@@ -2,7 +2,10 @@ import { Duration } from "luxon";
 import React from "react";
 import styled from "styled-components";
 
-import { VideoInfo } from "../../../../resources/videos/types";
+import {
+  LabeledAnnotation,
+  VideoInfo,
+} from "../../../../resources/videos/types";
 import TimelineSectionBackground from "./TimelineSectionBackground";
 
 const Wrapper = styled.div`
@@ -38,11 +41,20 @@ const HourTick = styled.div`
 
 const ActiveFrame = styled.div`
   background: red;
-  pointer-events: none;
-  background: red;
-  opacity: 0.8;
   height: 100%;
+  opacity: 0.8;
+  pointer-events: none;
   position: absolute;
+`;
+
+const EasterEggMark = styled.div`
+  margin-top: -${underlineHeight - 1}px;
+  top: 50%;
+  height: ${underlineHeight}px;
+  background: yellow;
+  pointer-events: none;
+  position: absolute;
+  box-sizing: border-box;
 `;
 
 export interface TimelineSectionData {
@@ -52,6 +64,31 @@ export interface TimelineSectionData {
   onActiveTimeOffsetChange: React.Dispatch<React.SetStateAction<number>>;
   videoInfo: VideoInfo;
 }
+
+const convertTimeToFrame = (
+  timeOffset: number | undefined,
+  sectionTimeOffset: number,
+  sectionDuration: number,
+  frameSamplingInterval: number,
+  cap?: boolean,
+) => {
+  if (timeOffset === undefined) {
+    return undefined;
+  }
+  const frame = Math.floor(
+    (timeOffset - sectionTimeOffset) / frameSamplingInterval,
+  );
+  const maxFrame = Math.floor(sectionDuration / frameSamplingInterval);
+
+  if (frame < 0) {
+    return cap ? 0 : undefined;
+  }
+  if (frame > maxFrame) {
+    return cap ? maxFrame : undefined;
+  }
+
+  return frame;
+};
 
 const TimelineSection: React.FunctionComponent<{
   style: React.CSSProperties;
@@ -70,6 +107,17 @@ const TimelineSection: React.FunctionComponent<{
 }) => {
   const { timeOffset, timeDuration } = videoInfo.labeledSections[index];
 
+  const labeledEasterEggs: LabeledAnnotation[] = React.useMemo(
+    () =>
+      videoInfo.labeledEasterEggs.filter(
+        (labeledEasterEgg) =>
+          labeledEasterEgg.timeOffset <= timeOffset + timeDuration &&
+          labeledEasterEgg.timeOffset + labeledEasterEgg.timeDuration >
+            timeOffset,
+      ),
+    [videoInfo.labeledEasterEggs, timeOffset, timeDuration],
+  );
+
   const timeEnd = timeOffset + timeDuration - 1;
   const currentHour = Duration.fromMillis(timeEnd).toFormat("hh");
   const prevHour = Duration.fromMillis(timeOffset).toFormat("hh");
@@ -83,14 +131,12 @@ const TimelineSection: React.FunctionComponent<{
 
   const canvasHeight = videoInfo.frameStripeHeight;
 
-  const cappedActiveFrame =
-    typeof activeTimeOffset === "number" &&
-    activeTimeOffset >= timeOffset &&
-    activeTimeOffset < timeOffset + timeDuration
-      ? Math.floor(
-          (activeTimeOffset - timeOffset) / videoInfo.frameSamplingInterval,
-        )
-      : undefined;
+  const activeFrame = convertTimeToFrame(
+    activeTimeOffset,
+    timeOffset,
+    timeDuration,
+    videoInfo.frameSamplingInterval,
+  );
 
   const handleHourMarkClick: React.MouseEventHandler = React.useCallback(() => {
     onActiveTimeOffsetChange(
@@ -142,10 +188,40 @@ const TimelineSection: React.FunctionComponent<{
           left: hourMarkWidth,
         }}
       />
-      {typeof cappedActiveFrame === "number" ? (
+      {labeledEasterEggs.map((labeledEasterEgg, easterEggIndex) => {
+        const firstFrame =
+          convertTimeToFrame(
+            labeledEasterEgg.timeOffset,
+            timeOffset,
+            timeDuration,
+            videoInfo.frameSamplingInterval,
+            true,
+          ) ?? 0;
+        const lastFrame =
+          convertTimeToFrame(
+            labeledEasterEgg.timeOffset +
+              labeledEasterEgg.timeDuration +
+              videoInfo.frameSamplingInterval,
+            timeOffset,
+            timeDuration,
+            videoInfo.frameSamplingInterval,
+            true,
+          ) ?? 0;
+        return (
+          <EasterEggMark
+            title={labeledEasterEgg.label}
+            key={easterEggIndex}
+            style={{
+              left: firstFrame * frameStripeWidth + hourMarkWidth,
+              width: (lastFrame - firstFrame) * frameStripeWidth,
+            }}
+          />
+        );
+      })}
+      {typeof activeFrame === "number" ? (
         <ActiveFrame
           style={{
-            left: cappedActiveFrame * frameStripeWidth + hourMarkWidth,
+            left: activeFrame * frameStripeWidth + hourMarkWidth,
             width: frameStripeWidth,
           }}
         />

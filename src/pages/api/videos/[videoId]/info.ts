@@ -21,7 +21,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     getApiResourceStorage(),
     videoId,
   );
-  const labeledEasterEggs = await videoResourceMaterialLookup.labeledSections.get(
+  const labeledEasterEggs = await videoResourceMaterialLookup.labeledEasterEggs.get(
     getApiResourceStorage(),
     videoId,
   );

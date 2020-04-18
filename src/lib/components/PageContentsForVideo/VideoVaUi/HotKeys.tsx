@@ -84,7 +84,7 @@ const HotKeys: React.FunctionComponent<HotKeysProps> = ({
   );
 
   useHotkeys(
-    "cmd+ctrl+shift+c",
+    "cmd+ctrl+c",
     (event) => {
       event.preventDefault();
       copy(`${activeTimeOffset}`);
