@@ -7,12 +7,12 @@ import { FrameStripe, VideoInfo } from "../../../resources/videos/types";
 const getFrameStripes = async (
   _,
   videoId: string,
-  timeOffsetStart: number,
-  timeOffsetInterval: number,
+  timeOffset: number,
+  timeDuration: number,
   frameSamplingInterval: number,
 ) => {
-  const firstFrameOffset = Math.floor(timeOffsetStart / frameSamplingInterval);
-  const frameCount = Math.floor(timeOffsetInterval / frameSamplingInterval);
+  const firstFrameOffset = Math.floor(timeOffset / frameSamplingInterval);
+  const frameCount = Math.floor(timeDuration / frameSamplingInterval);
   return await (
     await fetch(
       `/api/videos/${videoId}/frameStripes?firstFrameOffset=${firstFrameOffset}&frameCount=${frameCount}`,
@@ -21,8 +21,8 @@ const getFrameStripes = async (
 };
 const useFrameStripes = (
   videoInfo: VideoInfo,
-  timeOffsetStart: number,
-  timeOffsetInterval: number,
+  timeOffset: number,
+  timeDuration: number,
 ) => {
   const result = useQuery<
     FrameStripe[],
@@ -31,8 +31,8 @@ const useFrameStripes = (
     [
       "frameStripes",
       videoInfo.id,
-      timeOffsetStart,
-      timeOffsetInterval,
+      timeOffset,
+      timeDuration,
       videoInfo.frameSamplingInterval,
     ],
     getFrameStripes,
@@ -48,17 +48,13 @@ const Canvas = styled.canvas`
 
 const TimelineSegment: React.FunctionComponent<{
   frameStripeWidth: number;
-  timeOffsetInterval: number;
-  timeOffsetStart: number;
+  timeDuration: number;
+  timeOffset: number;
   videoInfo: VideoInfo;
-}> = ({ frameStripeWidth, videoInfo, timeOffsetInterval, timeOffsetStart }) => {
+}> = ({ frameStripeWidth, videoInfo, timeDuration, timeOffset }) => {
   const canvasRef = React.useRef<HTMLCanvasElement>(null);
 
-  const frameStripes = useFrameStripes(
-    videoInfo,
-    timeOffsetStart,
-    timeOffsetInterval,
-  );
+  const frameStripes = useFrameStripes(videoInfo, timeOffset, timeDuration);
 
   const canvasWidth = frameStripes.length * frameStripeWidth;
   const canvasHeight = videoInfo.frameStripeHeight;

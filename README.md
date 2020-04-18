@@ -57,6 +57,7 @@ Keyboard shortcuts
     yarn exe:dev src/commands/videoProcessing/2-extractFramePreviews.ts
     yarn exe:dev src/commands/videoProcessing/3-extractFrameStripes.ts
     yarn exe:dev src/commands/videoProcessing/4-joinFrameStripes.ts
+    yarn exe:dev src/commands/videoProcessing/4-extractLabeledSections.ts
     ```
 
 ### Running a local server

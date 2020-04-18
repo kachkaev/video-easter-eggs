@@ -20,7 +20,7 @@ import { resourceStorageLookup } from "../../lib/resourceStorages";
 
 const command: Command = async (context) => {
   const { logger } = context;
-  logger.log(chalk.green("Extracting frame stripes..."));
+  logger.log(chalk.green("Uploading to s3..."));
 
   const videoId = getVideoProcessingConfig().VIDEO_ID;
   const videoConfig = await videoResourceMaterialLookup.config.get(
@@ -52,23 +52,23 @@ const command: Command = async (context) => {
       videoId,
     ),
   );
-  // resourcePaths.push(
-  //   videoResourceMaterialLookup.labeledEasterEggs.getResolvedPath(
-  //     resourceStorageLookup.local,
-  //     videoId,
-  //   ),
-  // );
-  // resourcePaths.push(
-  //   videoResourceMaterialLookup.labeledSections.getResolvedPath(
-  //     resourceStorageLookup.local,
-  //     videoId,
-  //   ),
-  // );
+  resourcePaths.push(
+    videoResourceMaterialLookup.labeledEasterEggs.getResolvedPath(
+      resourceStorageLookup.local,
+      videoId,
+    ),
+  );
+  resourcePaths.push(
+    videoResourceMaterialLookup.labeledSections.getResolvedPath(
+      resourceStorageLookup.local,
+      videoId,
+    ),
+  );
 
   const maxTimeOffset =
     extractedMetadata.duration - (videoConfig.tailCutoffDuration || 0);
   for (
-    let timeOffset = 0;
+    let timeOffset = (3 * 60 + 10) * 60 * 1000;
     timeOffset < maxTimeOffset;
     timeOffset += videoConfig.frameSamplingInterval
   ) {

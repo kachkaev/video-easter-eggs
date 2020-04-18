@@ -21,30 +21,29 @@ const TimelineSegment: React.FunctionComponent<{
   activeTimeOffset?: number;
   frameStripeWidth: number;
   onActiveTimeOffsetChange?: (value: number) => void;
-  timeOffsetInterval: number;
-  timeOffsetStart: number;
+  timeDuration: number;
+  timeOffset: number;
   videoInfo: VideoInfo;
 }> = ({
   activeTimeOffset,
   frameStripeWidth,
   onActiveTimeOffsetChange,
-  timeOffsetInterval,
-  timeOffsetStart,
+  timeDuration,
+  timeOffset,
   videoInfo,
 }) => {
   const canvasWidth =
-    Math.floor(timeOffsetInterval / videoInfo.frameSamplingInterval) *
+    Math.floor(timeDuration / videoInfo.frameSamplingInterval) *
     frameStripeWidth;
 
   const canvasHeight = videoInfo.frameStripeHeight;
 
   const cappedActiveFrame =
     typeof activeTimeOffset === "number" &&
-    activeTimeOffset >= timeOffsetStart &&
-    activeTimeOffset < timeOffsetStart + timeOffsetInterval
+    activeTimeOffset >= timeOffset &&
+    activeTimeOffset < timeOffset + timeDuration
       ? Math.floor(
-          (activeTimeOffset - timeOffsetStart) /
-            videoInfo.frameSamplingInterval,
+          (activeTimeOffset - timeOffset) / videoInfo.frameSamplingInterval,
         )
       : undefined;
 
@@ -53,7 +52,7 @@ const TimelineSegment: React.FunctionComponent<{
       const x = e.nativeEvent.offsetX;
       if (onActiveTimeOffsetChange) {
         onActiveTimeOffsetChange(
-          timeOffsetStart +
+          timeOffset +
             Math.floor(x / frameStripeWidth) * videoInfo.frameSamplingInterval,
         );
       }
@@ -61,7 +60,7 @@ const TimelineSegment: React.FunctionComponent<{
     [
       frameStripeWidth,
       onActiveTimeOffsetChange,
-      timeOffsetStart,
+      timeOffset,
       videoInfo.frameSamplingInterval,
     ],
   );
@@ -77,8 +76,8 @@ const TimelineSegment: React.FunctionComponent<{
       <TimelineSegmentCanvas
         videoInfo={videoInfo}
         frameStripeWidth={frameStripeWidth}
-        timeOffsetStart={timeOffsetStart}
-        timeOffsetInterval={timeOffsetInterval}
+        timeOffset={timeOffset}
+        timeDuration={timeDuration}
       />
       {typeof cappedActiveFrame === "number" ? (
         <ActiveFrame

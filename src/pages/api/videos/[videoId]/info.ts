@@ -17,6 +17,14 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     getApiResourceStorage(),
     videoId,
   );
+  const labeledSections = await videoResourceMaterialLookup.labeledSections.get(
+    getApiResourceStorage(),
+    videoId,
+  );
+  const labeledEasterEggs = await videoResourceMaterialLookup.labeledSections.get(
+    getApiResourceStorage(),
+    videoId,
+  );
 
   const info: VideoInfo = {
     id: videoId,
@@ -24,7 +32,8 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       extractedMetadata.duration - (config.tailCutoffDuration || 0),
     ...config,
     ...extractedMetadata,
-    annotations: [],
+    labeledSections,
+    labeledEasterEggs,
   };
   res.json(info);
 };

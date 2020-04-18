@@ -7,11 +7,18 @@ export interface VideoConfig {
   framePreviewHeight: number;
   frameStripeHeight: number;
   tailCutoffDuration?: number; // cutting the tail to avoid a missing frame
+
+  sectionLabeling: {
+    minExpectedSectionDuration: number;
+    frameStripeDifferenceTolerance: number;
+    referenceFrameTimeOffset: number;
+    referenceFrameTimeOffsetWithinSection: number;
+  };
 }
 
 export interface VideoSectionCoordinates {
   timeOffset: number;
-  timeInterval: number;
+  timeDuration: number;
 }
 
 export type LabeledAnnotationType = "easterEgg" | "section";
@@ -28,10 +35,11 @@ export interface ExtractedVideoMetadata {
 export interface VideoInfo extends VideoConfig, ExtractedVideoMetadata {
   id: string;
   processedDuration: number;
-  annotations: LabeledAnnotation[];
+  labeledSections: LabeledAnnotation[];
+  labeledEasterEggs: LabeledAnnotation[];
 }
 
-export type FrameStripe = number[];
+export type FrameStripe = string[];
 
 export type GetResolvedPath = (
   storage: ResourceStorageMaterial,

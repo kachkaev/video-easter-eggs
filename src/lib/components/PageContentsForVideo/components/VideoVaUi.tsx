@@ -7,7 +7,7 @@ import { generateVideoUrl } from "../../../ui";
 import ActiveFrameDetails from "./ActiveFrameDetails";
 import TimelineSegment from "./TimelineSegment";
 
-const SegmentsWrapper = styled.div`
+const LabeledSectionsWrapper = styled.div`
   padding: 20px;
 `;
 
@@ -16,29 +16,12 @@ const VideoVaUi: React.FunctionComponent<{
 }> = ({ videoInfo }) => {
   const [activeTimeOffset, setActiveTimeOffset] = React.useState(0);
 
-  const segments: Array<{
-    timeOffsetStart: number;
-    timeOffsetInterval: number;
-  }> = [];
+  const { labeledSections } = videoInfo;
 
-  let timeOffsetStart = 0;
-  const chunkInterval = 77.5 * 1 * 1000;
-  while (timeOffsetStart < videoInfo.processedDuration) {
-    const timeOffsetInterval = Math.min(
-      chunkInterval,
-      videoInfo.processedDuration - timeOffsetStart,
-    );
-    segments.push({
-      timeOffsetStart,
-      timeOffsetInterval,
-    });
-    timeOffsetStart += chunkInterval;
-  }
-
-  const activeSegmentIndex = segments.findIndex(
-    (segment) =>
-      segment.timeOffsetStart <= activeTimeOffset &&
-      segment.timeOffsetStart + segment.timeOffsetInterval > activeTimeOffset,
+  const activeSegmentIndex = labeledSections.findIndex(
+    (section) =>
+      section.timeOffset <= activeTimeOffset &&
+      section.timeOffset + section.timeDuration > activeTimeOffset,
   );
 
   useHotkeys("left,shift+left,right,shift+right", (event) => {
@@ -58,20 +41,20 @@ const VideoVaUi: React.FunctionComponent<{
       const delta =
         (event.shiftKey ? 5 : 1) * (event.key === "ArrowUp" ? -1 : 1);
       const activeTimeOffsetWithinActiveSegment =
-        activeTimeOffset - segments[activeSegmentIndex].timeOffsetStart;
-      const newSegment = segments[activeSegmentIndex + delta];
+        activeTimeOffset - labeledSections[activeSegmentIndex].timeOffset;
+      const newSegment = labeledSections[activeSegmentIndex + delta];
       if (newSegment) {
         setActiveTimeOffset(
-          newSegment.timeOffsetStart +
+          newSegment.timeOffset +
             Math.min(
               activeTimeOffsetWithinActiveSegment,
-              newSegment.timeOffsetInterval - videoInfo.frameSamplingInterval,
+              newSegment.timeDuration - videoInfo.frameSamplingInterval,
             ),
         );
       }
     },
     {},
-    [activeSegmentIndex, activeTimeOffset, segments, videoInfo],
+    [activeSegmentIndex, activeTimeOffset, labeledSections, videoInfo],
   );
 
   useHotkeys(
@@ -94,25 +77,25 @@ const VideoVaUi: React.FunctionComponent<{
         videoInfo={videoInfo}
         activeTimeOffset={activeTimeOffset}
       />
-      <SegmentsWrapper>
-        {segments.slice(0, 100).map((segment) => (
+      <LabeledSectionsWrapper>
+        {labeledSections.map((labeledSection) => (
           <TimelineSegment
-            key={segment.timeOffsetStart}
+            key={labeledSection.timeOffset}
             videoInfo={videoInfo}
-            timeOffsetStart={segment.timeOffsetStart}
-            timeOffsetInterval={segment.timeOffsetInterval}
+            timeOffset={labeledSection.timeOffset}
+            timeDuration={labeledSection.timeDuration}
             frameStripeWidth={2}
             activeTimeOffset={
-              activeTimeOffset >= segment.timeOffsetStart &&
+              activeTimeOffset >= labeledSection.timeOffset &&
               activeTimeOffset <
-                segment.timeOffsetStart + segment.timeOffsetInterval
+                labeledSection.timeOffset + labeledSection.timeDuration
                 ? activeTimeOffset
                 : undefined
             }
             onActiveTimeOffsetChange={setActiveTimeOffset}
           />
         ))}
-      </SegmentsWrapper>
+      </LabeledSectionsWrapper>
     </>
   );
 };
