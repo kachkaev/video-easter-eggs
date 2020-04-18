@@ -5,8 +5,8 @@ import { ResourceStorageMaterial } from "./types";
 
 const s3 = new S3({
   credentials: {
-    accessKeyId: getS3ResourceStorageConfig().AWS_ACCESS_KEY_ID,
-    secretAccessKey: getS3ResourceStorageConfig().AWS_SECRET_ACCESS_KEY,
+    accessKeyId: getS3ResourceStorageConfig().S3_RESOURCE_ACCESS_KEY_ID,
+    secretAccessKey: getS3ResourceStorageConfig().S3_RESOURCE_SECRET_ACCESS_KEY,
   },
   region: getS3ResourceStorageConfig().S3_RESOURCE_STORAGE_REGION,
 });
