@@ -79,6 +79,7 @@ const Timeline: React.FunctionComponent<TimelineProps> = ({
           height={height}
           itemSize={videoInfo.frameStripeHeight}
           width={width}
+          overscanCount={50}
         >
           {TimelineSection}
         </FixedSizeList>
