@@ -9,7 +9,7 @@ export interface VideoConfig {
   frameStripeHeight: number;
   tailCutoffDuration?: number; // cutting the tail to avoid a missing frame
 
-  sectionLabeling: {
+  sectionLabeling?: {
     minExpectedSectionDuration: number;
     frameStripeDifferenceTolerance: number;
     referenceFrameTimeOffset: number;
@@ -36,6 +36,7 @@ export interface ExtractedVideoMetadata {
 export interface VideoInfo extends VideoConfig, ExtractedVideoMetadata {
   id: string;
   processedDuration: number;
+  publicResourcesBaseUrl: string;
   labeledSections: LabeledAnnotation[];
   labeledEasterEggs: LabeledAnnotation[];
 }

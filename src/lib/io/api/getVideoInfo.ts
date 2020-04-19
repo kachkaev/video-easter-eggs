@@ -2,22 +2,30 @@ import { VideoInfo, videoResourceMaterialLookup } from "../../resources/videos";
 import { getApiResourceStorage } from "./getApiResourceStorage";
 
 export const getVideoInfo = async (videoId: string): Promise<VideoInfo> => {
-  const config = await videoResourceMaterialLookup.config.get(
-    getApiResourceStorage(),
-    videoId,
-  );
-  const extractedMetadata = await videoResourceMaterialLookup.extractedMetadata.get(
-    getApiResourceStorage(),
-    videoId,
-  );
-  const labeledSections = await videoResourceMaterialLookup.labeledSections.get(
-    getApiResourceStorage(),
-    videoId,
-  );
-  const labeledEasterEggs = await videoResourceMaterialLookup.labeledEasterEggs.get(
-    getApiResourceStorage(),
-    videoId,
-  );
+  const resourceStorage = getApiResourceStorage();
+  const [
+    config,
+    extractedMetadata,
+    labeledSections,
+    labeledEasterEggs,
+  ] = await Promise.all([
+    await videoResourceMaterialLookup.config.get(resourceStorage, videoId),
+    await videoResourceMaterialLookup.extractedMetadata.get(
+      resourceStorage,
+      videoId,
+    ),
+    await videoResourceMaterialLookup.labeledSections.get(
+      resourceStorage,
+      videoId,
+    ),
+    await videoResourceMaterialLookup.labeledEasterEggs.get(
+      resourceStorage,
+      videoId,
+    ),
+  ]);
+
+  const publicResourcesBaseUrl =
+    resourceStorage.getPublicResourcesBaseUrl() || "/api";
 
   const info: VideoInfo = {
     id: videoId,
@@ -25,6 +33,7 @@ export const getVideoInfo = async (videoId: string): Promise<VideoInfo> => {
       extractedMetadata.duration - (config.tailCutoffDuration || 0),
     ...config,
     ...extractedMetadata,
+    publicResourcesBaseUrl,
     labeledSections,
     labeledEasterEggs,
   };

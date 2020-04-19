@@ -40,7 +40,8 @@ const DetailsOnDemand: React.FunctionComponent<DetailsOnDemandProps> = ({
   videoInfo,
   onActiveTimeOffsetChange,
 }) => {
-  const referenceFrame = videoInfo.sectionLabeling.referenceFrameTimeOffset;
+  const referenceFrameTimeOffset =
+    videoInfo.sectionLabeling?.referenceFrameTimeOffset;
 
   const numberOfLoops = React.useMemo(
     () =>
@@ -53,15 +54,17 @@ const DetailsOnDemand: React.FunctionComponent<DetailsOnDemandProps> = ({
   const handleReferenceFrameClick = React.useCallback(
     (e: React.MouseEvent) => {
       e.preventDefault();
-      onActiveTimeOffsetChange(referenceFrame);
+      if (typeof referenceFrameTimeOffset === "number") {
+        onActiveTimeOffsetChange(referenceFrameTimeOffset);
+      }
     },
-    [onActiveTimeOffsetChange, referenceFrame],
+    [onActiveTimeOffsetChange, referenceFrameTimeOffset],
   );
 
   return (
     <Wrapper>
       <Body>
-        {referenceFrame ? (
+        {typeof referenceFrameTimeOffset === "number" ? (
           <p>
             The{" "}
             <a href={videoInfo.url} target="_blank" rel="noopener noreferrer">
@@ -69,7 +72,9 @@ const DetailsOnDemand: React.FunctionComponent<DetailsOnDemandProps> = ({
             </a>{" "}
             is split into segments based on{" "}
             <a href="#" onClick={handleReferenceFrameClick}>
-              {Duration.fromMillis(referenceFrame).toFormat(shortTimeFormat)}
+              {Duration.fromMillis(referenceFrameTimeOffset).toFormat(
+                shortTimeFormat,
+              )}
             </a>{" "}
             as&nbsp;a&nbsp;reference
           </p>

@@ -1,6 +1,10 @@
 import chalk from "chalk";
 
-import { autoStartCommandIfNeeded, Command } from "../../lib/commands";
+import {
+  autoStartCommandIfNeeded,
+  Command,
+  CommandError,
+} from "../../lib/commands";
 import { getVideoProcessingConfig } from "../../lib/envBasedConfigs";
 import {
   FrameStripe,
@@ -45,6 +49,10 @@ const command: Command = async (context) => {
     resourceStorageLookup.local,
     videoId,
   );
+
+  if (!videoConfig.sectionLabeling) {
+    throw new CommandError("sectionLabeling is not defined in video config");
+  }
 
   const {
     minExpectedSectionDuration,

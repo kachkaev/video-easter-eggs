@@ -60,6 +60,7 @@
     "react-query": "^1.2.7",
     "react-use": "^14.1.1",
     "react-window": "^1.8.5",
+    "sleep-promise": "^8.0.1",
     "styled-components": "^5.1.0",
     "styled-normalize": "^8.0.7",
     "tmp": "^0.1.0"

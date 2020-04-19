@@ -1,8 +1,15 @@
+import { getResolvedPathToTimeOffsetDependentVideoResource } from "../resources/videos/helpers";
 import { VideoInfo } from "../resources/videos/types";
 
 export const generateFramePreviewUrl = (
   videoInfo: VideoInfo,
-  timeOffset?: number,
+  timeOffset: number,
 ) => {
-  return `/api/videos/${videoInfo.id}/framePreview?timeOffset=${timeOffset}`;
+  return `${videoInfo.publicResourcesBaseUrl}/videos/${
+    videoInfo.id
+  }/${getResolvedPathToTimeOffsetDependentVideoResource(
+    "framePreviews",
+    timeOffset,
+    "jpg",
+  )}`;
 };

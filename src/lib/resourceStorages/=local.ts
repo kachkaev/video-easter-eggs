@@ -11,6 +11,8 @@ export const localResourceStorageMaterial: ResourceStorageMaterial = {
       relativeResourcePath,
     ),
 
+  getPublicResourcesBaseUrl: () => undefined,
+
   getResource: async (resolvedPath: string, asString?: boolean): Promise<any> =>
     asString
       ? await fs.readFile(resolvedPath, "utf8")

@@ -10,6 +10,7 @@ type GetResource = ((
 
 export interface ResourceStorageMaterial {
   resolvePath: (relativeResourcePath: string) => string;
+  getPublicResourcesBaseUrl: () => string | undefined;
   getResource: GetResource;
   putResource: (
     resolvedPath: string,
