@@ -1,16 +1,21 @@
 import { S3 } from "aws-sdk";
+import _ from "lodash";
 
 import { getS3ResourceStorageConfig } from "../envBasedConfigs";
 import { ResourceStorageMaterial } from "./types";
 
-const s3 = new S3({
-  credentials: {
-    accessKeyId: getS3ResourceStorageConfig().S3_RESOURCE_STORAGE_ACCESS_KEY_ID,
-    secretAccessKey: getS3ResourceStorageConfig()
-      .S3_RESOURCE_STORAGE_SECRET_ACCESS_KEY,
-  },
-  region: getS3ResourceStorageConfig().S3_RESOURCE_STORAGE_REGION,
-});
+const getS3 = _.memoize(
+  () =>
+    new S3({
+      credentials: {
+        accessKeyId: getS3ResourceStorageConfig()
+          .S3_RESOURCE_STORAGE_ACCESS_KEY_ID,
+        secretAccessKey: getS3ResourceStorageConfig()
+          .S3_RESOURCE_STORAGE_SECRET_ACCESS_KEY,
+      },
+      region: getS3ResourceStorageConfig().S3_RESOURCE_STORAGE_REGION,
+    }),
+);
 
 export const s3ResourceStorageMaterial: ResourceStorageMaterial = {
   resolvePath: (relativeResourcePath) => relativeResourcePath,
@@ -19,7 +24,7 @@ export const s3ResourceStorageMaterial: ResourceStorageMaterial = {
     resolvedPath: string,
     asString?: boolean,
   ): Promise<any> => {
-    const data = await s3
+    const data = await getS3()
       .getObject({
         Bucket: getS3ResourceStorageConfig().S3_RESOURCE_STORAGE_BUCKET,
         Key: resolvedPath,
@@ -34,7 +39,7 @@ export const s3ResourceStorageMaterial: ResourceStorageMaterial = {
   },
 
   putResource: async (resolvedPath, contents) => {
-    await s3
+    await getS3()
       .putObject({
         Bucket: getS3ResourceStorageConfig().S3_RESOURCE_STORAGE_BUCKET,
         Key: resolvedPath,
