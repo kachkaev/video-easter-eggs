@@ -64,28 +64,11 @@ export interface TimelineSectionData {
 }
 
 const convertTimeToFrame = (
-  timeOffset: number | undefined,
+  timeOffset: number,
   sectionTimeOffset: number,
-  sectionDuration: number,
   frameSamplingInterval: number,
-  cap?: boolean,
-) => {
-  if (timeOffset === undefined) {
-    return undefined;
-  }
-  const frame = Math.floor(
-    (timeOffset - sectionTimeOffset) / frameSamplingInterval,
-  );
-  const maxFrame = Math.floor(sectionDuration / frameSamplingInterval);
-
-  if (frame < 0) {
-    return cap ? 0 : undefined;
-  }
-  if (frame > maxFrame) {
-    return cap ? maxFrame : undefined;
-  }
-
-  return frame;
+): number => {
+  return Math.floor((timeOffset - sectionTimeOffset) / frameSamplingInterval);
 };
 
 interface InnerTimelineSectionProps extends TimelineSectionData {
@@ -130,9 +113,13 @@ const InnerTimelineSection: React.FunctionComponent<InnerTimelineSectionProps> =
   const canvasHeight = videoInfo.frameStripeHeight;
 
   const activeFrame = convertTimeToFrame(
-    activeTimeOffset,
+    activeTimeOffset || -1,
     timeOffset,
-    timeDuration,
+    videoInfo.frameSamplingInterval,
+  );
+  const frameCount = convertTimeToFrame(
+    timeOffset + timeDuration,
+    timeOffset,
     videoInfo.frameSamplingInterval,
   );
 
@@ -187,24 +174,22 @@ const InnerTimelineSection: React.FunctionComponent<InnerTimelineSectionProps> =
         }}
       />
       {labeledEasterEggs.map((labeledEasterEgg, easterEggIndex) => {
-        const firstFrame =
+        const firstFrame = Math.max(
           convertTimeToFrame(
             labeledEasterEgg.timeOffset,
             timeOffset,
-            timeDuration,
             videoInfo.frameSamplingInterval,
-            true,
-          ) ?? 0;
-        const lastFrame =
+          ),
+          0,
+        );
+        const lastFrame = Math.min(
           convertTimeToFrame(
-            labeledEasterEgg.timeOffset +
-              labeledEasterEgg.timeDuration +
-              videoInfo.frameSamplingInterval,
+            labeledEasterEgg.timeOffset + labeledEasterEgg.timeDuration,
             timeOffset,
-            timeDuration,
             videoInfo.frameSamplingInterval,
-            true,
-          ) ?? 0;
+          ),
+          frameCount,
+        );
         return (
           <EasterEggMark
             title={labeledEasterEgg.label}
@@ -216,7 +201,7 @@ const InnerTimelineSection: React.FunctionComponent<InnerTimelineSectionProps> =
           />
         );
       })}
-      {typeof activeFrame === "number" ? (
+      {activeFrame >= 0 && activeFrame < frameCount ? (
         <ActiveFrame
           style={{
             left: activeFrame * frameStripeWidth + hourMarkWidth,

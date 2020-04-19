@@ -52,4 +52,6 @@ export const s3ResourceStorageMaterial: ResourceStorageMaterial = {
       })
       .promise();
   },
+  maxAgeOfCachedValue: 5 * 60 * 1000,
+  maxDurationOfGet: 60 * 1000,
 };

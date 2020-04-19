@@ -21,4 +21,7 @@ export const localResourceStorageMaterial: ResourceStorageMaterial = {
   putResource: async (resolvedPath, contents) => {
     await fs.writeFile(resolvedPath, contents);
   },
+
+  maxAgeOfCachedValue: 2 * 1000,
+  maxDurationOfGet: 1000,
 };

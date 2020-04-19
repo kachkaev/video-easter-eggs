@@ -16,4 +16,6 @@ export interface ResourceStorageMaterial {
     resolvedPath: string,
     contents: Buffer | string,
   ) => Promise<void>;
+  maxAgeOfCachedValue: number;
+  maxDurationOfGet: number;
 }
