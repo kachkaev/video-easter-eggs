@@ -20,11 +20,10 @@ const getS3 = _.memoize(
 export const s3ResourceStorageMaterial: ResourceStorageMaterial = {
   resolvePath: (relativeResourcePath) => relativeResourcePath,
 
-  getPublicResourcesBaseUrl: () => undefined,
-  // getPublicResourcesBaseUrl: () =>
-  //   `https://${getS3ResourceStorageConfig().S3_RESOURCE_STORAGE_BUCKET}.s3.${
-  //     getS3ResourceStorageConfig().S3_RESOURCE_STORAGE_REGION
-  //   }.amazonaws.com`,
+  getPublicResourcesBaseUrl: () =>
+    `https://${getS3ResourceStorageConfig().S3_RESOURCE_STORAGE_BUCKET}.s3.${
+      getS3ResourceStorageConfig().S3_RESOURCE_STORAGE_REGION
+    }.amazonaws.com`,
 
   getResource: async (
     resolvedPath: string,
