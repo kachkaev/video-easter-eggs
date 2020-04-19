@@ -33,10 +33,16 @@ const command: Command = async (context) => {
 
   logger.log();
   orderedLabeledEasterEggs.forEach((labeledEasterEgg) => {
+    const timeCodeIsNotSupported =
+      labeledEasterEgg.timeOffset > 60 * 60 * 1000 * 10;
+
+    const timeOffsetToShow = labeledEasterEgg.timeOffset - 1000;
     logger.log(
-      `${Duration.fromMillis(labeledEasterEgg.timeOffset - 1000).toFormat(
-        "hh:mm:ss",
-      )} (${Duration.fromMillis(labeledEasterEgg.timeDuration).toFormat(
+      `${Duration.fromMillis(timeOffsetToShow).toFormat("hh:mm:ss")}${
+        timeCodeIsNotSupported
+          ? ` &t=${Math.floor(timeOffsetToShow / 1000)}s`
+          : ""
+      } (${Duration.fromMillis(labeledEasterEgg.timeDuration).toFormat(
         "s",
       )} сек) ${labeledEasterEgg.label}`,
     );
