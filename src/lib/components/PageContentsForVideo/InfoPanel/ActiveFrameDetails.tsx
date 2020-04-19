@@ -4,14 +4,22 @@ import styled from "styled-components";
 
 import { VideoInfo } from "../../../resources/videos/types";
 import { generateFramePreviewUrl, generateVideoUrl } from "../../../ui";
-import { timeFormat } from "../styling";
+import { mobileMedia, timeFormat } from "../styling";
 import PlayIcon from "./PlayIcon";
 
 const Wrapper = styled.div`
   flex-grow: 0;
+  flex-shrink: 0;
   max-width: 160px;
   padding-top: 10px;
+  padding-right: 15px;
   padding-bottom: 10px;
+
+  ${mobileMedia} {
+    min-width: 135px;
+    width: 135px;
+    max-width: 135px;
+  }
 `;
 
 const A = styled.a`

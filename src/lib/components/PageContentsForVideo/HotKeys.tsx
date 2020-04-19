@@ -18,7 +18,7 @@ const HotKeys: React.FunctionComponent<HotKeysProps> = ({
   onActiveTimeOffsetChange,
   videoInfo,
 }) => {
-  const activeSegmentIndex = videoInfo.labeledSections.findIndex(
+  const activeSectionIndex = videoInfo.labeledSections.findIndex(
     (section) =>
       section.timeOffset <= activeTimeOffset &&
       section.timeOffset + section.timeDuration > activeTimeOffset,
@@ -30,7 +30,12 @@ const HotKeys: React.FunctionComponent<HotKeysProps> = ({
       (event.shiftKey ? 10000 : videoInfo.frameSamplingInterval) *
       (event.key === "ArrowLeft" ? -1 : 1);
     onActiveTimeOffsetChange((timeOffset) =>
-      Math.min(Math.max(timeOffset + delta, 0), videoInfo.processedDuration),
+      Math.min(
+        Math.max(timeOffset + delta, 0),
+        Math.floor(
+          videoInfo.processedDuration / videoInfo.frameSamplingInterval,
+        ) * videoInfo.frameSamplingInterval,
+      ),
     );
   });
 
@@ -40,22 +45,22 @@ const HotKeys: React.FunctionComponent<HotKeysProps> = ({
       event.preventDefault();
       const delta =
         (event.shiftKey ? 5 : 1) * (event.key === "ArrowUp" ? -1 : 1);
-      const activeTimeOffsetWithinActiveSegment =
+      const activeTimeOffsetWithinActiveSection =
         activeTimeOffset -
-        videoInfo.labeledSections[activeSegmentIndex].timeOffset;
-      const newSegment = videoInfo.labeledSections[activeSegmentIndex + delta];
-      if (newSegment) {
+        (videoInfo.labeledSections[activeSectionIndex]?.timeOffset ?? 0);
+      const newSection = videoInfo.labeledSections[activeSectionIndex + delta];
+      if (newSection) {
         onActiveTimeOffsetChange(
-          newSegment.timeOffset +
+          newSection.timeOffset +
             Math.min(
-              activeTimeOffsetWithinActiveSegment,
-              newSegment.timeDuration - videoInfo.frameSamplingInterval,
+              activeTimeOffsetWithinActiveSection,
+              newSection.timeDuration - videoInfo.frameSamplingInterval,
             ),
         );
       }
     },
     {},
-    [activeSegmentIndex, activeTimeOffset, videoInfo],
+    [activeSectionIndex, activeTimeOffset, videoInfo],
   );
 
   useHotkeys(

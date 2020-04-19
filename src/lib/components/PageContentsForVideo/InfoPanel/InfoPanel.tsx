@@ -8,7 +8,7 @@ import DetailsOnDemand from "./DetailsOnDemand";
 
 const Wrapper = styled.div`
   position: sticky;
-  padding: 0 15px;
+  padding: 0 0 0 15px;
   top: 0;
   left: 0;
   right: 0;

@@ -8,11 +8,12 @@ import { mobileMedia, shortTimeFormat } from "../styling";
 const Wrapper = styled.div`
   flex-grow: 1;
   padding-top: 20px;
+  padding-right: 15px;
   display: flex;
   flex-direction: column;
+  overflow: scroll;
 
   ${mobileMedia} {
-    padding-left: 30px;
     padding-top: 7px;
   }
 `;

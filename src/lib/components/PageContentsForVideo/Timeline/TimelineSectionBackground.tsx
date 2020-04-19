@@ -109,7 +109,11 @@ const TimelineSectionBackground: React.FunctionComponent<TimelineSectionBackgrou
 
   const frameStripes = useFrameStripes(videoInfo, sectionIndex);
 
-  const canvasWidth = frameStripes.length * frameStripeWidth;
+  const canvasWidth =
+    Math.round(
+      videoInfo.labeledSections[sectionIndex].timeDuration /
+        videoInfo.frameSamplingInterval,
+    ) * frameStripeWidth;
   const canvasHeight = videoInfo.frameStripeHeight;
 
   React.useEffect(() => {

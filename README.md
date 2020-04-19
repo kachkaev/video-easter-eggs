@@ -82,6 +82,6 @@ Once you’ve commented, you can specify the link to your comment in `var/videos
 
 ## Todo
 
-- Show the list of annotated segments
+- Show the list of easter eggs
 
 - Add index page + API route to get all video infos
