@@ -8,17 +8,14 @@ type QueryKey = [
   string,
   {
     videoId: string;
-    timeOffset: number;
-    timeDuration: number;
-    frameSamplingInterval: number;
+    firstFrameOffset: number;
+    frameCount: number;
   },
 ];
 
 const getFrameStripes = async (
-  ...[, { videoId, timeOffset, timeDuration, frameSamplingInterval }]: QueryKey
+  ...[, { videoId, firstFrameOffset, frameCount }]: QueryKey
 ) => {
-  const firstFrameOffset = Math.floor(timeOffset / frameSamplingInterval);
-  const frameCount = Math.floor(timeDuration / frameSamplingInterval);
   return await (
     await fetch(
       `/api/videos/${videoId}/frameStripes?firstFrameOffset=${firstFrameOffset}&frameCount=${frameCount}`,
@@ -26,33 +23,50 @@ const getFrameStripes = async (
   ).json();
 };
 
-const bulkFrameCount = 5000;
+const sectionGroupSize = 30;
 
-const useFrameStripes = (
-  videoInfo: VideoInfo,
-  timeOffset: number,
-  timeDuration: number,
-) => {
-  const bulkTimeDuration = bulkFrameCount * videoInfo.frameSamplingInterval;
-  const bulkTimeOffset =
-    Math.floor(timeOffset / bulkTimeDuration) * bulkTimeDuration;
+const useFrameStripes = (videoInfo: VideoInfo, sectionIndex: number) => {
+  const firstSectionIndex =
+    Math.floor(sectionIndex / sectionGroupSize) * sectionGroupSize;
+  const lastSectionIndex = Math.min(
+    firstSectionIndex + sectionGroupSize,
+    videoInfo.labeledSections.length - 1,
+  );
 
-  const makingBulkQuery =
-    bulkTimeOffset + bulkTimeDuration >= timeOffset + timeDuration;
+  const groupTimeDuration = React.useMemo(() => {
+    let result = 0;
+    for (let index = firstSectionIndex; index <= lastSectionIndex; index++) {
+      result += videoInfo.labeledSections[index].timeDuration;
+    }
+    return result;
+  }, [videoInfo.labeledSections, firstSectionIndex, lastSectionIndex]);
 
-  const timeOffsetToQuery = makingBulkQuery ? bulkTimeOffset : timeOffset;
-  const timeDurationToQuery = makingBulkQuery
-    ? Math.min(videoInfo.processedDuration - bulkTimeOffset, bulkTimeDuration)
-    : timeDuration;
+  const timeOffsetWithinGroup = React.useMemo(() => {
+    let result = 0;
+    for (let index = firstSectionIndex; index < sectionIndex; index++) {
+      result += videoInfo.labeledSections[index].timeDuration;
+    }
+    return result;
+  }, [firstSectionIndex, sectionIndex, videoInfo.labeledSections]);
+
+  const groupTimeOffset =
+    videoInfo.labeledSections[firstSectionIndex].timeOffset;
+
+  const groupFirstFrameOffset = Math.floor(
+    groupTimeOffset / videoInfo.frameSamplingInterval,
+  );
+
+  const groupFrameCount = Math.floor(
+    groupTimeDuration / videoInfo.frameSamplingInterval,
+  );
 
   const result = useQuery<FrameStripe[], QueryKey>({
     queryKey: [
       "frameStripes",
       {
-        timeDuration: timeDurationToQuery,
-        timeOffset: timeOffsetToQuery,
-        frameSamplingInterval: videoInfo.frameSamplingInterval,
         videoId: videoInfo.id,
+        firstFrameOffset: groupFirstFrameOffset,
+        frameCount: groupFrameCount,
       },
     ],
     queryFn: getFrameStripes,
@@ -61,17 +75,15 @@ const useFrameStripes = (
   if (!result.data) {
     return [];
   }
-  return makingBulkQuery
-    ? result.data.slice(
-        Math.floor(
-          (timeOffset - bulkTimeOffset) / videoInfo.frameSamplingInterval,
-        ),
-        Math.floor(
-          (timeOffset - bulkTimeOffset + timeDuration) /
-            videoInfo.frameSamplingInterval,
-        ),
-      )
-    : result.data;
+
+  const firstFrameIndex = Math.round(
+    timeOffsetWithinGroup / videoInfo.frameSamplingInterval,
+  );
+  const frameCount = Math.round(
+    videoInfo.labeledSections[sectionIndex].timeDuration /
+      videoInfo.frameSamplingInterval,
+  );
+  return result.data.slice(firstFrameIndex, firstFrameIndex + frameCount);
 };
 
 const Canvas = styled.canvas`
@@ -83,21 +95,19 @@ const Canvas = styled.canvas`
 export interface TimelineSectionBackgroundProps
   extends React.CanvasHTMLAttributes<HTMLCanvasElement> {
   frameStripeWidth: number;
-  timeDuration: number;
-  timeOffset: number;
   videoInfo: VideoInfo;
+  sectionIndex: number;
 }
 
 const TimelineSectionBackground: React.FunctionComponent<TimelineSectionBackgroundProps> = ({
   frameStripeWidth,
   videoInfo,
-  timeDuration,
-  timeOffset,
+  sectionIndex,
   ...rest
 }) => {
   const canvasRef = React.useRef<HTMLCanvasElement>(null);
 
-  const frameStripes = useFrameStripes(videoInfo, timeOffset, timeDuration);
+  const frameStripes = useFrameStripes(videoInfo, sectionIndex);
 
   const canvasWidth = frameStripes.length * frameStripeWidth;
   const canvasHeight = videoInfo.frameStripeHeight;

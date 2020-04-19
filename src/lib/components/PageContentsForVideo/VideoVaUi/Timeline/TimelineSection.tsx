@@ -184,9 +184,8 @@ const TimelineSection: React.FunctionComponent<{
       ) : null}
       <TimelineSectionBackground
         videoInfo={videoInfo}
+        sectionIndex={index}
         frameStripeWidth={frameStripeWidth}
-        timeOffset={timeOffset}
-        timeDuration={timeDuration}
         style={{
           left: hourMarkWidth,
         }}
