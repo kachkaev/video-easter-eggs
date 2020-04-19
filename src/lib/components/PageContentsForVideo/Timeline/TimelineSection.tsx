@@ -55,7 +55,7 @@ const EasterEggMark = styled.div`
 `;
 
 export interface TimelineSectionData {
-  activeTimeOffset: number;
+  activeTimeOffset?: number;
   frameStripeWidth: number;
   maxLabeledSectionDuration: number;
   onActiveTimeOffsetChange: React.Dispatch<React.SetStateAction<number>>;
@@ -76,7 +76,7 @@ const convertTimeToFrame = (
   const frame = Math.floor(
     (timeOffset - sectionTimeOffset) / frameSamplingInterval,
   );
-  const maxFrame = Math.floor(sectionDuration / frameSamplingInterval) - 1;
+  const maxFrame = Math.floor(sectionDuration / frameSamplingInterval);
 
   if (frame < 0) {
     return cap ? 0 : undefined;
@@ -88,21 +88,20 @@ const convertTimeToFrame = (
   return frame;
 };
 
-const TimelineSection: React.FunctionComponent<{
+interface InnerTimelineSectionProps extends TimelineSectionData {
   style: React.CSSProperties;
   index: number;
-  data: TimelineSectionData;
-}> = ({
+}
+
+const InnerTimelineSection: React.FunctionComponent<InnerTimelineSectionProps> = ({
   style,
   index,
-  data: {
-    activeTimeOffset,
-    frameStripeWidth,
-    maxLabeledSectionDuration,
-    onActiveTimeOffsetChange,
-    videoInfo,
-    listPadding,
-  },
+  activeTimeOffset,
+  frameStripeWidth,
+  maxLabeledSectionDuration,
+  onActiveTimeOffsetChange,
+  videoInfo,
+  listPadding,
 }) => {
   const { timeOffset, timeDuration } = videoInfo.labeledSections[index];
 
@@ -117,8 +116,8 @@ const TimelineSection: React.FunctionComponent<{
     [videoInfo.labeledEasterEggs, timeOffset, timeDuration],
   );
 
-  const timeEnd = timeOffset + timeDuration - 1;
-  const currentHour = Duration.fromMillis(timeEnd).toFormat("hh");
+  const timeEnd = timeOffset + timeDuration;
+  const currentHour = Duration.fromMillis(timeEnd - 1).toFormat("hh");
   const prevHour = Duration.fromMillis(timeOffset).toFormat("hh");
 
   const maxWidth =
@@ -139,7 +138,7 @@ const TimelineSection: React.FunctionComponent<{
 
   const handleHourMarkClick: React.MouseEventHandler = React.useCallback(() => {
     onActiveTimeOffsetChange(
-      Math.floor(timeEnd / 60 / 60 / 1000) * 60 * 60 * 1000,
+      Math.floor((timeEnd - 1) / 60 / 60 / 1000) * 60 * 60 * 1000,
     );
   }, [onActiveTimeOffsetChange, timeEnd]);
 
@@ -226,6 +225,39 @@ const TimelineSection: React.FunctionComponent<{
         />
       ) : null}
     </Wrapper>
+  );
+};
+
+const MemoizedTimelineSectionInner = React.memo(InnerTimelineSection);
+
+interface TimelineSectionProps {
+  style: React.CSSProperties;
+  index: number;
+  data: TimelineSectionData;
+}
+
+const TimelineSection: React.FunctionComponent<TimelineSectionProps> = ({
+  style,
+  index,
+  data,
+}) => {
+  const { videoInfo, activeTimeOffset } = data;
+  const { timeOffset, timeDuration } = videoInfo.labeledSections[index];
+
+  const activeTimeOffsetToPass =
+    typeof activeTimeOffset === "number" &&
+    activeTimeOffset >= timeOffset &&
+    activeTimeOffset < timeOffset + timeDuration
+      ? activeTimeOffset
+      : undefined;
+
+  return (
+    <MemoizedTimelineSectionInner
+      style={style}
+      index={index}
+      {...data}
+      activeTimeOffset={activeTimeOffsetToPass}
+    />
   );
 };
 
