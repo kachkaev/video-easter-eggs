@@ -65,8 +65,8 @@ timeDuration: 3500
 label: "продавец двигает головой"
 
 ---
-timeOffset: 79865000
-timeDuration: 22500
+timeOffset: 79865500
+timeDuration: 22000
 label: "Ричард и Татьяна говорят наоборот, именно, 2"
 
 ---
