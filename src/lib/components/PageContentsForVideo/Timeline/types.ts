@@ -8,5 +8,5 @@ export interface TimelineElementData {
   maxLabeledSectionDuration: number;
   onActiveTimeOffsetChange: React.Dispatch<React.SetStateAction<number>>;
   videoInfo: VideoInfo;
-  listPadding: { top: number; bottom: number };
+  dummyElementCountAtStart: number;
 }

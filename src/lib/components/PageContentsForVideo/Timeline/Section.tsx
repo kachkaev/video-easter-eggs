@@ -65,20 +65,19 @@ const convertTimeToFrame = (
 
 interface SectionProps extends TimelineElementData {
   style: React.CSSProperties;
-  index: number;
+  sectionIndex: number;
 }
 
 const Section: React.FunctionComponent<SectionProps> = ({
   style,
-  index,
+  sectionIndex,
   activeTimeOffset,
   frameStripeWidth,
   maxLabeledSectionDuration,
   onActiveTimeOffsetChange,
   videoInfo,
-  listPadding,
 }) => {
-  const { timeOffset, timeDuration } = videoInfo.labeledSections[index];
+  const { timeOffset, timeDuration } = videoInfo.labeledSections[sectionIndex];
 
   const labeledEasterEggs: LabeledAnnotation[] = React.useMemo(
     () =>
@@ -146,12 +145,11 @@ const Section: React.FunctionComponent<SectionProps> = ({
       onMouseDown={handleWrapperMouseDown}
       style={{
         ...style,
-        top: `${parseFloat(`${style.top}`) + listPadding.top}px`,
         width: maxWidth + hourMarkWidth,
         height: canvasHeight,
       }}
     >
-      {index === 0 || currentHour !== prevHour ? (
+      {sectionIndex === 0 || currentHour !== prevHour ? (
         <>
           <HourMark onClick={handleHourMarkClick}>{currentHour}</HourMark>
           <HourTick />
@@ -159,7 +157,7 @@ const Section: React.FunctionComponent<SectionProps> = ({
       ) : null}
       <TimelineSectionBackground
         videoInfo={videoInfo}
-        sectionIndex={index}
+        sectionIndex={sectionIndex}
         frameStripeWidth={frameStripeWidth}
         style={{
           left: hourMarkWidth,

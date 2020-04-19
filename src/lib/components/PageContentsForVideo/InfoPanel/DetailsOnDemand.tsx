@@ -80,12 +80,12 @@ const DetailsOnDemand: React.FunctionComponent<DetailsOnDemandProps> = ({
             as&nbsp;a&nbsp;reference
           </p>
         ) : null}
-        <p>Click on the timeline or navigate with arrow keys</p>
         <p>
           <Nobr>Total segments: {videoInfo.labeledSections.length}</Nobr>{" "}
           <Nobr>Number of loops: {numberOfLoops}</Nobr>{" "}
           <Nobr>Found easter eggs: {videoInfo.labeledEasterEggs.length}</Nobr>
         </p>
+        <p>Click on the timeline or navigate with arrow keys</p>
         <p>
           ✏️ by <a href="http://en.kachkaev.ru">Alexander Kachkaev</a>
           <br />

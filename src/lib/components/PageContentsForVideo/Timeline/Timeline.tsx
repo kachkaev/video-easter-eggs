@@ -25,31 +25,8 @@ const Wrapper = styled.div`
 `;
 
 const frameStripeWidth = 2;
-const listPadding = { top: 20, bottom: 20 };
-
-// https://github.com/bvaughn/react-window#can-i-add-padding-to-the-top-and-bottom-of-a-list
-const RawInnerListElement: React.RefForwardingComponent<
-  HTMLDivElement,
-  React.HTMLProps<HTMLDivElement>
-> = ({ style, ...rest }, ref) => {
-  return (
-    <div
-      ref={ref}
-      style={{
-        ...style,
-        position: "absolute",
-        height: `${
-          parseFloat(`${style?.height ?? 0}`) +
-          listPadding.top +
-          listPadding.bottom
-        }px`,
-      }}
-      {...rest}
-    />
-  );
-};
-
-const InnerListElement = React.forwardRef(RawInnerListElement);
+const dummyElementCountAtStart = 2;
+const dummyElementCountAtEnd = 2;
 
 export interface TimelineProps {
   activeTimeOffset: number;
@@ -74,22 +51,53 @@ const Timeline: React.FunctionComponent<TimelineProps> = ({
     return result;
   }, [labeledSections]);
 
+  const listRef = React.useRef<FixedSizeList>(null);
+
   const timelineElementData: TimelineElementData = {
     activeTimeOffset,
     frameStripeWidth,
-    listPadding,
+    dummyElementCountAtStart,
     maxLabeledSectionDuration,
     onActiveTimeOffsetChange,
     videoInfo,
   };
 
+  const prevIndex = React.useRef(-1);
+  React.useEffect(() => {
+    const sectionIndex = labeledSections.findIndex(
+      (labeledSection) =>
+        activeTimeOffset <
+        labeledSection.timeOffset + labeledSection.timeDuration,
+    );
+    if (sectionIndex == -1) {
+      return;
+    }
+
+    const index = sectionIndex + dummyElementCountAtStart;
+
+    const indexDelta = prevIndex.current - index;
+    if (!indexDelta) {
+      return;
+    }
+
+    if (prevIndex.current >= 0 && listRef.current) {
+      listRef.current.scrollToItem(index);
+    }
+
+    prevIndex.current = index;
+  }, [labeledSections, activeTimeOffset, videoInfo.frameStripeHeight]);
+
   const [timeline] = useSize(
     ({ width, height }) => (
       <SizeWrapper>
         <FixedSizeList
-          innerElementType={InnerListElement}
+          ref={listRef}
           itemData={timelineElementData}
-          itemCount={labeledSections.length}
+          itemCount={
+            labeledSections.length +
+            dummyElementCountAtStart +
+            dummyElementCountAtEnd
+          }
           height={height}
           itemSize={videoInfo.frameStripeHeight}
           width={width}

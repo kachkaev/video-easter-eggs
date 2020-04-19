@@ -15,7 +15,9 @@ const TimelineElement: React.FunctionComponent<TimelineElementProps> = ({
   data,
 }) => {
   const { videoInfo, activeTimeOffset } = data;
-  const { timeOffset, timeDuration } = videoInfo.labeledSections[index];
+  const sectionIndex = index - data.dummyElementCountAtStart;
+  const { timeOffset = -1, timeDuration = 0 } =
+    videoInfo.labeledSections[sectionIndex] ?? {};
 
   const activeTimeOffsetToPass =
     typeof activeTimeOffset === "number" &&
@@ -24,10 +26,20 @@ const TimelineElement: React.FunctionComponent<TimelineElementProps> = ({
       ? activeTimeOffset
       : undefined;
 
+  const memoizedStyle = React.useMemo(
+    () => style,
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    Object.entries(style).flat(),
+  );
+
+  if (!timeDuration) {
+    return null;
+  }
+
   return (
     <Section
-      style={style}
-      index={index}
+      style={memoizedStyle}
+      sectionIndex={sectionIndex}
       {...data}
       activeTimeOffset={activeTimeOffsetToPass}
     />
