@@ -12,6 +12,30 @@ const LabeledSectionsWrapper = styled.div`
 `;
 
 const frameStripeWidth = 2;
+const listPadding = { top: 10, bottom: 10 };
+
+// https://github.com/bvaughn/react-window#can-i-add-padding-to-the-top-and-bottom-of-a-list
+const RawInnerListElement: React.RefForwardingComponent<
+  HTMLDivElement,
+  React.HTMLProps<HTMLDivElement>
+> = ({ style, ...rest }, ref) => {
+  return (
+    <div
+      ref={ref}
+      style={{
+        ...style,
+        height: `${
+          parseFloat(`${style?.height ?? 0}`) +
+          listPadding.top +
+          listPadding.bottom
+        }px`,
+      }}
+      {...rest}
+    />
+  );
+};
+
+const InnerListElement = React.forwardRef(RawInnerListElement);
 
 export interface TimelineProps {
   activeTimeOffset: number;
@@ -42,12 +66,14 @@ const Timeline: React.FunctionComponent<TimelineProps> = ({
     maxLabeledSectionDuration,
     onActiveTimeOffsetChange,
     videoInfo,
+    listPadding,
   };
 
   const [timeline] = useSize(
     ({ width, height }) => (
       <LabeledSectionsWrapper>
         <FixedSizeList
+          innerElementType={InnerListElement}
           itemData={timelineSectionData}
           itemCount={labeledSections.length}
           height={height}

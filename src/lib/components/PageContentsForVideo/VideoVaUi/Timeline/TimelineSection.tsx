@@ -63,6 +63,7 @@ export interface TimelineSectionData {
   maxLabeledSectionDuration: number;
   onActiveTimeOffsetChange: React.Dispatch<React.SetStateAction<number>>;
   videoInfo: VideoInfo;
+  listPadding: { top: number; bottom: number };
 }
 
 const convertTimeToFrame = (
@@ -103,6 +104,7 @@ const TimelineSection: React.FunctionComponent<{
     maxLabeledSectionDuration,
     onActiveTimeOffsetChange,
     videoInfo,
+    listPadding,
   },
 }) => {
   const { timeOffset, timeDuration } = videoInfo.labeledSections[index];
@@ -169,6 +171,7 @@ const TimelineSection: React.FunctionComponent<{
       onMouseDown={handleWrapperMouseDown}
       style={{
         ...style,
+        top: `${parseFloat(`${style.top}`) + listPadding.top}px`,
         width: maxWidth + hourMarkWidth,
         height: canvasHeight,
       }}

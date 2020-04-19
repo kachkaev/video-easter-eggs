@@ -71,7 +71,7 @@ const DetailsOnDemand: React.FunctionComponent<DetailsOnDemandProps> = ({
             <a href="#" onClick={handleReferenceFrameClick}>
               {Duration.fromMillis(referenceFrame).toFormat(shortTimeFormat)}
             </a>{" "}
-            as&nbsp;a&nbsp;reference frame
+            as&nbsp;a&nbsp;reference
           </p>
         ) : null}
         <p>Click on the timeline or navigate with arrow keys</p>
