@@ -26,17 +26,31 @@ const getFrameStripes = async (
   ).json();
 };
 
+const bulkFrameCount = 5000;
+
 const useFrameStripes = (
   videoInfo: VideoInfo,
   timeOffset: number,
   timeDuration: number,
 ) => {
+  const bulkTimeDuration = bulkFrameCount * videoInfo.frameSamplingInterval;
+  const bulkTimeOffset =
+    Math.floor(timeOffset / bulkTimeDuration) * bulkTimeDuration;
+
+  const makingBulkQuery =
+    bulkTimeOffset + bulkTimeDuration >= timeOffset + timeDuration;
+
+  const timeOffsetToQuery = makingBulkQuery ? bulkTimeOffset : timeOffset;
+  const timeDurationToQuery = makingBulkQuery
+    ? Math.min(videoInfo.processedDuration - bulkTimeOffset, bulkTimeDuration)
+    : timeDuration;
+
   const result = useQuery<FrameStripe[], QueryKey>({
     queryKey: [
       "frameStripes",
       {
-        timeDuration,
-        timeOffset,
+        timeDuration: timeDurationToQuery,
+        timeOffset: timeOffsetToQuery,
         frameSamplingInterval: videoInfo.frameSamplingInterval,
         videoId: videoInfo.id,
       },
@@ -44,7 +58,20 @@ const useFrameStripes = (
     queryFn: getFrameStripes,
   });
 
-  return result.data || [];
+  if (!result.data) {
+    return [];
+  }
+  return makingBulkQuery
+    ? result.data.slice(
+        Math.floor(
+          (timeOffset - bulkTimeOffset) / videoInfo.frameSamplingInterval,
+        ),
+        Math.floor(
+          (timeOffset - bulkTimeOffset + timeDuration) /
+            videoInfo.frameSamplingInterval,
+        ),
+      )
+    : result.data;
 };
 
 const Canvas = styled.canvas`
