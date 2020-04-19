@@ -2,8 +2,9 @@ import { Duration } from "luxon";
 import React from "react";
 import styled from "styled-components";
 
-import { LabeledAnnotation, VideoInfo } from "../../../resources/videos/types";
-import TimelineSectionBackground from "./TimelineSectionBackground";
+import { LabeledAnnotation } from "../../../resources/videos/types";
+import TimelineSectionBackground from "./SectionBackground";
+import { TimelineElementData } from "./types";
 
 const Wrapper = styled.div`
   position: relative;
@@ -54,15 +55,6 @@ const EasterEggMark = styled.div`
   box-sizing: border-box;
 `;
 
-export interface TimelineSectionData {
-  activeTimeOffset?: number;
-  frameStripeWidth: number;
-  maxLabeledSectionDuration: number;
-  onActiveTimeOffsetChange: React.Dispatch<React.SetStateAction<number>>;
-  videoInfo: VideoInfo;
-  listPadding: { top: number; bottom: number };
-}
-
 const convertTimeToFrame = (
   timeOffset: number,
   sectionTimeOffset: number,
@@ -71,12 +63,12 @@ const convertTimeToFrame = (
   return Math.floor((timeOffset - sectionTimeOffset) / frameSamplingInterval);
 };
 
-interface InnerTimelineSectionProps extends TimelineSectionData {
+interface SectionProps extends TimelineElementData {
   style: React.CSSProperties;
   index: number;
 }
 
-const InnerTimelineSection: React.FunctionComponent<InnerTimelineSectionProps> = ({
+const Section: React.FunctionComponent<SectionProps> = ({
   style,
   index,
   activeTimeOffset,
@@ -113,7 +105,7 @@ const InnerTimelineSection: React.FunctionComponent<InnerTimelineSectionProps> =
   const canvasHeight = videoInfo.frameStripeHeight;
 
   const activeFrame = convertTimeToFrame(
-    activeTimeOffset || -1,
+    activeTimeOffset ?? -1,
     timeOffset,
     videoInfo.frameSamplingInterval,
   );
@@ -213,37 +205,4 @@ const InnerTimelineSection: React.FunctionComponent<InnerTimelineSectionProps> =
   );
 };
 
-const MemoizedTimelineSectionInner = React.memo(InnerTimelineSection);
-
-interface TimelineSectionProps {
-  style: React.CSSProperties;
-  index: number;
-  data: TimelineSectionData;
-}
-
-const TimelineSection: React.FunctionComponent<TimelineSectionProps> = ({
-  style,
-  index,
-  data,
-}) => {
-  const { videoInfo, activeTimeOffset } = data;
-  const { timeOffset, timeDuration } = videoInfo.labeledSections[index];
-
-  const activeTimeOffsetToPass =
-    typeof activeTimeOffset === "number" &&
-    activeTimeOffset >= timeOffset &&
-    activeTimeOffset < timeOffset + timeDuration
-      ? activeTimeOffset
-      : undefined;
-
-  return (
-    <MemoizedTimelineSectionInner
-      style={style}
-      index={index}
-      {...data}
-      activeTimeOffset={activeTimeOffsetToPass}
-    />
-  );
-};
-
-export default React.memo(TimelineSection);
+export default React.memo(Section);

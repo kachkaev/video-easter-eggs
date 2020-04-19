@@ -4,7 +4,8 @@ import { FixedSizeList } from "react-window";
 import styled from "styled-components";
 
 import { VideoInfo } from "../../../resources/videos";
-import TimelineSection, { TimelineSectionData } from "./TimelineSection";
+import TimelineElement from "./TimelineElement";
+import { TimelineElementData } from "./types";
 
 const SizeWrapper = styled.div`
   position: absolute !important;
@@ -73,7 +74,7 @@ const Timeline: React.FunctionComponent<TimelineProps> = ({
     return result;
   }, [labeledSections]);
 
-  const timelineSectionData: TimelineSectionData = {
+  const timelineElementData: TimelineElementData = {
     activeTimeOffset,
     frameStripeWidth,
     listPadding,
@@ -87,14 +88,14 @@ const Timeline: React.FunctionComponent<TimelineProps> = ({
       <SizeWrapper>
         <FixedSizeList
           innerElementType={InnerListElement}
-          itemData={timelineSectionData}
+          itemData={timelineElementData}
           itemCount={labeledSections.length}
           height={height}
           itemSize={videoInfo.frameStripeHeight}
           width={width}
           overscanCount={50}
         >
-          {TimelineSection}
+          {TimelineElement}
         </FixedSizeList>
       </SizeWrapper>
     ),
