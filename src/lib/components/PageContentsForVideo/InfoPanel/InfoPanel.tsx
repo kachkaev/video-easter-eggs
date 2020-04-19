@@ -18,8 +18,8 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   z-index: 1;
-  width: 160px;
-  min-width: 160px;
+  width: 170px;
+  min-width: 170px;
 
   ${mobileMedia} {
     width: auto;

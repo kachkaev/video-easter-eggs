@@ -14,6 +14,7 @@ export interface VideoConfig {
     frameStripeDifferenceTolerance: number;
     referenceFrameTimeOffset: number;
     referenceFrameTimeOffsetWithinSection: number;
+    endingStartTime?: number;
   };
 }
 
@@ -35,10 +36,10 @@ export interface ExtractedVideoMetadata {
 
 export interface VideoInfo extends VideoConfig, ExtractedVideoMetadata {
   id: string;
-  processedDuration: number;
-  publicResourcesBaseUrl: string;
   labeledSections: LabeledAnnotation[];
   labeledEasterEggs: LabeledAnnotation[];
+  publicResourcesBaseUrl: string;
+  processedTimeDuration: number;
 }
 
 export type FrameStripe = string[];

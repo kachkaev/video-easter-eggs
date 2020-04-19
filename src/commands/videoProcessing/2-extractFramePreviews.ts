@@ -16,6 +16,7 @@ import {
   processFileMappings,
 } from "../../lib/fileMappings";
 import { videoResourceMaterialLookup } from "../../lib/resources/videos";
+import { calculateProcessedTimeDuration } from "../../lib/resources/videos/helpers";
 import { resourceStorageLookup } from "../../lib/resourceStorages";
 
 const command: Command = async (context) => {
@@ -53,11 +54,13 @@ const command: Command = async (context) => {
   }
 
   const fileMappings: BaseFileMapping[] = [];
-  const maxTimeOffset =
-    extractedMetadata.duration - (videoConfig.tailCutoffDuration || 0);
+  const processedTimeDuration = calculateProcessedTimeDuration(
+    videoConfig,
+    extractedMetadata,
+  );
   const chunkInterval = videoConfig.frameSamplingInterval * 60;
   let timeOffset = 0;
-  while (timeOffset < maxTimeOffset) {
+  while (timeOffset < processedTimeDuration) {
     const nextTimeOffset = timeOffset + chunkInterval;
     fileMappings.push(
       fileMappingMaterialLookup.extractVideoFramePreviews.createFileMapping({
@@ -65,7 +68,7 @@ const command: Command = async (context) => {
         getTargetPath: getResolvedFramePreviewPath,
         timeOffsetStart: timeOffset,
         timeOffsetInterval: videoConfig.frameSamplingInterval,
-        timeOffsetEnd: Math.min(nextTimeOffset, maxTimeOffset) - 1,
+        timeOffsetEnd: Math.min(nextTimeOffset, processedTimeDuration) - 1,
       }),
     );
     timeOffset = nextTimeOffset;

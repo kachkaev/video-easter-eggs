@@ -13,6 +13,7 @@ const Wrapper = styled.div`
   bottom: 0;
   left: 0;
   right: 0;
+  max-height: 100%;
   display: flex;
   flex-direction: row;
 

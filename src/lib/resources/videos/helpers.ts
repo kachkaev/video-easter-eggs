@@ -2,6 +2,7 @@ import { Duration } from "luxon";
 import path from "path";
 
 import { ResourceStorageMaterial } from "../../resourceStorages";
+import { ExtractedVideoMetadata, VideoConfig } from "./types";
 
 export const resolveRelativePathToResource = (
   storage: ResourceStorageMaterial,
@@ -27,3 +28,14 @@ export const getResolvedPathToTimeOffsetDependentVideoResource = (
     `${timeOffsetAsDuration.toFormat("hh-mm-ss.SSS")}.${extension}`,
   );
 };
+
+export const calculateProcessedTimeDuration = (
+  config: VideoConfig,
+  extractedMetadata: ExtractedVideoMetadata,
+): number =>
+  (Math.floor(
+    (extractedMetadata.duration - (config.tailCutoffDuration || 0)) /
+      config.frameSamplingInterval,
+  ) +
+    1) *
+  config.frameSamplingInterval;

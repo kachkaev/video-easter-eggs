@@ -11,6 +11,7 @@ import {
   LabeledAnnotation,
   videoResourceMaterialLookup,
 } from "../../lib/resources/videos";
+import { calculateProcessedTimeDuration } from "../../lib/resources/videos/helpers";
 import { resourceStorageLookup } from "../../lib/resourceStorages";
 
 const calculateStripeDifference = (fs1: FrameStripe, fs2: FrameStripe) => {
@@ -59,7 +60,15 @@ const command: Command = async (context) => {
     frameStripeDifferenceTolerance,
     referenceFrameTimeOffset,
     referenceFrameTimeOffsetWithinSection,
+    endingStartTime,
   } = videoConfig.sectionLabeling;
+  const processedTimeDuration = calculateProcessedTimeDuration(
+    videoConfig,
+    extractedMetadata,
+  );
+  const endingTimeDuration = endingStartTime
+    ? processedTimeDuration - endingStartTime
+    : 0;
 
   const referenceFrameStripeIndex =
     referenceFrameTimeOffset / videoConfig.frameSamplingInterval;
@@ -78,12 +87,11 @@ const command: Command = async (context) => {
     });
   }
 
-  const maxTimeOffset =
-    extractedMetadata.duration - (videoConfig.tailCutoffDuration || 0);
   let lastFoundReferenceFrameTimeOffset = referenceFrameTimeOffset;
   let currentTimeOffset =
     lastFoundReferenceFrameTimeOffset + minExpectedSectionDuration;
 
+  const maxTimeOffset = processedTimeDuration - endingTimeDuration;
   while (
     currentTimeOffset <
     maxTimeOffset - videoConfig.frameSamplingInterval
@@ -103,7 +111,7 @@ const command: Command = async (context) => {
         timeOffset:
           lastFoundReferenceFrameTimeOffset -
           referenceFrameTimeOffsetWithinSection,
-        timeDuration: currentTimeOffset - lastFoundReferenceFrameTimeOffset - 1,
+        timeDuration: currentTimeOffset - lastFoundReferenceFrameTimeOffset,
       });
       lastFoundReferenceFrameTimeOffset = currentTimeOffset;
       currentTimeOffset =
@@ -111,13 +119,23 @@ const command: Command = async (context) => {
     }
   }
 
+  const lastLoopTimeOffset =
+    lastFoundReferenceFrameTimeOffset - referenceFrameTimeOffsetWithinSection;
   labeledSections.push({
     type: "section",
     label: "loop",
-    timeOffset:
-      lastFoundReferenceFrameTimeOffset - referenceFrameTimeOffsetWithinSection,
-    timeDuration: maxTimeOffset - lastFoundReferenceFrameTimeOffset - 1,
+    timeOffset: lastLoopTimeOffset,
+    timeDuration: maxTimeOffset - lastLoopTimeOffset,
   });
+
+  if (endingStartTime && endingTimeDuration) {
+    labeledSections.push({
+      type: "section",
+      label: "ending",
+      timeOffset: endingStartTime,
+      timeDuration: endingTimeDuration,
+    });
+  }
 
   await videoResourceMaterialLookup.labeledSections.put(
     resourceStorageLookup.local,

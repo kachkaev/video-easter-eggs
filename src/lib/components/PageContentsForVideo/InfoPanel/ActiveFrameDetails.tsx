@@ -11,11 +11,12 @@ const Wrapper = styled.div`
   flex-grow: 0;
   flex-shrink: 0;
   max-width: 160px;
-  padding-top: 10px;
+  padding-top: 20px;
   padding-right: 15px;
   padding-bottom: 10px;
 
   ${mobileMedia} {
+    padding-top: 10px;
     min-width: 135px;
     width: 135px;
     max-width: 135px;

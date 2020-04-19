@@ -76,7 +76,7 @@ const convertTimeToFrame = (
   const frame = Math.floor(
     (timeOffset - sectionTimeOffset) / frameSamplingInterval,
   );
-  const maxFrame = Math.floor(sectionDuration / frameSamplingInterval);
+  const maxFrame = Math.floor(sectionDuration / frameSamplingInterval) - 1;
 
   if (frame < 0) {
     return cap ? 0 : undefined;

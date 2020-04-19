@@ -6,6 +6,7 @@ import {
   FrameStripe,
   videoResourceMaterialLookup,
 } from "../../lib/resources/videos";
+import { calculateProcessedTimeDuration } from "../../lib/resources/videos/helpers";
 import { resourceStorageLookup } from "../../lib/resourceStorages";
 
 const command: Command = async (context) => {
@@ -24,11 +25,14 @@ const command: Command = async (context) => {
 
   const frameStripes: FrameStripe[] = [];
 
-  const maxTimeOffset =
-    extractedMetadata.duration - (videoConfig.tailCutoffDuration || 0);
+  const processedTimeDuration = calculateProcessedTimeDuration(
+    videoConfig,
+    extractedMetadata,
+  );
+
   for (
     let timeOffset = 0;
-    timeOffset < maxTimeOffset;
+    timeOffset < processedTimeDuration;
     timeOffset += videoConfig.frameSamplingInterval
   ) {
     frameStripes.push(

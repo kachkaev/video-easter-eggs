@@ -32,9 +32,11 @@ const HotKeys: React.FunctionComponent<HotKeysProps> = ({
     onActiveTimeOffsetChange((timeOffset) =>
       Math.min(
         Math.max(timeOffset + delta, 0),
-        Math.floor(
-          videoInfo.processedDuration / videoInfo.frameSamplingInterval,
-        ) * videoInfo.frameSamplingInterval,
+        (Math.floor(
+          videoInfo.processedTimeDuration / videoInfo.frameSamplingInterval,
+        ) -
+          1) *
+          videoInfo.frameSamplingInterval,
       ),
     );
   });

@@ -1,4 +1,5 @@
 import { VideoInfo, videoResourceMaterialLookup } from "../../resources/videos";
+import { calculateProcessedTimeDuration } from "../../resources/videos/helpers";
 import { getApiResourceStorage } from "./getApiResourceStorage";
 
 export const getVideoInfo = async (videoId: string): Promise<VideoInfo> => {
@@ -29,8 +30,10 @@ export const getVideoInfo = async (videoId: string): Promise<VideoInfo> => {
 
   const info: VideoInfo = {
     id: videoId,
-    processedDuration:
-      extractedMetadata.duration - (config.tailCutoffDuration || 0),
+    processedTimeDuration: calculateProcessedTimeDuration(
+      config,
+      extractedMetadata,
+    ),
     ...config,
     ...extractedMetadata,
     publicResourcesBaseUrl,

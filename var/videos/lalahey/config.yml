@@ -13,3 +13,4 @@ sectionLabeling:
   frameStripeDifferenceTolerance: 10
   referenceFrameTimeOffset: 54500
   referenceFrameTimeOffsetWithinSection: 29500
+  endingStartTime: 86329000
