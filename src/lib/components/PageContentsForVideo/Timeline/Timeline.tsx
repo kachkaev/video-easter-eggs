@@ -3,7 +3,7 @@ import { useSize } from "react-use";
 import { FixedSizeList } from "react-window";
 import styled from "styled-components";
 
-import { VideoInfo } from "../../../../resources/videos";
+import { VideoInfo } from "../../../resources/videos";
 import TimelineSection, { TimelineSectionData } from "./TimelineSection";
 
 const LabeledSectionsWrapper = styled.div`

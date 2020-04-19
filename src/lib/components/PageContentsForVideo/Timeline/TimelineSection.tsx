@@ -2,10 +2,7 @@ import { Duration } from "luxon";
 import React from "react";
 import styled from "styled-components";
 
-import {
-  LabeledAnnotation,
-  VideoInfo,
-} from "../../../../resources/videos/types";
+import { LabeledAnnotation, VideoInfo } from "../../../resources/videos/types";
 import TimelineSectionBackground from "./TimelineSectionBackground";
 
 const Wrapper = styled.div`

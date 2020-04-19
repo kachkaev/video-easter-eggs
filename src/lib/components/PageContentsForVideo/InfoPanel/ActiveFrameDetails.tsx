@@ -2,8 +2,8 @@ import { Duration } from "luxon";
 import React from "react";
 import styled from "styled-components";
 
-import { VideoInfo } from "../../../../resources/videos/types";
-import { generateFramePreviewUrl, generateVideoUrl } from "../../../../ui";
+import { VideoInfo } from "../../../resources/videos/types";
+import { generateFramePreviewUrl, generateVideoUrl } from "../../../ui";
 import { timeFormat } from "../styling";
 import PlayIcon from "./PlayIcon";
 

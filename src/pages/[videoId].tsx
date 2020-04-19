@@ -1,18 +1,39 @@
-import { NextPage } from "next";
-import dynamic from "next/dynamic";
-import { useRouter } from "next/router";
+import { GetServerSideProps, NextPage } from "next";
+import ErrorPage from "next/error";
+import Head from "next/head";
 import React from "react";
 
-const PageContentsForVideo = dynamic(
-  () => import("../lib/components/PageContentsForVideo"),
-  { ssr: false },
-);
+import PageContentsForVideo from "../lib/components/PageContentsForVideo";
+import { getVideoInfo } from "../lib/io/api";
+import { VideoInfo } from "../lib/resources/videos";
 
-const VideoPage: NextPage = () => {
-  const router = useRouter();
-  const videoId = `${router.query.videoId}`;
+const VideoPage: NextPage<{
+  videoInfo?: VideoInfo;
+}> = ({ videoInfo }) => {
+  if (!videoInfo) {
+    return <ErrorPage statusCode={404} />;
+  }
+  return (
+    <>
+      <Head>
+        <title>{videoInfo.shortTitle}</title>
+      </Head>
+      <PageContentsForVideo videoInfo={videoInfo} />
+    </>
+  );
+};
 
-  return <PageContentsForVideo videoId={videoId} />;
+export const getServerSideProps: GetServerSideProps = async ({ query }) => {
+  const videoId = `${query.videoId}`;
+  try {
+    return {
+      props: {
+        videoInfo: await getVideoInfo(videoId),
+      },
+    };
+  } catch {
+    return { props: {} };
+  }
 };
 
 export default VideoPage;

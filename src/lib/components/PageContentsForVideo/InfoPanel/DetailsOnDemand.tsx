@@ -2,7 +2,7 @@ import { Duration } from "luxon";
 import React from "react";
 import styled from "styled-components";
 
-import { VideoInfo } from "../../../../resources/videos/types";
+import { VideoInfo } from "../../../resources/videos/types";
 import { mobileMedia, shortTimeFormat } from "../styling";
 
 const Wrapper = styled.div`

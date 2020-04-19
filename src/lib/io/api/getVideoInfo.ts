@@ -1,14 +1,7 @@
-import { NextApiRequest, NextApiResponse } from "next";
+import { VideoInfo, videoResourceMaterialLookup } from "../../resources/videos";
+import { getApiResourceStorage } from "./getApiResourceStorage";
 
-import { getApiResourceStorage } from "../../../../lib/io/api";
-import {
-  VideoInfo,
-  videoResourceMaterialLookup,
-} from "../../../../lib/resources/videos";
-
-export default async (req: NextApiRequest, res: NextApiResponse) => {
-  const videoId = `${req.query.videoId}`;
-
+export const getVideoInfo = async (videoId: string): Promise<VideoInfo> => {
   const config = await videoResourceMaterialLookup.config.get(
     getApiResourceStorage(),
     videoId,
@@ -35,5 +28,5 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     labeledSections,
     labeledEasterEggs,
   };
-  res.json(info);
+  return info;
 };

@@ -1,18 +1,50 @@
 import React from "react";
+import styled from "styled-components";
 
-import { useVideoInfo } from "../../ui/apiHooks";
-import VideoVaUi from "./VideoVaUi";
+import { VideoInfo } from "../../resources/videos/types";
+import HotKeys from "./HotKeys";
+import InfoPanel from "./InfoPanel";
+import { mobileMedia } from "./styling";
+import Timeline from "./Timeline";
 
-const PageContentsForIndex: React.FunctionComponent<{
-  videoId: string;
-}> = ({ videoId }) => {
-  const { data: videoInfo } = useVideoInfo(videoId);
+const Wrapper = styled.div`
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  flex-direction: row;
 
-  if (!videoInfo) {
-    return null;
+  ${mobileMedia} {
+    flex-direction: column;
   }
+`;
 
-  return <VideoVaUi videoInfo={videoInfo} />;
+const PageContentsForVideo: React.FunctionComponent<{
+  videoInfo: VideoInfo;
+}> = ({ videoInfo }) => {
+  const [activeTimeOffset, setActiveTimeOffset] = React.useState(0);
+
+  return (
+    <Wrapper>
+      <HotKeys
+        activeTimeOffset={activeTimeOffset}
+        onActiveTimeOffsetChange={setActiveTimeOffset}
+        videoInfo={videoInfo}
+      />
+      <InfoPanel
+        activeTimeOffset={activeTimeOffset}
+        onActiveTimeOffsetChange={setActiveTimeOffset}
+        videoInfo={videoInfo}
+      />
+      <Timeline
+        activeTimeOffset={activeTimeOffset}
+        onActiveTimeOffsetChange={setActiveTimeOffset}
+        videoInfo={videoInfo}
+      />
+    </Wrapper>
+  );
 };
 
-export default PageContentsForIndex;
+export default PageContentsForVideo;
