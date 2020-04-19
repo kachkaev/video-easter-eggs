@@ -63,10 +63,10 @@ const Timeline: React.FunctionComponent<TimelineProps> = ({
   const timelineSectionData: TimelineSectionData = {
     activeTimeOffset,
     frameStripeWidth,
+    listPadding,
     maxLabeledSectionDuration,
     onActiveTimeOffsetChange,
     videoInfo,
-    listPadding,
   };
 
   const [timeline] = useSize(
