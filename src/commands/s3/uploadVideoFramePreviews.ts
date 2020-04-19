@@ -20,7 +20,7 @@ import { resourceStorageLookup } from "../../lib/resourceStorages";
 
 const command: Command = async (context) => {
   const { logger } = context;
-  logger.log(chalk.green("Uploading to s3..."));
+  logger.log(chalk.green("Uploading video frame previews to s3..."));
 
   const videoId = getVideoProcessingConfig().VIDEO_ID;
   const videoConfig = await videoResourceMaterialLookup.config.get(
@@ -33,37 +33,6 @@ const command: Command = async (context) => {
   );
 
   const resourcePaths: string[] = [];
-
-  resourcePaths.push(
-    videoResourceMaterialLookup.config.getResolvedPath(
-      resourceStorageLookup.local,
-      videoId,
-    ),
-  );
-  resourcePaths.push(
-    videoResourceMaterialLookup.extractedMetadata.getResolvedPath(
-      resourceStorageLookup.local,
-      videoId,
-    ),
-  );
-  resourcePaths.push(
-    videoResourceMaterialLookup.joinedFrameStripes.getResolvedPath(
-      resourceStorageLookup.local,
-      videoId,
-    ),
-  );
-  resourcePaths.push(
-    videoResourceMaterialLookup.labeledEasterEggs.getResolvedPath(
-      resourceStorageLookup.local,
-      videoId,
-    ),
-  );
-  resourcePaths.push(
-    videoResourceMaterialLookup.labeledSections.getResolvedPath(
-      resourceStorageLookup.local,
-      videoId,
-    ),
-  );
 
   const maxTimeOffset =
     extractedMetadata.duration - (videoConfig.tailCutoffDuration || 0);
