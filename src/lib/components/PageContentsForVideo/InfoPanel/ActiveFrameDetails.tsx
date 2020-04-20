@@ -60,12 +60,19 @@ const NavigationButton = styled.a<{ disabled?: boolean }>`
   display: inline-block;
   flex-grow: 0;
   cursor: default;
-  opacity: ${(p) => (p.disabled ? 0.2 : 1)};
 
   .no-touchscreen &:hover {
-    color: #000;
     text-decoration: none;
   }
+
+  ${(p) =>
+    p.disabled
+      ? `opacity: 0.5;`
+      : `
+  .no-touchscreen &:hover {
+    color: #000;
+  }
+  `}
 `;
 
 const TimeCode = styled.div`

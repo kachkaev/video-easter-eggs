@@ -2,7 +2,7 @@
 
 [![GitHub Workflow Status (checks)](https://img.shields.io/github/workflow/status/kachkaev/video-easter-eggs/Checks?label=checks)](https://github.com/kachkaev/video-easter-eggs/actions?query=workflow%3AChecks)
 
-A [visual analytics](https://en.wikipedia.org/wiki/Visual_analytics) tool to find [Easter eggs](<https://en.wikipedia.org/wiki/Easter_egg_(media)>) in videos
+A [visual analytics](https://en.wikipedia.org/wiki/Visual_analytics) tool for finding [Easter eggs](<https://en.wikipedia.org/wiki/Easter_egg_(media)>) in videos
 
 - inspired by https://youtu.be/6g82FwQfpGc
 - deployed to [video-easter-eggs.now.sh](https://video-easter-eggs.now.sh)
