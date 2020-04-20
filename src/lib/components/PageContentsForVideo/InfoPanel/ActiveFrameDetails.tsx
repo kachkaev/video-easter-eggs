@@ -31,9 +31,10 @@ const A = styled.a`
 const StyledPlayIcon = styled(PlayIcon)`
   position: absolute;
   display: none;
-  width: 100%;
+  left: 50%;
+  top: 50%;
   height: 40%;
-  top: 20%;
+  transform: translate(-50%, -50%);
   color: #fff;
 
   .no-touchscreen ${A}:hover & {
