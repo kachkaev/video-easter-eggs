@@ -4,7 +4,7 @@ import styled from "styled-components";
 
 import { LabeledAnnotation } from "../../../resources/videos/types";
 import TimelineSectionBackground from "./SectionBackground";
-import { TimelineElementData } from "./types";
+import { TimelineListElementData } from "./types";
 
 const Wrapper = styled.div`
   position: relative;
@@ -73,7 +73,7 @@ const convertTimeToFrame = (
   return Math.floor((timeOffset - sectionTimeOffset) / frameSamplingInterval);
 };
 
-interface SectionProps extends TimelineElementData {
+interface SectionProps extends TimelineListElementData {
   style: React.CSSProperties;
   sectionIndex: number;
 }
