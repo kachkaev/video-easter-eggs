@@ -1,9 +1,11 @@
-# Video easter eggs
+# Video Easter eggs 🔎
 
 [![GitHub Workflow Status (checks)](https://img.shields.io/github/workflow/status/kachkaev/video-easter-eggs/Checks?label=checks)](https://github.com/kachkaev/video-easter-eggs/actions?query=workflow%3AChecks)
 
-🔎 A visual analytics tool to find easter eggs in videos.
-Inspired by https://www.youtube.com/watch?v=6g82FwQfpGc, deployed to [video-easter-eggs.now.sh](https://video-easter-eggs.now.sh)
+A [visual analytics](https://en.wikipedia.org/wiki/Visual_analytics) tool to find [Easter eggs](<https://en.wikipedia.org/wiki/Easter_egg_(media)>) in videos
+
+- inspired by https://youtu.be/6g82FwQfpGc
+- deployed to [video-easter-eggs.now.sh](https://video-easter-eggs.now.sh)
 
 ## Working locally
 
@@ -15,19 +17,20 @@ Inspired by https://www.youtube.com/watch?v=6g82FwQfpGc, deployed to [video-east
     yarn install
     ```
 
-1.  Run the probe command to detect missing software
+1.  Run the probe command and install missing software if any problems are reported
 
     ```sh
-    yarn exe src/commands/prope.ts
+    yarn exe src/commands/probe.ts
     ```
 
 ### Processing a video
 
-1.  Copy `.env.dist` to `.env`, specify custom `VIDEO_ID` (e.g. `myTestVideo`).
+1.  Copy `.env.dist` to `.env`, specify custom `VIDEO_ID` (e.g. `my-test-video`).
 
-1.  Create `var/videos/myTestVideo/config.yml` by following an example in the `var` directory.
+1.  Create `var/videos/my-test-video/config.yml` by following an example in the `var` directory.
+    If you are not sure about some values, you can enter anything and revise later.
 
-1.  Run commands:
+1.  Run these commands:
 
     ```sh
     yarn exe src/commands/videoProcessing/1-download.ts
@@ -37,23 +40,26 @@ Inspired by https://www.youtube.com/watch?v=6g82FwQfpGc, deployed to [video-east
     yarn exe src/commands/videoProcessing/5-extractLabeledSections.ts
     ```
 
-1.  Run a local server and manually populate `var/videos/myTestVideo/labeledEasterEggs.yml`
+1.  Create an empty yaml for the Easter eggs at `var/videos/my-test-video/labeledEasterEggs.yml`.
+    You can start by copying some dummy entries from an example.
+
+1.  Run a local server and manually populate the yaml with the Easter eggs.
 
 ### Running a local server
 
 1.  Start the server
 
-    ```
+    ```sh
     yarn dev
     ```
 
 1.  Navigate to your video page, e.g.:
 
     ```
-    http://localhost:3000/myTestVideo
+    http://localhost:3000/my-test-video
     ```
 
-### Generating easter egg summary
+### Generating an Easter egg summary
 
 This command can be used to pre-generate a comment to the video:
 
@@ -61,17 +67,20 @@ This command can be used to pre-generate a comment to the video:
 yarn exe src/commands/videoProcessing/6-generateEasterEggSummary.ts
 ```
 
-Once you’ve commented, you can specify the link to your comment in `var/videos/myTestVideo/config.yml` so that it was displayed in the UI.
+Once you’ve made a comment, you can specify the link to it in `var/videos/my-test-video/config.yml`.
+The link will be displayed in the UI.
 
 ### Deployment
 
-1.  Setup an S3 bucket, configure `S3_RESOURCE_STORAGE_*` variables in `.env`
+1.  Setup an S3 bucket with public read access
 
-1.  Upload video-related resources to S3
+1.  Configure `S3_RESOURCE_STORAGE_*` variables in `.env`
 
-    ```
-    yarn exe src/commands/s3/uploadVideoFramePreviews.ts
+1.  Upload applicable video-related resources to S3
+
+    ```sh
     yarn exe src/commands/s3/uploadVideoData.ts
+    yarn exe src/commands/s3/uploadVideoFramePreviews.ts
     ```
 
 1.  Run the local server with `API_RESOURCE_STORAGE_TYPE=s3` to make sure the link between your bucket and the web app works
@@ -82,6 +91,8 @@ Once you’ve commented, you can specify the link to your comment in `var/videos
 
 ## Todo
 
-- Show the list of easter eggs
+- Show the list of Easter eggs
 
 - Add index page + API route to get all video infos
+
+- Find Easter eggs in more videos (suggestions welcome!)
