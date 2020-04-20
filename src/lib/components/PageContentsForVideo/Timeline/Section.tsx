@@ -14,7 +14,7 @@ const hourMarkWidth = 50;
 const hourTickWidth = 6;
 const underlineHeight = 2;
 
-const HourMark = styled.div`
+const HourMark = styled.div<{ disabled?: boolean }>`
   position: absolute;
   left: 0;
   top: 0;
@@ -26,6 +26,16 @@ const HourMark = styled.div`
   text-align: right;
   box-sizing: border-box;
   cursor: default;
+  z-index: 1;
+
+  ${(p) =>
+    p.disabled
+      ? ""
+      : `
+  .no-touchscreen &:hover {
+    color: #000;
+  }
+  `}
 `;
 
 const HourTick = styled.div`
@@ -114,11 +124,12 @@ const Section: React.FunctionComponent<SectionProps> = ({
     videoInfo.frameSamplingInterval,
   );
 
+  const startOfHourTimeOffset =
+    Math.floor((timeEnd - 1) / 60 / 60 / 1000) * 60 * 60 * 1000;
+
   const handleHourMarkClick: React.MouseEventHandler = React.useCallback(() => {
-    onActiveTimeOffsetChange(
-      Math.floor((timeEnd - 1) / 60 / 60 / 1000) * 60 * 60 * 1000,
-    );
-  }, [onActiveTimeOffsetChange, timeEnd]);
+    onActiveTimeOffsetChange(startOfHourTimeOffset);
+  }, [onActiveTimeOffsetChange, startOfHourTimeOffset]);
 
   const handleWrapperMouseDown: React.MouseEventHandler = React.useCallback(
     (e) => {
@@ -151,7 +162,12 @@ const Section: React.FunctionComponent<SectionProps> = ({
     >
       {sectionIndex === 0 || currentHour !== prevHour ? (
         <>
-          <HourMark onClick={handleHourMarkClick}>{currentHour}</HourMark>
+          <HourMark
+            onClick={handleHourMarkClick}
+            disabled={startOfHourTimeOffset === activeTimeOffset}
+          >
+            {currentHour}
+          </HourMark>
           <HourTick />
         </>
       ) : null}
