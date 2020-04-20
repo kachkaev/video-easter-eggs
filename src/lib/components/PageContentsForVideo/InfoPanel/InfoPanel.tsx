@@ -24,6 +24,7 @@ const Wrapper = styled.div`
     width: auto;
     min-width: auto;
     flex-direction: row;
+    max-height: 180px;
   }
 `;
 
