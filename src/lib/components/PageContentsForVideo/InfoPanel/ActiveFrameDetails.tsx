@@ -49,7 +49,7 @@ const Img = styled.img`
 
 const Navigation = styled.div`
   display: block;
-  padding-top: 3px;
+  padding-top: 5px;
   font-size: 20px;
   color: #888;
   display: flex;
