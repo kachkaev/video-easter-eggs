@@ -64,7 +64,7 @@ const tabMaterialLookup = {
   links: { name: "links", Body: TabWithLinks },
 };
 
-const defaultTab = Object.keys(tabMaterialLookup)[1];
+const defaultTab = Object.keys(tabMaterialLookup)[0];
 
 const DetailsOnDemand: React.FunctionComponent<DetailsOnDemandProps> = (
   props,

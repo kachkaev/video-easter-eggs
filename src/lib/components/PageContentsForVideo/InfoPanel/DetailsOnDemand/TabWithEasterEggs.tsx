@@ -1,58 +1,47 @@
-import { Duration } from "luxon";
 import React from "react";
 import styled from "styled-components";
 
-import { timeFormat } from "../../styling";
+import Wrapper from "../../../TimeCode";
 import TabBody from "./components/TabBody";
 import { TabProps } from "./types";
 
-const Ol = styled.ol`
+const EasterEgg = styled.div`
   margin: 0;
-  padding: 0;
-`;
-
-const Li = styled.li`
-  margin: 0;
-  padding: 0;
-  list-style-position: inside;
+  padding-left: 20px;
   margin-bottom: 5px;
+
+  &:last-child {
+    margin-bottom: 20px;
+  }
 `;
 
-const TimeCode = styled.span`
-  cursor: default;
+const Number = styled.span`
+  display: inline-block;
+  width: 20px;
+  margin-left: -20px;
 `;
 
 const TabWithSummary: React.FunctionComponent<TabProps> = ({
   videoInfo,
   active: hidden,
+  activeTimeOffset,
   onActiveTimeOffsetChange,
 }) => {
-  const handleLiClick = React.useCallback(
-    (event: React.MouseEvent<HTMLLIElement>) => {
-      event.preventDefault();
-      const timeOffset =
-        parseInt(`${event.currentTarget.dataset["time"]}`) || 0;
-      onActiveTimeOffsetChange(timeOffset);
-    },
-    [onActiveTimeOffsetChange],
-  );
   return (
     <TabBody active={hidden}>
-      <Ol>
-        {videoInfo.labeledEasterEggs.map((easteEgg, index) => (
-          <Li
-            key={index}
-            data-time={easteEgg.timeOffset}
-            onClick={handleLiClick}
-          >
-            <TimeCode>
-              {Duration.fromMillis(easteEgg.timeOffset)
-                .toFormat(timeFormat)
-                .substring(0, 8)}
-            </TimeCode>
-          </Li>
-        ))}
-      </Ol>
+      {videoInfo.labeledEasterEggs.map((easterEgg, index) => (
+        <EasterEgg key={index} data-time={easterEgg.timeOffset}>
+          <Number>{index + 1}.</Number>
+          <Wrapper
+            timeOffset={easterEgg.timeOffset}
+            isActive={easterEgg.timeOffset === activeTimeOffset}
+            onActiveTimeOffsetChange={onActiveTimeOffsetChange}
+          />{" "}
+          ({Math.round(easterEgg.timeDuration / 1000)} sec)
+          <br />
+          {easterEgg.label}
+        </EasterEgg>
+      ))}
     </TabBody>
   );
 };

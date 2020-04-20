@@ -1,8 +1,7 @@
-import { Duration } from "luxon";
 import React from "react";
 import styled from "styled-components";
 
-import { shortTimeFormat } from "../../styling";
+import TimeCode from "../../../TimeCode";
 import TabBody from "./components/TabBody";
 import { TabProps } from "./types";
 
@@ -11,7 +10,7 @@ const Nobr = styled.span`
 `;
 
 const TabWithSummary: React.FunctionComponent<TabProps> = ({
-  // activeTimeOffset,
+  activeTimeOffset,
   onActiveTimeOffsetChange,
   videoInfo,
   active: hidden,
@@ -27,16 +26,6 @@ const TabWithSummary: React.FunctionComponent<TabProps> = ({
     [videoInfo.labeledSections],
   );
 
-  const handleReferenceFrameClick = React.useCallback(
-    (e: React.MouseEvent) => {
-      e.preventDefault();
-      if (typeof referenceFrameTimeOffset === "number") {
-        onActiveTimeOffsetChange(referenceFrameTimeOffset);
-      }
-    },
-    [onActiveTimeOffsetChange, referenceFrameTimeOffset],
-  );
-
   return (
     <TabBody active={hidden}>
       {typeof referenceFrameTimeOffset === "number" ? (
@@ -46,11 +35,11 @@ const TabWithSummary: React.FunctionComponent<TabProps> = ({
             video
           </a>{" "}
           is split into segments based on{" "}
-          <a href="#" onClick={handleReferenceFrameClick}>
-            {Duration.fromMillis(referenceFrameTimeOffset).toFormat(
-              shortTimeFormat,
-            )}
-          </a>{" "}
+          <TimeCode
+            timeOffset={referenceFrameTimeOffset}
+            isActive={activeTimeOffset === referenceFrameTimeOffset}
+            onActiveTimeOffsetChange={onActiveTimeOffsetChange}
+          />{" "}
           as&nbsp;a&nbsp;reference
         </p>
       ) : null}
