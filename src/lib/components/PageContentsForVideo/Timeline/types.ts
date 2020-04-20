@@ -2,7 +2,7 @@ import React from "react";
 
 import { VideoInfo } from "../../../resources/videos";
 
-export interface TimelineElementData {
+export interface TimelineListElementData {
   activeTimeOffset?: number;
   frameStripeWidth: number;
   maxLabeledSectionDuration: number;

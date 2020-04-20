@@ -1,15 +1,15 @@
 import React from "react";
 
 import Section from "./Section";
-import { TimelineElementData } from "./types";
+import { TimelineListElementData } from "./types";
 
-export interface TimelineElementProps {
+export interface TimelineListElementProps {
   style: React.CSSProperties;
   index: number;
-  data: TimelineElementData;
+  data: TimelineListElementData;
 }
 
-const TimelineElement: React.FunctionComponent<TimelineElementProps> = ({
+const TimelineListElement: React.FunctionComponent<TimelineListElementProps> = ({
   style,
   index,
   data,
@@ -46,4 +46,4 @@ const TimelineElement: React.FunctionComponent<TimelineElementProps> = ({
   );
 };
 
-export default React.memo(TimelineElement);
+export default React.memo(TimelineListElement);
