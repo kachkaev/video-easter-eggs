@@ -44,7 +44,7 @@ const command: Command = async (context) => {
           : ""
       } (${Duration.fromMillis(labeledEasterEgg.timeDuration).toFormat(
         "s",
-      )} сек) ${labeledEasterEgg.label}`,
+      )} sec) ${labeledEasterEgg.label}`,
     );
   });
   logger.log();
