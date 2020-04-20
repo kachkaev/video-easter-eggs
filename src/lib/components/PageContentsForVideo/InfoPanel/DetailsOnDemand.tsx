@@ -86,18 +86,18 @@ const DetailsOnDemand: React.FunctionComponent<DetailsOnDemandProps> = ({
           <Nobr>Found easter eggs: {videoInfo.labeledEasterEggs.length}</Nobr>
         </p>
         <p>Click on the timeline or navigate with arrow keys</p>
-        <p>
+        <p style={{ whiteSpace: "nowrap" }}>
           ✏️ by <a href="http://en.kachkaev.ru">Alexander Kachkaev</a>
           <br />
-          {videoInfo.urlOfCommentWithTimestamps ? (
+          {videoInfo.urlOfCommentWithTimeCodes ? (
             <>
               👀{" "}
               <a
-                href={videoInfo.urlOfCommentWithTimestamps}
+                href={videoInfo.urlOfCommentWithTimeCodes}
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                Comment with timestamps
+                Comment with time codes
               </a>
               <br />
             </>

@@ -2,7 +2,7 @@ import { ResourceStorageMaterial } from "../../resourceStorages";
 
 export interface VideoConfig {
   url: string;
-  urlOfCommentWithTimestamps?: string;
+  urlOfCommentWithTimeCodes?: string;
   shortTitle: string;
   frameSamplingInterval: number;
   framePreviewHeight: number;
