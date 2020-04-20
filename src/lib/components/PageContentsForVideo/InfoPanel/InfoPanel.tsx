@@ -18,8 +18,7 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   z-index: 1;
-  width: 175px;
-  min-width: 175px;
+  width: 195px;
 
   ${mobileMedia} {
     width: auto;
@@ -44,6 +43,7 @@ const InfoPanel: React.FunctionComponent<InfoPanelProps> = ({
       <ActiveFrameDetails
         videoInfo={videoInfo}
         activeTimeOffset={activeTimeOffset}
+        onActiveTimeOffsetChange={onActiveTimeOffsetChange}
       />
       <DetailsOnDemand
         videoInfo={videoInfo}

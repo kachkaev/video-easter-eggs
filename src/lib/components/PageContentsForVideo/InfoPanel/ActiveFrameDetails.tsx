@@ -10,16 +10,15 @@ import PlayIcon from "./PlayIcon";
 const Wrapper = styled.div`
   flex-grow: 0;
   flex-shrink: 0;
-  max-width: 160px;
+  width: 180px;
+  min-width: 180px;
+  max-width: 180px;
   padding-top: 20px;
   padding-right: 15px;
   padding-bottom: 10px;
 
   ${mobileMedia} {
     padding-top: 10px;
-    min-width: 135px;
-    width: 135px;
-    max-width: 135px;
   }
 `;
 
@@ -27,12 +26,6 @@ const A = styled.a`
   display: block;
   border-bottom: none;
   position: relative;
-  color: #888;
-
-  :hover {
-    color: #000;
-    text-decoration: none;
-  }
 `;
 
 const StyledPlayIcon = styled(PlayIcon)`
@@ -53,19 +46,66 @@ const Img = styled.img`
   width: 100%;
 `;
 
-const TimeStamp = styled.div`
+const Navigation = styled.div`
   display: block;
-  text-align: center;
   padding-top: 3px;
   font-size: 20px;
+  color: #888;
+  display: flex;
+`;
+
+const NavigationButton = styled.a<{ disabled?: boolean }>`
+  color: #888;
+  display: inline-block;
+  flex-grow: 0;
+  cursor: default;
+  opacity: ${(p) => (p.disabled ? 0.2 : 1)};
+
+  :hover {
+    color: #000;
+    text-decoration: none;
+  }
+`;
+
+const TimeCode = styled.div`
+  flex-grow: 1;
+  text-align: center;
   font-variant-numeric: tabular-nums;
 `;
 
 const ActiveFrameDetails: React.FunctionComponent<{
-  videoInfo: VideoInfo;
   activeTimeOffset: number;
-}> = ({ videoInfo, activeTimeOffset }) => {
-  const activeTime = Duration.fromMillis(activeTimeOffset);
+  onActiveTimeOffsetChange: React.Dispatch<React.SetStateAction<number>>;
+  videoInfo: VideoInfo;
+}> = ({ videoInfo, activeTimeOffset, onActiveTimeOffsetChange }) => {
+  const minAllowedTimeOffset = 0;
+  const maxAllowedTimeOffset =
+    videoInfo.processedTimeDuration - videoInfo.frameSamplingInterval;
+
+  const handleNavigationButtonClick = React.useCallback(
+    (event: React.MouseEvent<HTMLAnchorElement>) => {
+      event.preventDefault();
+      const factor =
+        (event.shiftKey ? 5 : 1) *
+        (Number.parseInt(`${event.currentTarget.dataset.factor}`) ?? 1);
+      onActiveTimeOffsetChange((value) =>
+        Math.min(
+          Math.max(
+            value + factor * videoInfo.frameSamplingInterval,
+            minAllowedTimeOffset,
+          ),
+          maxAllowedTimeOffset,
+        ),
+      );
+    },
+    [
+      minAllowedTimeOffset,
+      maxAllowedTimeOffset,
+      onActiveTimeOffsetChange,
+      videoInfo.frameSamplingInterval,
+    ],
+  );
+
   return (
     <Wrapper>
       <A
@@ -74,9 +114,29 @@ const ActiveFrameDetails: React.FunctionComponent<{
         rel="noopener noreferrer"
       >
         <Img src={generateFramePreviewUrl(videoInfo, activeTimeOffset)} />
-        <TimeStamp>{activeTime.toFormat(timeFormat)}</TimeStamp>
         <StyledPlayIcon />
       </A>
+      <Navigation>
+        <NavigationButton
+          disabled={activeTimeOffset <= minAllowedTimeOffset}
+          href="#"
+          data-factor="-1"
+          onClick={handleNavigationButtonClick}
+        >
+          ◀
+        </NavigationButton>
+        <TimeCode>
+          {Duration.fromMillis(activeTimeOffset).toFormat(timeFormat)}
+        </TimeCode>
+        <NavigationButton
+          disabled={activeTimeOffset >= maxAllowedTimeOffset}
+          href="#"
+          data-factor="1"
+          onClick={handleNavigationButtonClick}
+        >
+          ▶
+        </NavigationButton>
+      </Navigation>
     </Wrapper>
   );
 };

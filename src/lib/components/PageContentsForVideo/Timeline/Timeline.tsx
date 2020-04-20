@@ -7,15 +7,6 @@ import { VideoInfo } from "../../../resources/videos";
 import TimelineElement from "./TimelineElement";
 import { TimelineElementData } from "./types";
 
-const SizeWrapper = styled.div`
-  position: absolute !important;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  overflow: visible;
-`;
-
 const Wrapper = styled.div`
   flex-grow: 1;
   flex-shrink: 1;
@@ -24,6 +15,14 @@ const Wrapper = styled.div`
   position: relative;
 `;
 
+const SizeWrapper = styled.div`
+  position: absolute !important;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow: visible;
+`;
 const frameStripeWidth = 2;
 const dummyElementCountAtStart = 2;
 const dummyElementCountAtEnd = 2;
