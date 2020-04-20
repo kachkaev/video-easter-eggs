@@ -13,7 +13,7 @@ const base = css`
   a {
     color: #0366d6;
     text-decoration: none;
-    :hover {
+    .no-touchscreen &:hover {
       text-decoration: underline;
     }
   }

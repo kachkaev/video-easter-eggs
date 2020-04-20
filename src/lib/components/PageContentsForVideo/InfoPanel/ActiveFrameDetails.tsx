@@ -36,7 +36,7 @@ const StyledPlayIcon = styled(PlayIcon)`
   top: 20%;
   color: #fff;
 
-  ${A}:hover & {
+  .no-touchscreen ${A}:hover & {
     display: inline-block;
   }
 `;
@@ -61,7 +61,7 @@ const NavigationButton = styled.a<{ disabled?: boolean }>`
   cursor: default;
   opacity: ${(p) => (p.disabled ? 0.2 : 1)};
 
-  :hover {
+  .no-touchscreen &:hover {
     color: #000;
     text-decoration: none;
   }
