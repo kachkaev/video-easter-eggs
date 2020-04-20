@@ -16,7 +16,7 @@ const VideoPage: NextPage<{
   return (
     <>
       <Head>
-        <title>{videoInfo.shortTitle}</title>
+        <title>{videoInfo.pageTitle || videoInfo.shortTitle}</title>
       </Head>
       <PageContentsForVideo videoInfo={videoInfo} />
     </>
