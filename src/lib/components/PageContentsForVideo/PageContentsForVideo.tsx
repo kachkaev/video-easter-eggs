@@ -2,9 +2,9 @@ import React from "react";
 import styled from "styled-components";
 
 import { VideoInfo } from "../../resources/videos/types";
+import { mobileMedia } from "../styling";
 import HotKeys from "./HotKeys";
 import InfoPanel from "./InfoPanel";
-import { mobileMedia } from "./styling";
 import Timeline from "./Timeline";
 
 const Wrapper = styled.div`

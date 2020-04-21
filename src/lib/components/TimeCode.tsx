@@ -2,7 +2,7 @@ import { Duration } from "luxon";
 import React from "react";
 import styled from "styled-components";
 
-import { shortTimeFormat } from "./PageContentsForVideo/styling";
+import { activeTimeOffsetColor, shortTimeFormat } from "./styling";
 
 const Wrapper = styled.span<{ isActive?: boolean }>`
   cursor: default;
@@ -12,7 +12,13 @@ const Wrapper = styled.span<{ isActive?: boolean }>`
     border-bottom-color: #000;
   }
 
-  ${(p) => (p.isActive ? "border-bottom-color: rgba(0,0,0,0) !important" : "")};
+  ${(p) =>
+    p.isActive
+      ? `
+  border-bottom-color: rgba(0,0,0,0) !important;
+  color: ${activeTimeOffsetColor}
+`
+      : ""};
 `;
 
 const TimeCode: React.FunctionComponent<{

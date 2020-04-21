@@ -2,6 +2,7 @@ import _ from "lodash";
 import React from "react";
 import styled from "styled-components";
 
+import { easterEggMarkColor } from "../../../styling";
 import Wrapper from "../../../TimeCode";
 import TabBody from "./components/TabBody";
 import EasterEggIcon from "./EasterEggIcon";
@@ -20,6 +21,7 @@ const EasterEgg = styled.div`
 const EasterEggMark = styled.span`
   cursor: default;
   opacity: 0.4;
+  /* color: ${easterEggMarkColor}; */
 `;
 
 const StyledEasterEggIcon = styled(EasterEggIcon)`

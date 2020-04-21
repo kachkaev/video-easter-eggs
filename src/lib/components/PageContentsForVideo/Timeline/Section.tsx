@@ -3,6 +3,7 @@ import React from "react";
 import styled from "styled-components";
 
 import { LabeledAnnotation } from "../../../resources/videos/types";
+import { activeTimeOffsetColor, easterEggMarkColor } from "../../styling";
 import TimelineSectionBackground from "./SectionBackground";
 import { TimelineListElementData } from "./types";
 
@@ -48,9 +49,9 @@ const HourTick = styled.div`
 `;
 
 const ActiveFrame = styled.div`
-  background: red;
+  background: ${activeTimeOffsetColor};
   height: 100%;
-  opacity: 0.8;
+  opacity: 0.9;
   pointer-events: none;
   position: absolute;
 `;
@@ -59,7 +60,7 @@ const EasterEggMark = styled.div`
   margin-top: -${underlineHeight - 1}px;
   top: 50%;
   height: ${underlineHeight}px;
-  background: yellow;
+  background: ${easterEggMarkColor};
   pointer-events: none;
   position: absolute;
   box-sizing: border-box;

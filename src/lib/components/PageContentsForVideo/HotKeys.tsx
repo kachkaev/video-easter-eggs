@@ -5,7 +5,7 @@ import { useHotkeys } from "react-hotkeys-hook";
 
 import { VideoInfo } from "../../resources/videos";
 import { generateVideoUrl } from "../../ui";
-import { timeFormat } from "./styling";
+import { timeFormat } from "../styling";
 
 interface HotKeysProps {
   activeTimeOffset: number;
