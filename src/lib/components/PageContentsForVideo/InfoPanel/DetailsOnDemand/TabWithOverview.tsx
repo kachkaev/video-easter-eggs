@@ -3,6 +3,8 @@ import styled from "styled-components";
 
 import ExternalLink from "../../../ExternalLink";
 import TimeCode from "../../../TimeCode";
+import { useVizConfig } from "../../vizConfig";
+import Checkbox from "./components/Checkbox";
 import TabBody from "./components/TabBody";
 import { TabProps } from "./types";
 
@@ -27,6 +29,16 @@ const TabWithOverview: React.FunctionComponent<TabProps> = ({
     [videoInfo.labeledSections],
   );
 
+  const { vizConfig, setVizConfig } = useVizConfig();
+
+  const handleCheckboxClick = (e: React.MouseEvent<HTMLInputElement>) => {
+    const { id, checked } = e.currentTarget;
+    setVizConfig((currentVizConfig) => ({
+      ...currentVizConfig,
+      [id]: checked,
+    }));
+  };
+
   return (
     <TabBody active={hidden}>
       {typeof referenceFrameTimeOffset === "number" ? (
@@ -44,11 +56,27 @@ const TabWithOverview: React.FunctionComponent<TabProps> = ({
       <p>
         <Nobr>Total segments: {videoInfo.labeledSections.length}</Nobr>{" "}
         <Nobr>Number of loops: {numberOfLoops}</Nobr>{" "}
-        <Nobr>Found easter eggs: {videoInfo.labeledEasterEggs.length}</Nobr>
+        <Nobr>Easter eggs found: {videoInfo.labeledEasterEggs.length}</Nobr>
       </p>
       <p>
         Click on the timeline or navigate with arrow keys. To play the video at
         the current time code, click on the frame preview or press Enter
+      </p>
+      <p>
+        <Checkbox
+          checked={vizConfig.highlightEasterEggs}
+          id="highlightEasterEggs"
+          onChange={handleCheckboxClick}
+          label="highlight Easter eggs"
+        />
+        {/* <Checkbox
+          checked={vizConfig.subtractActiveSection}
+          id="subtractActiveSection"
+          onChange={handleCheckboxClick}
+          label="subtract current section"
+        />
+        <br />
+        &nbsp;&nbsp;&nbsp;&nbsp;(helps spot Easter eggs) */}
       </p>
     </TabBody>
   );

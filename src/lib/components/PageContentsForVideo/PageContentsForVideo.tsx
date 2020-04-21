@@ -6,6 +6,7 @@ import { mobileMedia } from "../styling";
 import HotKeys from "./HotKeys";
 import InfoPanel from "./InfoPanel";
 import Timeline from "./Timeline";
+import VizConfigProvider from "./vizConfig/VizConfigProvider";
 
 const Wrapper = styled.div`
   position: absolute;
@@ -28,23 +29,25 @@ const PageContentsForVideo: React.FunctionComponent<{
   const [activeTimeOffset, setActiveTimeOffset] = React.useState(0);
 
   return (
-    <Wrapper>
-      <HotKeys
-        activeTimeOffset={activeTimeOffset}
-        onActiveTimeOffsetChange={setActiveTimeOffset}
-        videoInfo={videoInfo}
-      />
-      <InfoPanel
-        activeTimeOffset={activeTimeOffset}
-        onActiveTimeOffsetChange={setActiveTimeOffset}
-        videoInfo={videoInfo}
-      />
-      <Timeline
-        activeTimeOffset={activeTimeOffset}
-        onActiveTimeOffsetChange={setActiveTimeOffset}
-        videoInfo={videoInfo}
-      />
-    </Wrapper>
+    <VizConfigProvider>
+      <Wrapper>
+        <HotKeys
+          activeTimeOffset={activeTimeOffset}
+          onActiveTimeOffsetChange={setActiveTimeOffset}
+          videoInfo={videoInfo}
+        />
+        <InfoPanel
+          activeTimeOffset={activeTimeOffset}
+          onActiveTimeOffsetChange={setActiveTimeOffset}
+          videoInfo={videoInfo}
+        />
+        <Timeline
+          activeTimeOffset={activeTimeOffset}
+          onActiveTimeOffsetChange={setActiveTimeOffset}
+          videoInfo={videoInfo}
+        />
+      </Wrapper>
+    </VizConfigProvider>
   );
 };
 

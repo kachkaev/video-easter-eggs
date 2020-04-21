@@ -8,6 +8,7 @@ import {
   baseColor,
   easterEggMarkColor,
 } from "../../styling";
+import { useVizConfig } from "../vizConfig";
 import TimelineSectionBackground from "./SectionBackground";
 import { TimelineListElementData } from "./types";
 
@@ -93,16 +94,25 @@ const Section: React.FunctionComponent<SectionProps> = ({
   videoInfo,
 }) => {
   const { timeOffset, timeDuration } = videoInfo.labeledSections[sectionIndex];
+  const {
+    vizConfig: { highlightEasterEggs },
+  } = useVizConfig();
 
   const labeledEasterEggs: LabeledAnnotation[] = React.useMemo(
     () =>
       videoInfo.labeledEasterEggs.filter(
         (labeledEasterEgg) =>
+          highlightEasterEggs &&
           labeledEasterEgg.timeOffset <= timeOffset + timeDuration &&
           labeledEasterEgg.timeOffset + labeledEasterEgg.timeDuration >
             timeOffset,
       ),
-    [videoInfo.labeledEasterEggs, timeOffset, timeDuration],
+    [
+      videoInfo.labeledEasterEggs,
+      timeOffset,
+      timeDuration,
+      highlightEasterEggs,
+    ],
   );
 
   const timeEnd = timeOffset + timeDuration;
