@@ -52,12 +52,12 @@ const Navigation = styled.div`
   display: block;
   padding-top: 5px;
   font-size: 20px;
-  color: #888;
+  color: ${baseColor};
   display: flex;
 `;
 
 const NavigationButton = styled.a<{ disabled?: boolean }>`
-  color: #888;
+  color: ${baseColor};
   display: inline-block;
   flex-grow: 0;
   cursor: default;
@@ -68,10 +68,10 @@ const NavigationButton = styled.a<{ disabled?: boolean }>`
 
   ${(p) =>
     p.disabled
-      ? `opacity: 0.2;`
+      ? `color: #ccc;`
       : `
   .no-touchscreen &:hover {
-    color: ${baseColor};
+    color: #000;
   }
   `}
 `;

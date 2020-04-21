@@ -15,20 +15,20 @@ const Wrapper = styled.div`
   position: relative;
 `;
 
-const hourMarkWidth = 50;
-const hourTickWidth = 6;
+const paddingLeft = 15;
+const paddingRight = 15;
+const hourMarkWidth = 30;
+const hourTickWidth = 3;
 const underlineHeight = 2;
 
 const HourMark = styled.div<{ disabled?: boolean }>`
   position: absolute;
-  left: 0;
   top: 0;
+  left: ${paddingLeft}px;
   width: ${hourMarkWidth}px;
   font-size: 20px;
   line-height: 14px;
-  color: #999;
-  padding-right: 10px;
-  text-align: right;
+  color: ${baseColor};
   box-sizing: border-box;
   cursor: default;
   z-index: 1;
@@ -38,18 +38,18 @@ const HourMark = styled.div<{ disabled?: boolean }>`
       ? ""
       : `
   .no-touchscreen &:hover {
-    color: ${baseColor};
+    color: #000;
   }
   `}
 `;
 
 const HourTick = styled.div`
   position: absolute;
-  left: ${hourMarkWidth - hourTickWidth}px;
+  left: ${paddingLeft + hourMarkWidth - hourTickWidth}px;
   width: ${hourTickWidth}px;
   top: 0;
   height: ${underlineHeight}px;
-  background: #999;
+  background: ${baseColor};
 `;
 
 const ActiveFrame = styled.div`
@@ -139,10 +139,13 @@ const Section: React.FunctionComponent<SectionProps> = ({
   const handleWrapperMouseDown: React.MouseEventHandler = React.useCallback(
     (e) => {
       const x = e.nativeEvent.offsetX;
-      if (x >= hourMarkWidth && x < sectionWidth + hourMarkWidth) {
+      if (
+        x >= paddingLeft + hourMarkWidth &&
+        x < paddingLeft + hourMarkWidth + sectionWidth
+      ) {
         onActiveTimeOffsetChange(
           timeOffset +
-            Math.floor((x - hourMarkWidth) / frameStripeWidth) *
+            Math.floor((x - hourMarkWidth - paddingLeft) / frameStripeWidth) *
               videoInfo.frameSamplingInterval,
         );
       }
@@ -161,7 +164,7 @@ const Section: React.FunctionComponent<SectionProps> = ({
       onMouseDown={handleWrapperMouseDown}
       style={{
         ...style,
-        width: maxWidth + hourMarkWidth,
+        width: maxWidth + hourMarkWidth + paddingLeft + paddingRight,
         height: canvasHeight,
       }}
     >
@@ -181,7 +184,7 @@ const Section: React.FunctionComponent<SectionProps> = ({
         sectionIndex={sectionIndex}
         frameStripeWidth={frameStripeWidth}
         style={{
-          left: hourMarkWidth,
+          left: paddingLeft + hourMarkWidth,
         }}
       />
       {labeledEasterEggs.map((labeledEasterEgg, easterEggIndex) => {
@@ -206,7 +209,7 @@ const Section: React.FunctionComponent<SectionProps> = ({
             title={labeledEasterEgg.label}
             key={easterEggIndex}
             style={{
-              left: firstFrame * frameStripeWidth + hourMarkWidth,
+              left: paddingLeft + hourMarkWidth + firstFrame * frameStripeWidth,
               width: (lastFrame - firstFrame) * frameStripeWidth,
             }}
           />
@@ -215,7 +218,7 @@ const Section: React.FunctionComponent<SectionProps> = ({
       {activeFrame >= 0 && activeFrame < frameCount ? (
         <ActiveFrame
           style={{
-            left: activeFrame * frameStripeWidth + hourMarkWidth,
+            left: paddingLeft + hourMarkWidth + activeFrame * frameStripeWidth,
             width: frameStripeWidth,
           }}
         />

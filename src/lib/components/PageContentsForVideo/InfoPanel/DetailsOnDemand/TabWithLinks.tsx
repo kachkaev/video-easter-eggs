@@ -12,7 +12,7 @@ const TabWithOverview: React.FunctionComponent<TabProps> = ({
     <TabBody active={hidden}>
       <p style={{ whiteSpace: "nowrap" }}>
         ✏️ by{" "}
-        <ExternalLink href="http://en.kachkaev.ru">
+        <ExternalLink href="https://en.kachkaev.ru">
           Alexander Kachkaev
         </ExternalLink>
         <br />
@@ -32,13 +32,13 @@ const TabWithOverview: React.FunctionComponent<TabProps> = ({
       </p>
       <p>
         📖{" "}
-        <ExternalLink href="https://en.wikipedia.org/wiki/Visual_analytics">
-          Visual analytics method
+        <ExternalLink href="https://en.wikipedia.org/wiki/Easter_egg_(media)">
+          Easter eggs in media
         </ExternalLink>
         <br />
         📖{" "}
-        <ExternalLink href="https://en.wikipedia.org/wiki/Easter_egg_(media)">
-          Easter eggs in media
+        <ExternalLink href="https://en.wikipedia.org/wiki/Visual_analytics">
+          Visual analytics method
         </ExternalLink>
       </p>
     </TabBody>
