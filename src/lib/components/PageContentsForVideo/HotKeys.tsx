@@ -73,6 +73,7 @@ const HotKeys: React.FunctionComponent<HotKeysProps> = ({
       const newWindow = window.open(
         generateVideoUrl(videoInfo, activeTimeOffset),
         "_blank",
+        'rel="noopener noreferrer"',
       );
       newWindow?.focus();
     },

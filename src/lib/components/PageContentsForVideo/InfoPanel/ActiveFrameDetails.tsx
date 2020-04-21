@@ -4,6 +4,7 @@ import styled from "styled-components";
 
 import { VideoInfo } from "../../../resources/videos/types";
 import { generateFramePreviewUrl, generateVideoUrl } from "../../../ui";
+import ExternalLink from "../../ExternalLink";
 import { mobileMedia, timeFormat } from "../../styling";
 import PlayIcon from "./PlayIcon";
 
@@ -22,7 +23,7 @@ const Wrapper = styled.div`
   }
 `;
 
-const A = styled.a`
+const A = styled(ExternalLink)`
   display: block;
   border-bottom: none;
   position: relative;
@@ -116,11 +117,7 @@ const ActiveFrameDetails: React.FunctionComponent<{
 
   return (
     <Wrapper>
-      <A
-        href={generateVideoUrl(videoInfo, activeTimeOffset)}
-        target="_blank"
-        rel="noopener noreferrer"
-      >
+      <A href={generateVideoUrl(videoInfo, activeTimeOffset)}>
         <Img src={generateFramePreviewUrl(videoInfo, activeTimeOffset)} />
         <StyledPlayIcon />
       </A>

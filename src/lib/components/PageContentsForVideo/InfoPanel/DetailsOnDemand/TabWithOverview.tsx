@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
+import ExternalLink from "../../../ExternalLink";
 import TimeCode from "../../../TimeCode";
 import TabBody from "./components/TabBody";
 import { TabProps } from "./types";
@@ -30,11 +31,8 @@ const TabWithOverview: React.FunctionComponent<TabProps> = ({
     <TabBody active={hidden}>
       {typeof referenceFrameTimeOffset === "number" ? (
         <p>
-          The{" "}
-          <a href={videoInfo.url} target="_blank" rel="noopener noreferrer">
-            video
-          </a>{" "}
-          is split into segments based on{" "}
+          The <ExternalLink href={videoInfo.url}>video</ExternalLink> is split
+          into segments based on{" "}
           <TimeCode
             timeOffset={referenceFrameTimeOffset}
             isActive={activeTimeOffset === referenceFrameTimeOffset}

@@ -1,5 +1,6 @@
 import React from "react";
 
+import ExternalLink from "../../../ExternalLink";
 import TabBody from "./components/TabBody";
 import { TabProps } from "./types";
 
@@ -10,48 +11,35 @@ const TabWithOverview: React.FunctionComponent<TabProps> = ({
   return (
     <TabBody active={hidden}>
       <p style={{ whiteSpace: "nowrap" }}>
-        ✏️ by <a href="http://en.kachkaev.ru">Alexander Kachkaev</a>
+        ✏️ by{" "}
+        <ExternalLink href="http://en.kachkaev.ru">
+          Alexander Kachkaev
+        </ExternalLink>
         <br />
         {videoInfo.urlOfCommentWithTimeCodes ? (
           <>
             👀{" "}
-            <a
-              href={videoInfo.urlOfCommentWithTimeCodes}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
+            <ExternalLink href={videoInfo.urlOfCommentWithTimeCodes}>
               Comment with time codes
-            </a>
+            </ExternalLink>
             <br />
           </>
         ) : null}
         💻{" "}
-        <a
-          href="https://github.com/kachkaev/video-easter-eggs"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
+        <ExternalLink href="https://github.com/kachkaev/video-easter-eggs">
           Source on GitHub
-        </a>
+        </ExternalLink>
       </p>
       <p>
         📖{" "}
-        <a
-          href="https://en.wikipedia.org/wiki/Visual_analytics"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
+        <ExternalLink href="https://en.wikipedia.org/wiki/Visual_analytics">
           Visual analytics method
-        </a>
+        </ExternalLink>
         <br />
         📖{" "}
-        <a
-          href="https://en.wikipedia.org/wiki/Easter_egg_(media)"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
+        <ExternalLink href="https://en.wikipedia.org/wiki/Easter_egg_(media)">
           Easter eggs in media
-        </a>
+        </ExternalLink>
       </p>
     </TabBody>
   );

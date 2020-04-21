@@ -36,12 +36,9 @@ const TabNameContainer = styled.div`
   }
 `;
 
-const TabName = styled.a<{ active: boolean }>`
+const TabName = styled.span`
   display: inline-block;
   flex-grow: 1;
-  font-weight: bold;
-  color: ${(p) => (p.active ? "#000" : "#888")};
-  border-bottom: 1px solid rgba(0, 0, 0, 0);
 
   ${mobileMedia} {
     margin-right: 15px;
@@ -50,11 +47,19 @@ const TabName = styled.a<{ active: boolean }>`
       margin-right: 0;
     }
   }
+`;
+
+const TabNameLink = styled.a<{ active: boolean }>`
+  font-weight: bold;
+  border-bottom: 1px dotted #ccc;
+  color: #000;
+  cursor: default;
+  ${(p) => (p.active ? "border-bottom-color: rgba(0,0,0,0) !important" : "")};
 
   .no-touchscreen &:hover {
     color: #000;
     text-decoration: none;
-    border-bottom: #666;
+    border-bottom-color: #000;
   }
 `;
 
@@ -96,14 +101,15 @@ const DetailsOnDemand: React.FunctionComponent<DetailsOnDemandProps> = (
     <Wrapper>
       <TabNameContainer>
         {Object.entries(tabMaterialLookup).map(([key, { name }]) => (
-          <TabName
-            href="#"
-            key={key}
-            data-key={key}
-            active={activeTab === key}
-            onClick={handleTabNameClick}
-          >
-            {name}
+          <TabName key={key}>
+            <TabNameLink
+              href="#"
+              data-key={key}
+              active={activeTab === key}
+              onClick={handleTabNameClick}
+            >
+              {name}
+            </TabNameLink>
           </TabName>
         ))}
       </TabNameContainer>
