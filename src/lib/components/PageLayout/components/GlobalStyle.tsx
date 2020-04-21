@@ -1,9 +1,11 @@
 import { createGlobalStyle, css } from "styled-components";
 import normalize from "styled-normalize";
 
+import { baseColor } from "../../styling";
+
 const base = css`
   body {
-    color: #24292e;
+    color: ${baseColor};
     font-family: "-apple-system", BlinkMacSystemFont, Avenir Next, Avenir,
       Helvetica, sans-serif;
     margin: 0;

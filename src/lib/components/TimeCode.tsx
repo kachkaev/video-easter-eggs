@@ -2,14 +2,14 @@ import { Duration } from "luxon";
 import React from "react";
 import styled from "styled-components";
 
-import { activeTimeOffsetColor, shortTimeFormat } from "./styling";
+import { activeTimeOffsetColor, baseColor, shortTimeFormat } from "./styling";
 
 const Wrapper = styled.span<{ isActive?: boolean }>`
   cursor: default;
   border-bottom: 1px dotted #ccc;
 
   .no-touchscreen &:hover {
-    border-bottom-color: #000;
+    border-bottom-color: ${baseColor};
   }
 
   ${(p) =>

@@ -5,7 +5,7 @@ import styled from "styled-components";
 import { VideoInfo } from "../../../resources/videos/types";
 import { generateFramePreviewUrl, generateVideoUrl } from "../../../ui";
 import ExternalLink from "../../ExternalLink";
-import { mobileMedia, timeFormat } from "../../styling";
+import { baseColor, mobileMedia, timeFormat } from "../../styling";
 import PlayIcon from "./PlayIcon";
 
 const Wrapper = styled.div`
@@ -71,7 +71,7 @@ const NavigationButton = styled.a<{ disabled?: boolean }>`
       ? `opacity: 0.2;`
       : `
   .no-touchscreen &:hover {
-    color: #000;
+    color: ${baseColor};
   }
   `}
 `;

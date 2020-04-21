@@ -3,7 +3,11 @@ import React from "react";
 import styled from "styled-components";
 
 import { LabeledAnnotation } from "../../../resources/videos/types";
-import { activeTimeOffsetColor, easterEggMarkColor } from "../../styling";
+import {
+  activeTimeOffsetColor,
+  baseColor,
+  easterEggMarkColor,
+} from "../../styling";
 import TimelineSectionBackground from "./SectionBackground";
 import { TimelineListElementData } from "./types";
 
@@ -34,7 +38,7 @@ const HourMark = styled.div<{ disabled?: boolean }>`
       ? ""
       : `
   .no-touchscreen &:hover {
-    color: #000;
+    color: ${baseColor};
   }
   `}
 `;

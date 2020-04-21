@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 
 import { VideoInfo } from "../../../../resources/videos/types";
-import { mobileMedia } from "../../../styling";
+import { baseColor, mobileMedia } from "../../../styling";
 import TabWithFindings from "./TabWithFindings";
 import TabWithLinks from "./TabWithLinks";
 import TabWithOverview from "./TabWithOverview";
@@ -52,14 +52,14 @@ const TabName = styled.span`
 const TabNameLink = styled.a<{ active: boolean }>`
   font-weight: bold;
   border-bottom: 1px dotted #ccc;
-  color: #000;
+  color: ${baseColor};
   cursor: default;
   ${(p) => (p.active ? "border-bottom-color: rgba(0,0,0,0) !important" : "")};
 
   .no-touchscreen &:hover {
-    color: #000;
+    color: ${baseColor};
     text-decoration: none;
-    border-bottom-color: #000;
+    border-bottom-color: ${baseColor};
   }
 `;
 

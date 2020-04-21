@@ -1,13 +1,15 @@
 import styled from "styled-components";
 
+import { baseColor } from "./styling";
+
 const ExternalLink = styled.a`
-  color: #000;
+  color: ${baseColor};
   text-decoration: none;
   border-bottom: 1px solid #ccc;
 
   .no-touchscreen &:hover {
     text-decoration: none;
-    border-bottom-color: #000;
+    border-bottom-color: ${baseColor};
   }
 `;
 
