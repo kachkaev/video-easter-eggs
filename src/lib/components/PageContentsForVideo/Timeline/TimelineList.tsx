@@ -72,7 +72,7 @@ const Timeline: React.FunctionComponent<TimelineProps> = ({
     }
 
     if (prevIndex.current >= 0 && listRef.current) {
-      listRef.current.scrollToItem(index);
+      listRef.current.scrollToItem(index, "smart");
     }
 
     prevIndex.current = index;
