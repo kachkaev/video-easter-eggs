@@ -16,6 +16,8 @@ export interface VideoConfig {
     referenceFrameTimeOffset: number;
     referenceFrameTimeOffsetWithinSection: number;
     endingStartTime?: number;
+    endingLabel?: string;
+    introLabel?: string;
   };
 }
 

@@ -3,7 +3,7 @@ import React from "react";
 import TabBody from "./components/TabBody";
 import { TabProps } from "./types";
 
-const TabWithSummary: React.FunctionComponent<TabProps> = ({
+const TabWithOverview: React.FunctionComponent<TabProps> = ({
   videoInfo,
   active: hidden,
 }) => {
@@ -57,4 +57,4 @@ const TabWithSummary: React.FunctionComponent<TabProps> = ({
   );
 };
 
-export default React.memo(TabWithSummary);
+export default React.memo(TabWithOverview);

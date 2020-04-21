@@ -27,7 +27,8 @@ const HotKeys: React.FunctionComponent<HotKeysProps> = ({
   useHotkeys("left,shift+left,right,shift+right", (event) => {
     event.preventDefault();
     const delta =
-      (event.shiftKey ? 10000 : videoInfo.frameSamplingInterval) *
+      (event.shiftKey ? 10 : 1) *
+      videoInfo.frameSamplingInterval *
       (event.key === "ArrowLeft" ? -1 : 1);
     onActiveTimeOffsetChange((timeOffset) =>
       Math.min(

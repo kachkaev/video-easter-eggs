@@ -9,7 +9,7 @@ const Nobr = styled.span`
   white-space: nowrap;
 `;
 
-const TabWithSummary: React.FunctionComponent<TabProps> = ({
+const TabWithOverview: React.FunctionComponent<TabProps> = ({
   activeTimeOffset,
   onActiveTimeOffsetChange,
   videoInfo,
@@ -56,4 +56,4 @@ const TabWithSummary: React.FunctionComponent<TabProps> = ({
   );
 };
 
-export default React.memo(TabWithSummary);
+export default React.memo(TabWithOverview);

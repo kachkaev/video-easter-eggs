@@ -67,7 +67,7 @@ const NavigationButton = styled.a<{ disabled?: boolean }>`
 
   ${(p) =>
     p.disabled
-      ? `opacity: 0.5;`
+      ? `opacity: 0.2;`
       : `
   .no-touchscreen &:hover {
     color: #000;
@@ -94,7 +94,7 @@ const ActiveFrameDetails: React.FunctionComponent<{
     (event: React.MouseEvent<HTMLAnchorElement>) => {
       event.preventDefault();
       const factor =
-        (event.shiftKey ? 5 : 1) *
+        (event.shiftKey ? 10 : 1) *
         (Number.parseInt(`${event.currentTarget.dataset.factor}`) ?? 1);
       onActiveTimeOffsetChange((value) =>
         Math.min(

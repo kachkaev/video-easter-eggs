@@ -15,3 +15,5 @@ sectionLabeling:
   referenceFrameTimeOffset: 54500
   referenceFrameTimeOffsetWithinSection: 29500
   endingStartTime: 86326500
+  endingLabel: концовка
+  introLabel: вступление

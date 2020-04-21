@@ -3,9 +3,9 @@ import styled from "styled-components";
 
 import { VideoInfo } from "../../../../resources/videos/types";
 import { mobileMedia } from "../../styling";
-import TabWithEasterEggs from "./TabWithEasterEggs";
+import TabWithFindings from "./TabWithFindings";
 import TabWithLinks from "./TabWithLinks";
-import TabWithSummary from "./TabWithSummary";
+import TabWithOverview from "./TabWithOverview";
 
 const Wrapper = styled.div`
   flex-grow: 1;
@@ -24,7 +24,12 @@ const Wrapper = styled.div`
 
 const TabNameContainer = styled.div`
   display: flex;
+  flex-basis: 1.5em;
+  flex-shrink: 0;
+  flex-grow: 0;
   padding-bottom: 10px;
+  white-space: nowrap;
+  overflow: scroll;
 
   ${mobileMedia} {
     display: block;
@@ -37,8 +42,13 @@ const TabName = styled.a<{ active: boolean }>`
   font-weight: bold;
   color: ${(p) => (p.active ? "#000" : "#888")};
   border-bottom: 1px solid rgba(0, 0, 0, 0);
+
   ${mobileMedia} {
-    padding-right: 15px;
+    margin-right: 15px;
+
+    &:last-child {
+      margin-right: 0;
+    }
   }
 
   .no-touchscreen &:hover {
@@ -49,7 +59,9 @@ const TabName = styled.a<{ active: boolean }>`
 `;
 
 const TabBodyContainer = styled.div`
-  overflow: scroll;
+  flex-grow: 1;
+  position: relative;
+  overflow: hidden;
 `;
 
 export interface DetailsOnDemandProps {
@@ -59,12 +71,12 @@ export interface DetailsOnDemandProps {
 }
 
 const tabMaterialLookup = {
-  summary: { name: "summary", Body: TabWithSummary },
-  easterEggs: { name: "easter eggs", Body: TabWithEasterEggs },
+  overview: { name: "overview", Body: TabWithOverview },
+  findings: { name: "findings", Body: TabWithFindings },
   links: { name: "links", Body: TabWithLinks },
 };
 
-const defaultTab = Object.keys(tabMaterialLookup)[0];
+const defaultTab = Object.keys(tabMaterialLookup)[1];
 
 const DetailsOnDemand: React.FunctionComponent<DetailsOnDemandProps> = (
   props,

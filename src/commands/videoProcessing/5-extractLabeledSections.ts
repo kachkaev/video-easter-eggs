@@ -61,6 +61,8 @@ const command: Command = async (context) => {
     referenceFrameTimeOffset,
     referenceFrameTimeOffsetWithinSection,
     endingStartTime,
+    endingLabel,
+    introLabel,
   } = videoConfig.sectionLabeling;
   const processedTimeDuration = calculateProcessedTimeDuration(
     videoConfig,
@@ -81,7 +83,7 @@ const command: Command = async (context) => {
   if (introDuration) {
     labeledSections.push({
       type: "section",
-      label: "intro",
+      label: introLabel ?? "intro",
       timeOffset: 0,
       timeDuration: introDuration,
     });
@@ -131,7 +133,7 @@ const command: Command = async (context) => {
   if (endingStartTime && endingTimeDuration) {
     labeledSections.push({
       type: "section",
-      label: "ending",
+      label: endingLabel ?? "ending",
       timeOffset: endingStartTime,
       timeDuration: endingTimeDuration,
     });
