@@ -4,11 +4,11 @@ import styled from "styled-components";
 
 import Wrapper from "../../../TimeCode";
 import TabBody from "./components/TabBody";
+import EasterEggIcon from "./EasterEggIcon";
 import { TabProps } from "./types";
 
 const EasterEgg = styled.div`
   margin: 0;
-  padding-left: 20px;
   margin-bottom: 1em;
   position: relative;
 
@@ -17,13 +17,16 @@ const EasterEgg = styled.div`
   }
 `;
 
-const EasterEggNumber = styled.span`
+const EasterEggMark = styled.span`
+  cursor: default;
+  opacity: 0.4;
+`;
+
+const StyledEasterEggIcon = styled(EasterEggIcon)`
+  width: 1em;
+  padding-top: 0.25em;
   display: inline-block;
-  width: 15px;
-  margin-left: -20px;
-  padding-right: 5px;
-  white-space: nowrap;
-  text-align: right;
+  vertical-align: top;
 `;
 
 const TabWithFindings: React.FunctionComponent<TabProps> = ({
@@ -45,18 +48,22 @@ const TabWithFindings: React.FunctionComponent<TabProps> = ({
   return (
     <TabBody active={hidden}>
       {findings.map((finding, index) => {
-        const easterEggIndex = videoInfo.labeledEasterEggs.indexOf(finding);
+        const easterEggIndexToDisplay =
+          videoInfo.labeledEasterEggs.indexOf(finding) + 1;
         return (
           <EasterEgg key={index} data-time={finding.timeOffset}>
-            {easterEggIndex !== -1 ? (
-              <EasterEggNumber>{easterEggIndex + 1}.</EasterEggNumber>
-            ) : null}
             <Wrapper
               timeOffset={finding.timeOffset}
               isActive={finding.timeOffset === activeTimeOffset}
               onActiveTimeOffsetChange={onActiveTimeOffsetChange}
             />{" "}
             ({Math.round(finding.timeDuration / 1000)} sec)
+            {easterEggIndexToDisplay > 0 ? (
+              <EasterEggMark title={`Easter egg # ${easterEggIndexToDisplay}`}>
+                {" "}
+                <StyledEasterEggIcon /> {easterEggIndexToDisplay}
+              </EasterEggMark>
+            ) : null}
             <br />
             {finding.label}
           </EasterEgg>
