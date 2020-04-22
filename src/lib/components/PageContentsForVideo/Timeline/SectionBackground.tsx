@@ -123,7 +123,10 @@ const TimelineSectionBackground: React.FunctionComponent<TimelineSectionBackgrou
   const canvasRef = React.useRef<HTMLCanvasElement>(null);
 
   const frameStripes = useFrameStripes(videoInfo, sectionIndex);
-  const frameStripesToDiff = useFrameStripes(videoInfo, sectionToDiffIndex);
+  const frameStripesToDiff = useFrameStripes(
+    videoInfo,
+    sectionIndex === sectionToDiffIndex ? -1 : sectionToDiffIndex,
+  );
 
   const canvasWidth =
     Math.round(
