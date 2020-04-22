@@ -75,7 +75,6 @@ const TabWithOverview: React.FunctionComponent<TabProps> = ({
           onChange={handleCheckboxClick}
           label="diff with active section"
         />
-        <br />
         &nbsp;&nbsp;&nbsp;&nbsp;(helps spot Easter eggs)
       </p>
     </TabBody>
