@@ -4,6 +4,7 @@ import { FixedSizeList } from "react-window";
 import styled from "styled-components";
 
 import { VideoInfo } from "../../../resources/videos";
+import { useActiveTimeOffset } from "../activeTimeOffset";
 import { useVizConfig } from "../vizConfig";
 import TimelineListElement from "./TimelineListElement";
 import { TimelineListElementData } from "./types";
@@ -21,16 +22,11 @@ const dummyElementCountAtStart = 2;
 const dummyElementCountAtEnd = 2;
 
 export interface TimelineProps {
-  activeTimeOffset: number;
-  onActiveTimeOffsetChange: React.Dispatch<React.SetStateAction<number>>;
   videoInfo: VideoInfo;
 }
 
-const Timeline: React.FunctionComponent<TimelineProps> = ({
-  activeTimeOffset,
-  onActiveTimeOffsetChange,
-  videoInfo,
-}) => {
+const Timeline: React.FunctionComponent<TimelineProps> = ({ videoInfo }) => {
+  const { activeTimeOffset } = useActiveTimeOffset();
   const { labeledSections } = videoInfo;
 
   const maxLabeledSectionDuration = React.useMemo(() => {
@@ -64,13 +60,11 @@ const Timeline: React.FunctionComponent<TimelineProps> = ({
   );
 
   const timelineListElementData: TimelineListElementData = {
-    activeTimeOffset,
-    frameStripeWidth,
     dummyElementCountAtStart,
+    frameStripeWidth,
     maxLabeledSectionDuration,
-    onActiveTimeOffsetChange,
-    videoInfo,
     sectionToDiffIndex,
+    videoInfo,
   };
 
   const prevIndex = React.useRef(-1);

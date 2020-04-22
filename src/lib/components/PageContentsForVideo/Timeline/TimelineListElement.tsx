@@ -1,5 +1,6 @@
 import React from "react";
 
+import { useActiveTimeOffset } from "../activeTimeOffset";
 import Section from "./Section";
 import { TimelineListElementData } from "./types";
 
@@ -14,7 +15,8 @@ const TimelineListElement: React.FunctionComponent<TimelineListElementProps> = (
   index,
   data,
 }) => {
-  const { videoInfo, activeTimeOffset, sectionToDiffIndex } = data;
+  const { activeTimeOffset, setActiveTimeOffset } = useActiveTimeOffset();
+  const { videoInfo, sectionToDiffIndex } = data;
   const sectionIndex = index - data.dummyElementCountAtStart;
   const { timeOffset = -1, timeDuration = 0 } =
     videoInfo.labeledSections[sectionIndex] ?? {};
@@ -41,8 +43,9 @@ const TimelineListElement: React.FunctionComponent<TimelineListElementProps> = (
       style={memoizedStyle}
       sectionIndex={sectionIndex}
       sectionToDiffIndex={sectionToDiffIndex}
-      {...data}
+      onActiveTimeOffsetChange={setActiveTimeOffset}
       activeTimeOffset={activeTimeOffsetToPass}
+      {...data}
     />
   );
 };

@@ -71,8 +71,6 @@ const TabBodyContainer = styled.div`
 
 export interface DetailsOnDemandProps {
   videoInfo: VideoInfo;
-  activeTimeOffset: number;
-  onActiveTimeOffsetChange: React.Dispatch<React.SetStateAction<number>>;
 }
 
 const tabMaterialLookup = {

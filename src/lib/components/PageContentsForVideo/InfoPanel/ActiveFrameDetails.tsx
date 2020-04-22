@@ -6,6 +6,7 @@ import { VideoInfo } from "../../../resources/videos/types";
 import { generateFramePreviewUrl, generateVideoUrl } from "../../../ui";
 import ExternalLink from "../../ExternalLink";
 import { baseColor, mobileMedia, timeFormat } from "../../styling";
+import { useActiveTimeOffset } from "../activeTimeOffset";
 import PlayIcon from "./PlayIcon";
 
 const Wrapper = styled.div`
@@ -83,10 +84,10 @@ const TimeCode = styled.div`
 `;
 
 const ActiveFrameDetails: React.FunctionComponent<{
-  activeTimeOffset: number;
-  onActiveTimeOffsetChange: React.Dispatch<React.SetStateAction<number>>;
   videoInfo: VideoInfo;
-}> = ({ videoInfo, activeTimeOffset, onActiveTimeOffsetChange }) => {
+}> = ({ videoInfo }) => {
+  const { activeTimeOffset, setActiveTimeOffset } = useActiveTimeOffset();
+
   const minAllowedTimeOffset = 0;
   const maxAllowedTimeOffset =
     videoInfo.processedTimeDuration - videoInfo.frameSamplingInterval;
@@ -97,7 +98,7 @@ const ActiveFrameDetails: React.FunctionComponent<{
       const factor =
         (event.shiftKey ? 10 : 1) *
         (Number.parseInt(`${event.currentTarget.dataset.factor}`) ?? 1);
-      onActiveTimeOffsetChange((value) =>
+      setActiveTimeOffset((value) =>
         Math.min(
           Math.max(
             value + factor * videoInfo.frameSamplingInterval,
@@ -110,7 +111,7 @@ const ActiveFrameDetails: React.FunctionComponent<{
     [
       minAllowedTimeOffset,
       maxAllowedTimeOffset,
-      onActiveTimeOffsetChange,
+      setActiveTimeOffset,
       videoInfo.frameSamplingInterval,
     ],
   );

@@ -13,8 +13,6 @@ const Nobr = styled.span`
 `;
 
 const TabWithOverview: React.FunctionComponent<TabProps> = ({
-  activeTimeOffset,
-  onActiveTimeOffsetChange,
   videoInfo,
   active: hidden,
 }) => {
@@ -45,11 +43,7 @@ const TabWithOverview: React.FunctionComponent<TabProps> = ({
         <p>
           The <ExternalLink href={videoInfo.url}>video</ExternalLink> is split
           into segments based on{" "}
-          <TimeCode
-            timeOffset={referenceFrameTimeOffset}
-            isActive={activeTimeOffset === referenceFrameTimeOffset}
-            onActiveTimeOffsetChange={onActiveTimeOffsetChange}
-          />{" "}
+          <TimeCode timeOffset={referenceFrameTimeOffset} />{" "}
           as&nbsp;a&nbsp;reference
         </p>
       ) : null}

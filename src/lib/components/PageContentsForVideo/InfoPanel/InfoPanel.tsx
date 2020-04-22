@@ -29,28 +29,14 @@ const Wrapper = styled.div`
 `;
 
 interface InfoPanelProps {
-  activeTimeOffset: number;
-  onActiveTimeOffsetChange: React.Dispatch<React.SetStateAction<number>>;
   videoInfo: VideoInfo;
 }
 
-const InfoPanel: React.FunctionComponent<InfoPanelProps> = ({
-  videoInfo,
-  activeTimeOffset,
-  onActiveTimeOffsetChange,
-}) => {
+const InfoPanel: React.FunctionComponent<InfoPanelProps> = ({ videoInfo }) => {
   return (
     <Wrapper>
-      <ActiveFrameDetails
-        videoInfo={videoInfo}
-        activeTimeOffset={activeTimeOffset}
-        onActiveTimeOffsetChange={onActiveTimeOffsetChange}
-      />
-      <DetailsOnDemand
-        videoInfo={videoInfo}
-        onActiveTimeOffsetChange={onActiveTimeOffsetChange}
-        activeTimeOffset={activeTimeOffset}
-      />
+      <ActiveFrameDetails videoInfo={videoInfo} />
+      <DetailsOnDemand videoInfo={videoInfo} />
     </Wrapper>
   );
 };

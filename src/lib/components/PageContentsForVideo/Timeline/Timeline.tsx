@@ -15,8 +15,6 @@ const Wrapper = styled.div`
 `;
 
 export interface TimelineProps {
-  activeTimeOffset: number;
-  onActiveTimeOffsetChange: React.Dispatch<React.SetStateAction<number>>;
   videoInfo: VideoInfo;
 }
 

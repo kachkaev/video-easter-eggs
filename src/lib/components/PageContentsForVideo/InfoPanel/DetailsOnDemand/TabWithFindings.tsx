@@ -2,7 +2,7 @@ import _ from "lodash";
 import React from "react";
 import styled from "styled-components";
 
-import Wrapper from "../../../TimeCode";
+import TimeCode from "../../../TimeCode";
 import TabBody from "./components/TabBody";
 import EasterEggIcon from "./EasterEggIcon";
 import { TabProps } from "./types";
@@ -31,8 +31,6 @@ const StyledEasterEggIcon = styled(EasterEggIcon)`
 const TabWithFindings: React.FunctionComponent<TabProps> = ({
   videoInfo,
   active: hidden,
-  activeTimeOffset,
-  onActiveTimeOffsetChange,
 }) => {
   const findings = React.useMemo(() => {
     const nonLoopSections = videoInfo.labeledSections.filter(
@@ -51,12 +49,8 @@ const TabWithFindings: React.FunctionComponent<TabProps> = ({
           videoInfo.labeledEasterEggs.indexOf(finding) + 1;
         return (
           <EasterEgg key={index} data-time={finding.timeOffset}>
-            <Wrapper
-              timeOffset={finding.timeOffset}
-              isActive={finding.timeOffset === activeTimeOffset}
-              onActiveTimeOffsetChange={onActiveTimeOffsetChange}
-            />{" "}
-            ({Math.round(finding.timeDuration / 1000)} sec)
+            <TimeCode timeOffset={finding.timeOffset} /> (
+            {Math.round(finding.timeDuration / 1000)} sec)
             {easterEggIndexToDisplay > 0 ? (
               <EasterEggMark title={`Easter egg # ${easterEggIndexToDisplay}`}>
                 {" "}

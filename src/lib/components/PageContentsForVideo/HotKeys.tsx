@@ -6,18 +6,15 @@ import { useHotkeys } from "react-hotkeys-hook";
 import { VideoInfo } from "../../resources/videos";
 import { generateVideoUrl } from "../../ui";
 import { timeFormat } from "../styling";
+import { useActiveTimeOffset } from "./activeTimeOffset";
 
 interface HotKeysProps {
-  activeTimeOffset: number;
-  onActiveTimeOffsetChange: React.Dispatch<React.SetStateAction<number>>;
   videoInfo: VideoInfo;
 }
 
-const HotKeys: React.FunctionComponent<HotKeysProps> = ({
-  activeTimeOffset,
-  onActiveTimeOffsetChange,
-  videoInfo,
-}) => {
+const HotKeys: React.FunctionComponent<HotKeysProps> = ({ videoInfo }) => {
+  const { activeTimeOffset, setActiveTimeOffset } = useActiveTimeOffset();
+
   const activeSectionIndex = videoInfo.labeledSections.findIndex(
     (section) =>
       section.timeOffset <= activeTimeOffset &&
@@ -30,7 +27,7 @@ const HotKeys: React.FunctionComponent<HotKeysProps> = ({
       (event.shiftKey ? 10 : 1) *
       videoInfo.frameSamplingInterval *
       (event.key === "ArrowLeft" ? -1 : 1);
-    onActiveTimeOffsetChange((timeOffset) =>
+    setActiveTimeOffset((timeOffset) =>
       Math.min(
         Math.max(timeOffset + delta, 0),
         (Math.floor(
@@ -53,7 +50,7 @@ const HotKeys: React.FunctionComponent<HotKeysProps> = ({
         (videoInfo.labeledSections[activeSectionIndex]?.timeOffset ?? 0);
       const newSection = videoInfo.labeledSections[activeSectionIndex + delta];
       if (newSection) {
-        onActiveTimeOffsetChange(
+        setActiveTimeOffset(
           newSection.timeOffset +
             Math.min(
               activeTimeOffsetWithinActiveSection,
@@ -63,7 +60,7 @@ const HotKeys: React.FunctionComponent<HotKeysProps> = ({
       }
     },
     {},
-    [activeSectionIndex, activeTimeOffset, videoInfo],
+    [activeSectionIndex, activeTimeOffset, videoInfo, setActiveTimeOffset],
   );
 
   useHotkeys(

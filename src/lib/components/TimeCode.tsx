@@ -2,6 +2,7 @@ import { Duration } from "luxon";
 import React from "react";
 import styled from "styled-components";
 
+import { useActiveTimeOffset } from "./PageContentsForVideo/activeTimeOffset";
 import { activeTimeOffsetColor, baseColor, shortTimeFormat } from "./styling";
 
 const Wrapper = styled.span<{ isActive?: boolean }>`
@@ -23,19 +24,18 @@ const Wrapper = styled.span<{ isActive?: boolean }>`
 
 const TimeCode: React.FunctionComponent<{
   timeOffset: number;
-  isActive?: boolean;
-  onActiveTimeOffsetChange: React.Dispatch<React.SetStateAction<number>>;
-}> = ({ isActive, onActiveTimeOffsetChange, timeOffset }) => {
+}> = ({ timeOffset }) => {
+  const { activeTimeOffset, setActiveTimeOffset } = useActiveTimeOffset();
   const handleLiClick = React.useCallback(
     (event: React.MouseEvent<HTMLLIElement>) => {
       event.preventDefault();
-      onActiveTimeOffsetChange(timeOffset);
+      setActiveTimeOffset(timeOffset);
     },
-    [onActiveTimeOffsetChange, timeOffset],
+    [setActiveTimeOffset, timeOffset],
   );
 
   return (
-    <Wrapper isActive={isActive} onClick={handleLiClick}>
+    <Wrapper isActive={timeOffset === activeTimeOffset} onClick={handleLiClick}>
       {Duration.fromMillis(timeOffset).toFormat(shortTimeFormat)}
     </Wrapper>
   );

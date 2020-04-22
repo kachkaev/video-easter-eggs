@@ -82,6 +82,8 @@ const convertTimeToFrame = (
 interface SectionProps extends TimelineListElementData {
   style: React.CSSProperties;
   sectionIndex: number;
+  activeTimeOffset?: number;
+  onActiveTimeOffsetChange: React.Dispatch<React.SetStateAction<number>>;
 }
 
 const Section: React.FunctionComponent<SectionProps> = ({
