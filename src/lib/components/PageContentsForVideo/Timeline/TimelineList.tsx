@@ -4,6 +4,7 @@ import { FixedSizeList } from "react-window";
 import styled from "styled-components";
 
 import { VideoInfo } from "../../../resources/videos";
+import { useVizConfig } from "../vizConfig";
 import TimelineListElement from "./TimelineListElement";
 import { TimelineListElementData } from "./types";
 
@@ -44,6 +45,24 @@ const Timeline: React.FunctionComponent<TimelineProps> = ({
 
   const listRef = React.useRef<FixedSizeList>(null);
 
+  const {
+    vizConfig: { diffWithActiveSection },
+  } = useVizConfig();
+
+  const sectionToDiffIndex = React.useMemo(
+    () =>
+      diffWithActiveSection
+        ? videoInfo.labeledSections.findIndex(
+            (labeledSection) =>
+              activeTimeOffset >= labeledSection.timeOffset &&
+              activeTimeOffset <
+                labeledSection.timeOffset + labeledSection.timeDuration,
+          )
+        : -1,
+
+    [activeTimeOffset, diffWithActiveSection, videoInfo.labeledSections],
+  );
+
   const timelineListElementData: TimelineListElementData = {
     activeTimeOffset,
     frameStripeWidth,
@@ -51,6 +70,7 @@ const Timeline: React.FunctionComponent<TimelineProps> = ({
     maxLabeledSectionDuration,
     onActiveTimeOffsetChange,
     videoInfo,
+    sectionToDiffIndex,
   };
 
   const prevIndex = React.useRef(-1);

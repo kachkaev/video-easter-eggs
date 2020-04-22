@@ -3,6 +3,7 @@ import { useQuery } from "react-query";
 import styled from "styled-components";
 
 import { FrameStripe, VideoInfo } from "../../../resources/videos/types";
+import { extractHexColorDelta } from "./extractHexColorDelta";
 
 type QueryKey = [
   string,
@@ -25,18 +26,24 @@ const getFrameStripes = async (
 
 const sectionGroupSize = 30;
 
+/**
+ * @param sectionIndex can be -1 when applying against sectionToDiffIndex
+ */
 const useFrameStripes = (videoInfo: VideoInfo, sectionIndex: number) => {
   const firstSectionIndex =
     Math.floor(sectionIndex / sectionGroupSize) * sectionGroupSize;
-  const lastSectionIndex = Math.min(
-    firstSectionIndex + sectionGroupSize,
-    videoInfo.labeledSections.length - 1,
-  );
+  const lastSectionIndex =
+    sectionIndex >= 0
+      ? Math.min(
+          firstSectionIndex + sectionGroupSize,
+          videoInfo.labeledSections.length - 1,
+        )
+      : firstSectionIndex;
 
   const groupTimeDuration = React.useMemo(() => {
     let result = 0;
     for (let index = firstSectionIndex; index <= lastSectionIndex; index++) {
-      result += videoInfo.labeledSections[index].timeDuration;
+      result += videoInfo.labeledSections[index]?.timeDuration ?? 0;
     }
     return result;
   }, [videoInfo.labeledSections, firstSectionIndex, lastSectionIndex]);
@@ -44,13 +51,13 @@ const useFrameStripes = (videoInfo: VideoInfo, sectionIndex: number) => {
   const timeOffsetWithinGroup = React.useMemo(() => {
     let result = 0;
     for (let index = firstSectionIndex; index < sectionIndex; index++) {
-      result += videoInfo.labeledSections[index].timeDuration;
+      result += videoInfo.labeledSections[index]?.timeDuration ?? 0;
     }
     return result;
   }, [firstSectionIndex, sectionIndex, videoInfo.labeledSections]);
 
   const groupTimeOffset =
-    videoInfo.labeledSections[firstSectionIndex].timeOffset;
+    videoInfo.labeledSections[firstSectionIndex]?.timeOffset ?? 0;
 
   const groupFirstFrameOffset = Math.floor(
     groupTimeOffset / videoInfo.frameSamplingInterval,
@@ -59,6 +66,8 @@ const useFrameStripes = (videoInfo: VideoInfo, sectionIndex: number) => {
   const groupFrameCount = Math.floor(
     groupTimeDuration / videoInfo.frameSamplingInterval,
   );
+
+  const needsSkipping = groupFrameCount === 0 && groupFirstFrameOffset === 0;
 
   const result = useQuery<FrameStripe[], QueryKey>({
     queryKey: [
@@ -70,9 +79,12 @@ const useFrameStripes = (videoInfo: VideoInfo, sectionIndex: number) => {
       },
     ],
     queryFn: getFrameStripes,
+    config: {
+      manual: needsSkipping,
+    },
   });
 
-  if (!result.data) {
+  if (!result.data || needsSkipping) {
     return [];
   }
 
@@ -83,6 +95,7 @@ const useFrameStripes = (videoInfo: VideoInfo, sectionIndex: number) => {
     videoInfo.labeledSections[sectionIndex].timeDuration /
       videoInfo.frameSamplingInterval,
   );
+
   return result.data.slice(firstFrameIndex, firstFrameIndex + frameCount);
 };
 
@@ -97,17 +110,20 @@ export interface TimelineSectionBackgroundProps
   frameStripeWidth: number;
   videoInfo: VideoInfo;
   sectionIndex: number;
+  sectionToDiffIndex: number;
 }
 
 const TimelineSectionBackground: React.FunctionComponent<TimelineSectionBackgroundProps> = ({
   frameStripeWidth,
   videoInfo,
   sectionIndex,
+  sectionToDiffIndex,
   ...rest
 }) => {
   const canvasRef = React.useRef<HTMLCanvasElement>(null);
 
   const frameStripes = useFrameStripes(videoInfo, sectionIndex);
+  const frameStripesToDiff = useFrameStripes(videoInfo, sectionToDiffIndex);
 
   const canvasWidth =
     Math.round(
@@ -124,18 +140,40 @@ const TimelineSectionBackground: React.FunctionComponent<TimelineSectionBackgrou
     }
 
     ctx.clearRect(0, 0, canvasWidth, canvasHeight);
-    frameStripes.forEach((frameStripe, frameIndex) => {
-      frameStripe.forEach((colorHex, colorIndex) => {
-        ctx.fillStyle = `#${colorHex}`;
+    for (
+      let frameIndex = 0;
+      frameIndex < frameStripes.length;
+      frameIndex += 1
+    ) {
+      const frameStripe = frameStripes[frameIndex];
+      const frameStripeToDiff = frameStripesToDiff[frameIndex];
+      for (
+        let colorIndex = 0;
+        colorIndex < frameStripe.length;
+        colorIndex += 1
+      ) {
+        const hexColorCode = frameStripeToDiff?.[colorIndex]
+          ? extractHexColorDelta(
+              frameStripe[colorIndex],
+              frameStripeToDiff[colorIndex],
+            )
+          : frameStripe[colorIndex];
+        ctx.fillStyle = `#${hexColorCode}`;
         ctx.fillRect(
           frameIndex * frameStripeWidth,
           colorIndex,
           frameStripeWidth,
           1,
         );
-      });
-    });
-  }, [frameStripes, canvasWidth, frameStripeWidth, canvasHeight]);
+      }
+    }
+  }, [
+    frameStripes,
+    frameStripesToDiff,
+    canvasWidth,
+    frameStripeWidth,
+    canvasHeight,
+  ]);
 
   return (
     <Canvas

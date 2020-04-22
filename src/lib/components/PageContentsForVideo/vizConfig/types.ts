@@ -1,6 +1,6 @@
 export interface VizConfig {
   highlightEasterEggs: boolean;
-  subtractActiveSection: boolean;
+  diffWithActiveSection: boolean;
 }
 
 export interface VizConfigContextValue {

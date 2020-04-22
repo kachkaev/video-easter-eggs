@@ -87,6 +87,7 @@ interface SectionProps extends TimelineListElementData {
 const Section: React.FunctionComponent<SectionProps> = ({
   style,
   sectionIndex,
+  sectionToDiffIndex,
   activeTimeOffset,
   frameStripeWidth,
   maxLabeledSectionDuration,
@@ -192,6 +193,7 @@ const Section: React.FunctionComponent<SectionProps> = ({
       <TimelineSectionBackground
         videoInfo={videoInfo}
         sectionIndex={sectionIndex}
+        sectionToDiffIndex={sectionToDiffIndex}
         frameStripeWidth={frameStripeWidth}
         style={{
           left: paddingLeft + hourMarkWidth,

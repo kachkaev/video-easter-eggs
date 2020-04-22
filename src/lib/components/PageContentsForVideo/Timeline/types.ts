@@ -9,4 +9,5 @@ export interface TimelineListElementData {
   onActiveTimeOffsetChange: React.Dispatch<React.SetStateAction<number>>;
   videoInfo: VideoInfo;
   dummyElementCountAtStart: number;
+  sectionToDiffIndex: number;
 }

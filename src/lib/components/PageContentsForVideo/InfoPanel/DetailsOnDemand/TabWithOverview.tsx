@@ -69,14 +69,14 @@ const TabWithOverview: React.FunctionComponent<TabProps> = ({
           onChange={handleCheckboxClick}
           label="highlight Easter eggs"
         />
-        {/* <Checkbox
-          checked={vizConfig.subtractActiveSection}
-          id="subtractActiveSection"
+        <Checkbox
+          checked={vizConfig.diffWithActiveSection}
+          id="diffWithActiveSection"
           onChange={handleCheckboxClick}
-          label="subtract current section"
+          label="diff with active section"
         />
         <br />
-        &nbsp;&nbsp;&nbsp;&nbsp;(helps spot Easter eggs) */}
+        &nbsp;&nbsp;&nbsp;&nbsp;(helps spot Easter eggs)
       </p>
     </TabBody>
   );

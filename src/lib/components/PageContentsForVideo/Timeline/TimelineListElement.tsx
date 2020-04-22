@@ -14,7 +14,7 @@ const TimelineListElement: React.FunctionComponent<TimelineListElementProps> = (
   index,
   data,
 }) => {
-  const { videoInfo, activeTimeOffset } = data;
+  const { videoInfo, activeTimeOffset, sectionToDiffIndex } = data;
   const sectionIndex = index - data.dummyElementCountAtStart;
   const { timeOffset = -1, timeDuration = 0 } =
     videoInfo.labeledSections[sectionIndex] ?? {};
@@ -40,6 +40,7 @@ const TimelineListElement: React.FunctionComponent<TimelineListElementProps> = (
     <Section
       style={memoizedStyle}
       sectionIndex={sectionIndex}
+      sectionToDiffIndex={sectionToDiffIndex}
       {...data}
       activeTimeOffset={activeTimeOffsetToPass}
     />

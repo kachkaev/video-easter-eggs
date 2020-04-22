@@ -6,7 +6,7 @@ import VizConfigContext from "./VizConfigContext";
 const VizConfigProvider: React.FunctionComponent = ({ children }) => {
   const [vizConfig, setVizConfig] = React.useState<VizConfig>({
     highlightEasterEggs: true,
-    subtractActiveSection: false,
+    diffWithActiveSection: false,
   });
 
   const providerValue = React.useMemo<VizConfigContextValue>(
