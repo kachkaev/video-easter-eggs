@@ -3,16 +3,13 @@ import { Duration } from "luxon";
 import React from "react";
 import { useHotkeys } from "react-hotkeys-hook";
 
-import { VideoInfo } from "../../resources/videos";
 import { generateVideoUrl } from "../../ui";
 import { timeFormat } from "../styling";
 import { useActiveTimeOffset } from "./activeTimeOffset";
+import { useVideoInfo } from "./videoInfo";
 
-interface HotKeysProps {
-  videoInfo: VideoInfo;
-}
-
-const HotKeys: React.FunctionComponent<HotKeysProps> = ({ videoInfo }) => {
+const HotKeys: React.FunctionComponent<{ children?: never }> = () => {
+  const videoInfo = useVideoInfo();
   const { activeTimeOffset, setActiveTimeOffset } = useActiveTimeOffset();
 
   const activeSectionIndex = videoInfo.labeledSections.findIndex(

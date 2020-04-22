@@ -3,6 +3,7 @@ import React from "react";
 import styled from "styled-components";
 
 import TimeCode from "../../../TimeCode";
+import { useVideoInfo } from "../../videoInfo";
 import TabBody from "./components/TabBody";
 import EasterEggIcon from "./EasterEggIcon";
 import { TabProps } from "./types";
@@ -29,9 +30,9 @@ const StyledEasterEggIcon = styled(EasterEggIcon)`
 `;
 
 const TabWithFindings: React.FunctionComponent<TabProps> = ({
-  videoInfo,
   active: hidden,
 }) => {
+  const videoInfo = useVideoInfo();
   const findings = React.useMemo(() => {
     const nonLoopSections = videoInfo.labeledSections.filter(
       (labeledSection) => labeledSection.label !== "loop",

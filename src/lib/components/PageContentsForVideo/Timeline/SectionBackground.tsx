@@ -3,6 +3,7 @@ import { useQuery } from "react-query";
 import styled from "styled-components";
 
 import { FrameStripe, VideoInfo } from "../../../resources/videos/types";
+import { useVideoInfo } from "../videoInfo";
 import { extractHexColorDelta } from "./extractHexColorDelta";
 
 type QueryKey = [
@@ -108,20 +109,18 @@ const Canvas = styled.canvas`
 export interface TimelineSectionBackgroundProps
   extends React.CanvasHTMLAttributes<HTMLCanvasElement> {
   frameStripeWidth: number;
-  videoInfo: VideoInfo;
   sectionIndex: number;
   sectionToDiffIndex: number;
 }
 
 const TimelineSectionBackground: React.FunctionComponent<TimelineSectionBackgroundProps> = ({
   frameStripeWidth,
-  videoInfo,
   sectionIndex,
   sectionToDiffIndex,
   ...rest
 }) => {
   const canvasRef = React.useRef<HTMLCanvasElement>(null);
-
+  const videoInfo = useVideoInfo();
   const frameStripes = useFrameStripes(videoInfo, sectionIndex);
   const frameStripesToDiff = useFrameStripes(
     videoInfo,

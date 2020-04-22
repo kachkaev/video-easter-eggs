@@ -1,13 +1,14 @@
 import React from "react";
 
 import ExternalLink from "../../../ExternalLink";
+import { useVideoInfo } from "../../videoInfo";
 import TabBody from "./components/TabBody";
 import { TabProps } from "./types";
 
 const TabWithOverview: React.FunctionComponent<TabProps> = ({
-  videoInfo,
   active: hidden,
 }) => {
+  const videoInfo = useVideoInfo();
   return (
     <TabBody active={hidden}>
       <p style={{ whiteSpace: "nowrap" }}>

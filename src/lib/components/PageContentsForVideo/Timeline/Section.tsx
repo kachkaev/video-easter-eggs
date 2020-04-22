@@ -8,6 +8,7 @@ import {
   baseColor,
   easterEggMarkColor,
 } from "../../styling";
+import { useVideoInfo } from "../videoInfo";
 import { useVizConfig } from "../vizConfig";
 import TimelineSectionBackground from "./SectionBackground";
 import { TimelineListElementData } from "./types";
@@ -94,8 +95,8 @@ const Section: React.FunctionComponent<SectionProps> = ({
   frameStripeWidth,
   maxLabeledSectionDuration,
   onActiveTimeOffsetChange,
-  videoInfo,
 }) => {
+  const videoInfo = useVideoInfo();
   const { timeOffset, timeDuration } = videoInfo.labeledSections[sectionIndex];
   const {
     vizConfig: { highlightEasterEggs },
@@ -193,7 +194,6 @@ const Section: React.FunctionComponent<SectionProps> = ({
         </>
       ) : null}
       <TimelineSectionBackground
-        videoInfo={videoInfo}
         sectionIndex={sectionIndex}
         sectionToDiffIndex={sectionToDiffIndex}
         frameStripeWidth={frameStripeWidth}

@@ -2,11 +2,11 @@ import { Duration } from "luxon";
 import React from "react";
 import styled from "styled-components";
 
-import { VideoInfo } from "../../../resources/videos/types";
 import { generateFramePreviewUrl, generateVideoUrl } from "../../../ui";
 import ExternalLink from "../../ExternalLink";
 import { baseColor, mobileMedia, timeFormat } from "../../styling";
 import { useActiveTimeOffset } from "../activeTimeOffset";
+import { useVideoInfo } from "../videoInfo";
 import PlayIcon from "./PlayIcon";
 
 const Wrapper = styled.div`
@@ -84,8 +84,9 @@ const TimeCode = styled.div`
 `;
 
 const ActiveFrameDetails: React.FunctionComponent<{
-  videoInfo: VideoInfo;
-}> = ({ videoInfo }) => {
+  children?: never;
+}> = () => {
+  const videoInfo = useVideoInfo();
   const { activeTimeOffset, setActiveTimeOffset } = useActiveTimeOffset();
 
   const minAllowedTimeOffset = 0;

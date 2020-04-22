@@ -2,8 +2,6 @@ import dynamic from "next/dynamic";
 import React from "react";
 import styled from "styled-components";
 
-import { VideoInfo } from "../../../resources/videos";
-
 const TimelineList = dynamic(() => import("./TimelineList"), { ssr: false });
 
 const Wrapper = styled.div`
@@ -14,14 +12,10 @@ const Wrapper = styled.div`
   position: relative;
 `;
 
-export interface TimelineProps {
-  videoInfo: VideoInfo;
-}
-
-const Timeline: React.FunctionComponent<TimelineProps> = (props) => {
+const Timeline: React.FunctionComponent<{ children?: never }> = () => {
   return (
     <Wrapper>
-      <TimelineList {...props} />
+      <TimelineList />
     </Wrapper>
   );
 };

@@ -3,8 +3,8 @@ import { useSize } from "react-use";
 import { FixedSizeList } from "react-window";
 import styled from "styled-components";
 
-import { VideoInfo } from "../../../resources/videos";
 import { useActiveTimeOffset } from "../activeTimeOffset";
+import { useVideoInfo } from "../videoInfo";
 import { useVizConfig } from "../vizConfig";
 import TimelineListElement from "./TimelineListElement";
 import { TimelineListElementData } from "./types";
@@ -21,11 +21,8 @@ const frameStripeWidth = 2;
 const dummyElementCountAtStart = 2;
 const dummyElementCountAtEnd = 2;
 
-export interface TimelineProps {
-  videoInfo: VideoInfo;
-}
-
-const Timeline: React.FunctionComponent<TimelineProps> = ({ videoInfo }) => {
+const Timeline: React.FunctionComponent<{ children?: never }> = () => {
+  const videoInfo = useVideoInfo();
   const { activeTimeOffset } = useActiveTimeOffset();
   const { labeledSections } = videoInfo;
 
@@ -64,7 +61,6 @@ const Timeline: React.FunctionComponent<TimelineProps> = ({ videoInfo }) => {
     frameStripeWidth,
     maxLabeledSectionDuration,
     sectionToDiffIndex,
-    videoInfo,
   };
 
   const prevIndex = React.useRef(-1);

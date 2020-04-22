@@ -1,7 +1,6 @@
 import React from "react";
 import styled from "styled-components";
 
-import { VideoInfo } from "../../../resources/videos/types";
 import { mobileMedia } from "../../styling";
 import ActiveFrameDetails from "./ActiveFrameDetails";
 import DetailsOnDemand from "./DetailsOnDemand";
@@ -28,15 +27,11 @@ const Wrapper = styled.div`
   }
 `;
 
-interface InfoPanelProps {
-  videoInfo: VideoInfo;
-}
-
-const InfoPanel: React.FunctionComponent<InfoPanelProps> = ({ videoInfo }) => {
+const InfoPanel: React.FunctionComponent<{ children?: never }> = () => {
   return (
     <Wrapper>
-      <ActiveFrameDetails videoInfo={videoInfo} />
-      <DetailsOnDemand videoInfo={videoInfo} />
+      <ActiveFrameDetails />
+      <DetailsOnDemand />
     </Wrapper>
   );
 };

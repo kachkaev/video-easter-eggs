@@ -1,7 +1,6 @@
 import React from "react";
 import styled from "styled-components";
 
-import { VideoInfo } from "../../../../resources/videos/types";
 import { baseColor, mobileMedia } from "../../../styling";
 import TabWithFindings from "./TabWithFindings";
 import TabWithLinks from "./TabWithLinks";
@@ -69,10 +68,6 @@ const TabBodyContainer = styled.div`
   overflow: hidden;
 `;
 
-export interface DetailsOnDemandProps {
-  videoInfo: VideoInfo;
-}
-
 const tabMaterialLookup = {
   overview: { name: "overview", Body: TabWithOverview },
   findings: { name: "findings", Body: TabWithFindings },
@@ -81,9 +76,7 @@ const tabMaterialLookup = {
 
 const defaultTab = Object.keys(tabMaterialLookup)[0];
 
-const DetailsOnDemand: React.FunctionComponent<DetailsOnDemandProps> = (
-  props,
-) => {
+const DetailsOnDemand: React.FunctionComponent<{ children?: never }> = () => {
   const [activeTab, setActiveTab] = React.useState(defaultTab);
 
   const handleTabNameClick = React.useCallback(
@@ -113,7 +106,7 @@ const DetailsOnDemand: React.FunctionComponent<DetailsOnDemandProps> = (
       </TabNameContainer>
       <TabBodyContainer>
         {Object.entries(tabMaterialLookup).map(([key, { Body }]) => (
-          <Body key={key} {...props} active={activeTab === key} />
+          <Body key={key} active={activeTab === key} />
         ))}
       </TabBodyContainer>
     </Wrapper>

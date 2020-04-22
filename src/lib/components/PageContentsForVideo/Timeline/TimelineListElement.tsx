@@ -1,6 +1,7 @@
 import React from "react";
 
 import { useActiveTimeOffset } from "../activeTimeOffset";
+import { useVideoInfo } from "../videoInfo";
 import Section from "./Section";
 import { TimelineListElementData } from "./types";
 
@@ -15,8 +16,9 @@ const TimelineListElement: React.FunctionComponent<TimelineListElementProps> = (
   index,
   data,
 }) => {
+  const videoInfo = useVideoInfo();
   const { activeTimeOffset, setActiveTimeOffset } = useActiveTimeOffset();
-  const { videoInfo, sectionToDiffIndex } = data;
+  const { sectionToDiffIndex } = data;
   const sectionIndex = index - data.dummyElementCountAtStart;
   const { timeOffset = -1, timeDuration = 0 } =
     videoInfo.labeledSections[sectionIndex] ?? {};

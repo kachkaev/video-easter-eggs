@@ -3,6 +3,7 @@ import styled from "styled-components";
 
 import ExternalLink from "../../../ExternalLink";
 import TimeCode from "../../../TimeCode";
+import { useVideoInfo } from "../../videoInfo";
 import { useVizConfig } from "../../vizConfig";
 import Checkbox from "./components/Checkbox";
 import TabBody from "./components/TabBody";
@@ -13,9 +14,9 @@ const Nobr = styled.span`
 `;
 
 const TabWithOverview: React.FunctionComponent<TabProps> = ({
-  videoInfo,
   active: hidden,
 }) => {
+  const videoInfo = useVideoInfo();
   const referenceFrameTimeOffset =
     videoInfo.sectionLabeling?.referenceFrameTimeOffset;
 

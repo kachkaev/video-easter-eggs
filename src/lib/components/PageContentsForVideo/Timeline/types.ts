@@ -1,9 +1,6 @@
-import { VideoInfo } from "../../../resources/videos";
-
 export interface TimelineListElementData {
+  dummyElementCountAtStart: number;
   frameStripeWidth: number;
   maxLabeledSectionDuration: number;
-  videoInfo: VideoInfo;
-  dummyElementCountAtStart: number;
   sectionToDiffIndex: number;
 }
