@@ -7,6 +7,7 @@ interface CheckboxProps extends React.HTMLProps<HTMLInputElement> {
 
 const CheckboxWrapper = styled.span`
   white-space: nowrap;
+  display: block;
 `;
 
 const Checkbox: React.FunctionComponent<CheckboxProps> = ({
