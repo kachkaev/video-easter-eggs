@@ -8,7 +8,7 @@ export const autoStartCommandIfNeeded = async (
   fileName: string,
 ): Promise<void> => {
   const logger = console;
-  if ((process.mainModule || ({} as any)).filename === fileName) {
+  if (require.main?.filename === fileName) {
     try {
       configureExitOnUnhandledRejection();
       await command({ logger });
