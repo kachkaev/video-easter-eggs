@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-import GlobalStyle from "./components/GlobalStyle";
+import GlobalStyle from "./GlobalStyle";
 
 const Container = styled.div``;
 

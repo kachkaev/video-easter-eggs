@@ -1,7 +1,7 @@
 import { createGlobalStyle, css } from "styled-components";
 import normalize from "styled-normalize";
 
-import { baseColor } from "../../shared/styling";
+import { baseColor } from "../shared/styling";
 
 const base = css`
   body {
