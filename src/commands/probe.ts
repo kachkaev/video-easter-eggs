@@ -1,9 +1,9 @@
 import chalk from "chalk";
 
-import { autoStartCommandIfNeeded, Command } from "../lib/commands";
-import { logProblemsAndMessage } from "../lib/commands/logProblemsAndMessage";
-import { fileMappingMaterialLookup } from "../lib/fileMappings";
-import { initProblems } from "../lib/problems";
+import { autoStartCommandIfNeeded, Command } from "../shared/commands";
+import { logProblemsAndMessage } from "../shared/commands/logProblemsAndMessage";
+import { fileMappingMaterialLookup } from "../shared/fileMappings";
+import { initProblems } from "../shared/problems";
 
 const command: Command = async (context) => {
   const { logger } = context;

@@ -2,10 +2,10 @@ import _ from "lodash";
 import React from "react";
 import styled from "styled-components";
 
-import TimeCode from "../../../TimeCode";
+import TimeCode from "../../../shared/TimeCode";
 import { useVideoInfo } from "../../videoInfo";
-import TabBody from "./components/TabBody";
 import EasterEggIcon from "./EasterEggIcon";
+import TabBody from "./shared/TabBody";
 import { TabProps } from "./types";
 
 const EasterEgg = styled.div`

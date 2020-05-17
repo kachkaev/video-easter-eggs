@@ -1,8 +1,8 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import path from "path";
 
-import { getApiResourceStorage } from "../../../../../../../lib/io/api";
-import { getResolvedPathToVideoResource } from "../../../../../../../lib/resources/videos/helpers";
+import { getApiResourceStorage } from "../../../../../../../shared/io/api";
+import { getResolvedPathToVideoResource } from "../../../../../../../shared/resources/videos/helpers";
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   const videoId = `${req.query.videoId}`;

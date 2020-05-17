@@ -3,8 +3,8 @@ import { Duration } from "luxon";
 import React from "react";
 import { useHotkeys } from "react-hotkeys-hook";
 
-import { generateVideoUrl } from "../../ui";
-import { timeFormat } from "../styling";
+import { generateVideoUrl } from "../shared/generateVideoUrl";
+import { timeFormat } from "../shared/styling";
 import { useActiveTimeOffset } from "./activeTimeOffset";
 import { useVideoInfo } from "./videoInfo";
 

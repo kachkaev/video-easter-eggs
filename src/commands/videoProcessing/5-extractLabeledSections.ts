@@ -4,15 +4,15 @@ import {
   autoStartCommandIfNeeded,
   Command,
   CommandError,
-} from "../../lib/commands";
-import { getVideoProcessingConfig } from "../../lib/envBasedConfigs";
+} from "../../shared/commands";
+import { getVideoProcessingConfig } from "../../shared/envBasedConfigs";
 import {
   FrameStripe,
   LabeledAnnotation,
   videoResourceMaterialLookup,
-} from "../../lib/resources/videos";
-import { calculateProcessedTimeDuration } from "../../lib/resources/videos/helpers";
-import { resourceStorageLookup } from "../../lib/resourceStorages";
+} from "../../shared/resources/videos";
+import { calculateProcessedTimeDuration } from "../../shared/resources/videos/helpers";
+import { resourceStorageLookup } from "../../shared/resourceStorages";
 
 const calculateStripeDifference = (fs1: FrameStripe, fs2: FrameStripe) => {
   let maxChannelDifference = 0;

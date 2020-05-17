@@ -2,10 +2,10 @@ import chalk from "chalk";
 import _ from "lodash";
 import { Duration } from "luxon";
 
-import { autoStartCommandIfNeeded, Command } from "../../lib/commands";
-import { getVideoProcessingConfig } from "../../lib/envBasedConfigs";
-import { videoResourceMaterialLookup } from "../../lib/resources/videos";
-import { resourceStorageLookup } from "../../lib/resourceStorages";
+import { autoStartCommandIfNeeded, Command } from "../../shared/commands";
+import { getVideoProcessingConfig } from "../../shared/envBasedConfigs";
+import { videoResourceMaterialLookup } from "../../shared/resources/videos";
+import { resourceStorageLookup } from "../../shared/resourceStorages";
 
 const command: Command = async (context) => {
   const { logger } = context;

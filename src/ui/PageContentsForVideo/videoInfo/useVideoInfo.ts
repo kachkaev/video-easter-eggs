@@ -1,6 +1,6 @@
 import React from "react";
 
-import { VideoInfo } from "../../../resources/videos";
+import { VideoInfo } from "../../../shared/resources/videos";
 import VideoInfoContext from "./VideoInfoContext";
 
 export const useVideoInfo = (): VideoInfo => {

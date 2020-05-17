@@ -3,9 +3,9 @@ import ErrorPage from "next/error";
 import Head from "next/head";
 import React from "react";
 
-import PageContentsForVideo from "../lib/components/PageContentsForVideo";
-import { getVideoInfo } from "../lib/io/api";
-import { VideoInfo } from "../lib/resources/videos";
+import { getVideoInfo } from "../shared/io/api";
+import { VideoInfo } from "../shared/resources/videos";
+import PageContentsForVideo from "../ui/PageContentsForVideo";
 
 const VideoPage: NextPage<{
   videoInfo?: VideoInfo;

@@ -1,12 +1,12 @@
 import React from "react";
 import styled from "styled-components";
 
-import ExternalLink from "../../../ExternalLink";
-import TimeCode from "../../../TimeCode";
+import ExternalLink from "../../../shared/ExternalLink";
+import TimeCode from "../../../shared/TimeCode";
 import { useVideoInfo } from "../../videoInfo";
 import { useVizConfig } from "../../vizConfig";
-import Checkbox from "./components/Checkbox";
-import TabBody from "./components/TabBody";
+import Checkbox from "./shared/Checkbox";
+import TabBody from "./shared/TabBody";
 import { TabProps } from "./types";
 
 const Nobr = styled.span`

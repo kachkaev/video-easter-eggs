@@ -5,7 +5,7 @@ import {
   ReactQueryProviderConfig,
 } from "react-query";
 
-import PageLayout from "../lib/components/PageLayout";
+import PageLayout from "../ui/PageLayout";
 
 const queryConfig: ReactQueryProviderConfig = {
   cacheTime: Number.POSITIVE_INFINITY,

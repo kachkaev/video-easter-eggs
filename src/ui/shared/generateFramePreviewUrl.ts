@@ -1,5 +1,7 @@
-import { getResolvedPathToTimeOffsetDependentVideoResource } from "../resources/videos/helpers";
-import { VideoInfo } from "../resources/videos/types";
+import {
+  getResolvedPathToTimeOffsetDependentVideoResource,
+  VideoInfo,
+} from "../../shared/resources/videos";
 
 export const generateFramePreviewUrl = (
   videoInfo: VideoInfo,

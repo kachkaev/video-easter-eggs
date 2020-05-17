@@ -5,19 +5,19 @@ import {
   autoStartCommandIfNeeded,
   Command,
   CommandError,
-} from "../../lib/commands";
+} from "../../shared/commands";
 import {
   getLocalResourceStorageConfig,
   getVideoProcessingConfig,
-} from "../../lib/envBasedConfigs";
+} from "../../shared/envBasedConfigs";
 import {
   BaseFileMapping,
   fileMappingMaterialLookup,
   processFileMappings,
-} from "../../lib/fileMappings";
-import { videoResourceMaterialLookup } from "../../lib/resources/videos";
-import { calculateProcessedTimeDuration } from "../../lib/resources/videos/helpers";
-import { resourceStorageLookup } from "../../lib/resourceStorages";
+} from "../../shared/fileMappings";
+import { videoResourceMaterialLookup } from "../../shared/resources/videos";
+import { calculateProcessedTimeDuration } from "../../shared/resources/videos/helpers";
+import { resourceStorageLookup } from "../../shared/resourceStorages";
 
 const command: Command = async (context) => {
   const { logger } = context;

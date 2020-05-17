@@ -1,13 +1,13 @@
 import chalk from "chalk";
 
-import { autoStartCommandIfNeeded, Command } from "../../lib/commands";
-import { getVideoProcessingConfig } from "../../lib/envBasedConfigs";
+import { autoStartCommandIfNeeded, Command } from "../../shared/commands";
+import { getVideoProcessingConfig } from "../../shared/envBasedConfigs";
 import {
   FrameStripe,
   videoResourceMaterialLookup,
-} from "../../lib/resources/videos";
-import { calculateProcessedTimeDuration } from "../../lib/resources/videos/helpers";
-import { resourceStorageLookup } from "../../lib/resourceStorages";
+} from "../../shared/resources/videos";
+import { calculateProcessedTimeDuration } from "../../shared/resources/videos/helpers";
+import { resourceStorageLookup } from "../../shared/resourceStorages";
 
 const command: Command = async (context) => {
   const { logger } = context;

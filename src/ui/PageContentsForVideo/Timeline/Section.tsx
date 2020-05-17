@@ -2,12 +2,12 @@ import { Duration } from "luxon";
 import React from "react";
 import styled from "styled-components";
 
-import { LabeledAnnotation } from "../../../resources/videos/types";
+import { LabeledAnnotation } from "../../../shared/resources/videos";
 import {
   activeTimeOffsetColor,
   baseColor,
   easterEggMarkColor,
-} from "../../styling";
+} from "../../shared/styling";
 import { useVideoInfo } from "../videoInfo";
 import { useVizConfig } from "../vizConfig";
 import TimelineSectionBackground from "./SectionBackground";

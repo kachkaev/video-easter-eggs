@@ -1,8 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 
-import { VideoInfo } from "../../resources/videos/types";
-import { mobileMedia } from "../styling";
+import { VideoInfo } from "../../shared/resources/videos";
+import { mobileMedia } from "../shared/styling";
 import ActiveTimeOffsetProvider from "./activeTimeOffset/ActiveTimeOffsetProvider";
 import HotKeys from "./HotKeys";
 import InfoPanel from "./InfoPanel";

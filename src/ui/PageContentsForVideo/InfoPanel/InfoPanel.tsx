@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-import { mobileMedia } from "../../styling";
+import { mobileMedia } from "../../shared/styling";
 import ActiveFrameDetails from "./ActiveFrameDetails";
 import DetailsOnDemand from "./DetailsOnDemand";
 

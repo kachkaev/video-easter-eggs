@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-import { baseColor, mobileMedia } from "../../../styling";
+import { baseColor, mobileMedia } from "../../../shared/styling";
 import TabWithFindings from "./TabWithFindings";
 import TabWithLinks from "./TabWithLinks";
 import TabWithOverview from "./TabWithOverview";

@@ -2,9 +2,10 @@ import { Duration } from "luxon";
 import React from "react";
 import styled from "styled-components";
 
-import { generateFramePreviewUrl, generateVideoUrl } from "../../../ui";
-import ExternalLink from "../../ExternalLink";
-import { baseColor, mobileMedia, timeFormat } from "../../styling";
+import ExternalLink from "../../shared/ExternalLink";
+import { generateFramePreviewUrl } from "../../shared/generateFramePreviewUrl";
+import { generateVideoUrl } from "../../shared/generateVideoUrl";
+import { baseColor, mobileMedia, timeFormat } from "../../shared/styling";
 import { useActiveTimeOffset } from "../activeTimeOffset";
 import { useVideoInfo } from "../videoInfo";
 import PlayIcon from "./PlayIcon";

@@ -2,7 +2,7 @@ import { Duration } from "luxon";
 import React from "react";
 import styled from "styled-components";
 
-import { useActiveTimeOffset } from "./PageContentsForVideo/activeTimeOffset";
+import { useActiveTimeOffset } from "../PageContentsForVideo/activeTimeOffset";
 import { activeTimeOffsetColor, baseColor, shortTimeFormat } from "./styling";
 
 const Wrapper = styled.span<{ isActive?: boolean }>`

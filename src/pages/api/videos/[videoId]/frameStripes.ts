@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
 
-import { getApiResourceStorage } from "../../../../lib/io/api";
-import { videoResourceMaterialLookup } from "../../../../lib/resources/videos";
+import { getApiResourceStorage } from "../../../../shared/io/api";
+import { videoResourceMaterialLookup } from "../../../../shared/resources/videos";
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   const videoId = `${req.query.videoId}`;

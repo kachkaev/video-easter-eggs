@@ -1,8 +1,8 @@
 import React from "react";
 
-import ExternalLink from "../../../ExternalLink";
+import ExternalLink from "../../../shared/ExternalLink";
 import { useVideoInfo } from "../../videoInfo";
-import TabBody from "./components/TabBody";
+import TabBody from "./shared/TabBody";
 import { TabProps } from "./types";
 
 const TabWithOverview: React.FunctionComponent<TabProps> = ({
