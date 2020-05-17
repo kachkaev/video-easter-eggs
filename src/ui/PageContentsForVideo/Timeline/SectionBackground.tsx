@@ -2,7 +2,7 @@ import React from "react";
 import { useQuery } from "react-query";
 import styled from "styled-components";
 
-import { FrameStripe, VideoInfo } from "../../../shared/resources/videos";
+import { FrameStripe, VideoInfo } from "../../../shared/resources/videos/types";
 import { useVideoInfo } from "../videoInfo";
 import { extractHexColorDelta } from "./extractHexColorDelta";
 

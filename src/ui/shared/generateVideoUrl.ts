@@ -1,4 +1,4 @@
-import { VideoInfo } from "../../shared/resources/videos";
+import { VideoInfo } from "../../shared/resources/videos/types";
 
 export const generateVideoUrl = (videoInfo: VideoInfo, timeOffset?: number) => {
   let result = videoInfo.urlOfCommentWithTimeCodes || videoInfo.url;

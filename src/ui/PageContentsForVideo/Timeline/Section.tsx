@@ -2,7 +2,7 @@ import { Duration } from "luxon";
 import React from "react";
 import styled from "styled-components";
 
-import { LabeledAnnotation } from "../../../shared/resources/videos";
+import { LabeledAnnotation } from "../../../shared/resources/videos/types";
 import {
   activeTimeOffsetColor,
   baseColor,

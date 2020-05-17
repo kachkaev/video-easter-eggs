@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-import { VideoInfo } from "../../shared/resources/videos";
+import { VideoInfo } from "../../shared/resources/videos/types";
 import { mobileMedia } from "../shared/styling";
 import ActiveTimeOffsetProvider from "./activeTimeOffset/ActiveTimeOffsetProvider";
 import HotKeys from "./HotKeys";
