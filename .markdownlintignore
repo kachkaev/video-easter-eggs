@@ -1,13 +1,7 @@
 ## extensions
 *.*
-!*.js
-!*.json
+LICENSE
 !*.md
-!*.ts
-!*.tsx
-!*.yml
-
-!/.github/
 
 
 ## same as in .gitignore
