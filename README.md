@@ -4,7 +4,7 @@
 
 A [visual analytics](https://en.wikipedia.org/wiki/Visual_analytics) tool for finding [Easter eggs](<https://en.wikipedia.org/wiki/Easter_egg_(media)>) in videos
 
-- inspired by https://youtu.be/6g82FwQfpGc
+- inspired by <https://youtu.be/6g82FwQfpGc>
 - deployed to [video-easter-eggs.now.sh](https://video-easter-eggs.now.sh)
 
 ## Working locally
@@ -55,7 +55,7 @@ A [visual analytics](https://en.wikipedia.org/wiki/Visual_analytics) tool for fi
 
 1.  Navigate to your video page, e.g.:
 
-    ```
+    ```txt
     http://localhost:3000/my-test-video
     ```
 
