@@ -1,11 +1,9 @@
 import chalk from "chalk";
 
-import {
-  BaseProblem,
-  dumpProblems,
-  filterProblemsBySeverity,
-} from "../problems";
-import { CommandError } from "./types";
+import { CommandError } from "../commands/types";
+import { dumpProblems } from "./dumpProblems";
+import { filterProblemsBySeverity } from "./filterBySeverity";
+import { BaseProblem } from "./types";
 
 interface Options {
   throwOnErrors?: boolean;
