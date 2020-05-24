@@ -1,12 +1,12 @@
-import chalk from "chalk";
-import globby from "globby";
-import path from "path";
-
 import {
   autoStartCommandIfNeeded,
   Command,
   CommandError,
-} from "../../shared/commands";
+} from "@kachkaev/commands";
+import chalk from "chalk";
+import globby from "globby";
+import path from "path";
+
 import { getVideoProcessingConfig } from "../../shared/envBasedConfigs";
 import {
   BaseFileMapping,

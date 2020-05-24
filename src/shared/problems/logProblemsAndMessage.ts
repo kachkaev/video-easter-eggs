@@ -1,6 +1,6 @@
+import { CommandError } from "@kachkaev/commands";
 import chalk from "chalk";
 
-import { CommandError } from "../commands/types";
 import { dumpProblems } from "./dumpProblems";
 import { filterProblemsBySeverity } from "./filterBySeverity";
 import { BaseProblem } from "./types";

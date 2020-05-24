@@ -1,11 +1,10 @@
+import { autoStartCommandIfNeeded, Command } from "@kachkaev/commands";
 import chalk from "chalk";
 
-import { autoStartCommandIfNeeded, Command } from "../shared/commands";
 import { fileMappingMaterialLookup } from "../shared/fileMappings";
 import { initProblems, logProblemsAndMessage } from "../shared/problems";
 
-const command: Command = async (context) => {
-  const { logger } = context;
+const command: Command = async ({ logger }) => {
   logger.log(chalk.green("Probing project functionality..."));
 
   const [getProblems, reportProblem] = initProblems();

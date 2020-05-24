@@ -1,11 +1,11 @@
-import chalk from "chalk";
-import fs from "fs-extra";
-
 import {
   autoStartCommandIfNeeded,
   Command,
   CommandError,
-} from "../../shared/commands";
+} from "@kachkaev/commands";
+import chalk from "chalk";
+import fs from "fs-extra";
+
 import {
   getCommonConfig,
   getVideoProcessingConfig,

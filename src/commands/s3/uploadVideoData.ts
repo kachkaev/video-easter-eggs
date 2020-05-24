@@ -1,11 +1,11 @@
-import chalk from "chalk";
-import path from "path";
-
 import {
   autoStartCommandIfNeeded,
   Command,
   CommandError,
-} from "../../shared/commands";
+} from "@kachkaev/commands";
+import chalk from "chalk";
+import path from "path";
+
 import {
   getLocalResourceStorageConfig,
   getVideoProcessingConfig,
@@ -18,8 +18,7 @@ import {
 import { videoResourceMaterialLookup } from "../../shared/resources/videos";
 import { resourceStorageLookup } from "../../shared/resourceStorages";
 
-const command: Command = async (context) => {
-  const { logger } = context;
+const command: Command = async ({ logger }) => {
   logger.log(chalk.green("Uploading video data to s3..."));
 
   const videoId = getVideoProcessingConfig().VIDEO_ID;

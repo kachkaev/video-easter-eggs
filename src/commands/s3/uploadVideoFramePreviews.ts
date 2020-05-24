@@ -1,11 +1,11 @@
-import chalk from "chalk";
-import path from "path";
-
 import {
   autoStartCommandIfNeeded,
   Command,
   CommandError,
-} from "../../shared/commands";
+} from "@kachkaev/commands";
+import chalk from "chalk";
+import path from "path";
+
 import {
   getLocalResourceStorageConfig,
   getVideoProcessingConfig,

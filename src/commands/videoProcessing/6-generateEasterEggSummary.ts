@@ -1,8 +1,8 @@
+import { autoStartCommandIfNeeded, Command } from "@kachkaev/commands";
 import chalk from "chalk";
 import _ from "lodash";
 import { Duration } from "luxon";
 
-import { autoStartCommandIfNeeded, Command } from "../../shared/commands";
 import { getVideoProcessingConfig } from "../../shared/envBasedConfigs";
 import { videoResourceMaterialLookup } from "../../shared/resources/videos";
 import { resourceStorageLookup } from "../../shared/resourceStorages";

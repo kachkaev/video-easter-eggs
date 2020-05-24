@@ -1,10 +1,10 @@
-import chalk from "chalk";
-
 import {
   autoStartCommandIfNeeded,
   Command,
   CommandError,
-} from "../../shared/commands";
+} from "@kachkaev/commands";
+import chalk from "chalk";
+
 import { getVideoProcessingConfig } from "../../shared/envBasedConfigs";
 import {
   FrameStripe,
