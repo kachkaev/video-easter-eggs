@@ -18,7 +18,7 @@ import {
 import { videoResourceMaterialLookup } from "../../shared/resources/videos";
 import { resourceStorageLookup } from "../../shared/resourceStorages";
 
-const command: Command = async ({ logger }) => {
+const uploadVideoData: Command = async ({ logger }) => {
   logger.log(chalk.green("Uploading video data to s3..."));
 
   const videoId = getVideoProcessingConfig().VIDEO_ID;
@@ -73,6 +73,4 @@ const command: Command = async ({ logger }) => {
   }
 };
 
-autoStartCommandIfNeeded(command, __filename);
-
-export default command;
+autoStartCommandIfNeeded(uploadVideoData, __filename);

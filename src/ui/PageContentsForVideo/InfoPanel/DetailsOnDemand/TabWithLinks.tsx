@@ -1,11 +1,11 @@
 import React from "react";
 
-import ExternalLink from "../../../shared/ExternalLink";
+import { ExternalLink } from "../../../shared/ExternalLink";
 import { useVideoInfo } from "../../videoInfo";
-import TabBody from "./shared/TabBody";
+import { TabBody } from "./shared/TabBody";
 import { TabProps } from "./types";
 
-const TabWithOverview: React.FunctionComponent<TabProps> = ({
+const TabWithLinks: React.FunctionComponent<TabProps> = ({
   active: hidden,
 }) => {
   const videoInfo = useVideoInfo();
@@ -46,4 +46,5 @@ const TabWithOverview: React.FunctionComponent<TabProps> = ({
   );
 };
 
-export default React.memo(TabWithOverview);
+const WrappedTabWithLinks = React.memo(TabWithLinks);
+export { WrappedTabWithLinks as TabWithLinks };

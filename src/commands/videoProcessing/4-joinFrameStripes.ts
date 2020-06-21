@@ -9,7 +9,7 @@ import {
 import { calculateProcessedTimeDuration } from "../../shared/resources/videos/helpers";
 import { resourceStorageLookup } from "../../shared/resourceStorages";
 
-const command: Command = async (context) => {
+export const joinFrameStripes: Command = async (context) => {
   const { logger } = context;
   logger.log(chalk.green("Joining frame stripes..."));
 
@@ -51,6 +51,4 @@ const command: Command = async (context) => {
   );
 };
 
-autoStartCommandIfNeeded(command, __filename);
-
-export default command;
+autoStartCommandIfNeeded(joinFrameStripes, __filename);

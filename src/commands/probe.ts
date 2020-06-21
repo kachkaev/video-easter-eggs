@@ -4,7 +4,7 @@ import chalk from "chalk";
 import { fileMappingMaterialLookup } from "../shared/fileMappings";
 import { initProblems, logProblemsAndMessage } from "../shared/problems";
 
-const command: Command = async ({ logger }) => {
+export const probe: Command = async ({ logger }) => {
   logger.log(chalk.green("Probing project functionality..."));
 
   const [getProblems, reportProblem] = initProblems();
@@ -16,6 +16,4 @@ const command: Command = async ({ logger }) => {
   logProblemsAndMessage(logger, getProblems());
 };
 
-autoStartCommandIfNeeded(command, __filename);
-
-export default command;
+autoStartCommandIfNeeded(probe, __filename);

@@ -1,11 +1,11 @@
 import React from "react";
 import styled from "styled-components";
 
-import GlobalStyle from "./GlobalStyle";
+import { GlobalStyle } from "./GlobalStyle";
 
 const Container = styled.div``;
 
-const PageLayout: React.FunctionComponent = ({ children }) => {
+export const PageLayout: React.FunctionComponent = ({ children }) => {
   return (
     <Container>
       <GlobalStyle />
@@ -13,5 +13,3 @@ const PageLayout: React.FunctionComponent = ({ children }) => {
     </Container>
   );
 };
-
-export default PageLayout;

@@ -10,7 +10,7 @@ import {
 } from "../../shared/styling";
 import { useVideoInfo } from "../videoInfo";
 import { useVizConfig } from "../vizConfig";
-import TimelineSectionBackground from "./SectionBackground";
+import { TimelineSectionBackground } from "./SectionBackground";
 import { TimelineListElementData } from "./types";
 
 const Wrapper = styled.div`
@@ -241,4 +241,5 @@ const Section: React.FunctionComponent<SectionProps> = ({
   );
 };
 
-export default React.memo(Section);
+const WrappedSection = React.memo(Section);
+export { WrappedSection as Section };

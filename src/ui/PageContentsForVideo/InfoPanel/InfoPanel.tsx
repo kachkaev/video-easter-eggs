@@ -2,8 +2,8 @@ import React from "react";
 import styled from "styled-components";
 
 import { mobileMedia } from "../../shared/styling";
-import ActiveFrameDetails from "./ActiveFrameDetails";
-import DetailsOnDemand from "./DetailsOnDemand";
+import { ActiveFrameDetails } from "./ActiveFrameDetails";
+import { DetailsOnDemand } from "./DetailsOnDemand";
 
 const Wrapper = styled.div`
   position: sticky;
@@ -36,4 +36,5 @@ const InfoPanel: React.FunctionComponent<{ children?: never }> = () => {
   );
 };
 
-export default React.memo(InfoPanel);
+const WrappedInfoPanel = React.memo(InfoPanel);
+export { WrappedInfoPanel as InfoPanel };

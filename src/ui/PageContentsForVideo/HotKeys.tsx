@@ -8,7 +8,7 @@ import { timeFormat } from "../shared/styling";
 import { useActiveTimeOffset } from "./activeTimeOffset";
 import { useVideoInfo } from "./videoInfo";
 
-const HotKeys: React.FunctionComponent<{ children?: never }> = () => {
+export const HotKeys: React.FunctionComponent<{ children?: never }> = () => {
   const videoInfo = useVideoInfo();
   const { activeTimeOffset, setActiveTimeOffset } = useActiveTimeOffset();
 
@@ -98,5 +98,3 @@ const HotKeys: React.FunctionComponent<{ children?: never }> = () => {
 
   return null;
 };
-
-export default HotKeys;

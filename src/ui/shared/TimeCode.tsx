@@ -41,4 +41,5 @@ const TimeCode: React.FunctionComponent<{
   );
 };
 
-export default React.memo(TimeCode);
+const WrappedTimeCode = React.memo(TimeCode);
+export { WrappedTimeCode as TimeCode };

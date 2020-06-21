@@ -36,4 +36,5 @@ const EasterEggIcon: React.FunctionComponent<React.HTMLAttributes<
   );
 };
 
-export default React.memo(EasterEggIcon);
+const WrappedEasterEggIcon = React.memo(EasterEggIcon);
+export { WrappedEasterEggIcon as EasterEggIcon };

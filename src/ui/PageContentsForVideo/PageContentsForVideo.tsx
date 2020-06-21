@@ -3,12 +3,12 @@ import styled from "styled-components";
 
 import { VideoInfo } from "../../shared/resources/videos/types";
 import { mobileMedia } from "../shared/styling";
-import ActiveTimeOffsetProvider from "./activeTimeOffset/ActiveTimeOffsetProvider";
-import HotKeys from "./HotKeys";
-import InfoPanel from "./InfoPanel";
-import Timeline from "./Timeline";
-import VideoInfoContext from "./videoInfo/VideoInfoContext";
-import VizConfigProvider from "./vizConfig/VizConfigProvider";
+import { ActiveTimeOffsetProvider } from "./activeTimeOffset/ActiveTimeOffsetProvider";
+import { HotKeys } from "./HotKeys";
+import { InfoPanel } from "./InfoPanel";
+import { Timeline } from "./Timeline";
+import { VideoInfoContext } from "./videoInfo/VideoInfoContext";
+import { VizConfigProvider } from "./vizConfig/VizConfigProvider";
 
 const Wrapper = styled.div`
   position: absolute;
@@ -25,7 +25,7 @@ const Wrapper = styled.div`
   }
 `;
 
-const PageContentsForVideo: React.FunctionComponent<{
+export const PageContentsForVideo: React.FunctionComponent<{
   videoInfo: VideoInfo;
 }> = ({ videoInfo }) => {
   return (
@@ -42,5 +42,3 @@ const PageContentsForVideo: React.FunctionComponent<{
     </VideoInfoContext.Provider>
   );
 };
-
-export default PageContentsForVideo;

@@ -19,7 +19,7 @@ import { videoResourceMaterialLookup } from "../../shared/resources/videos";
 import { calculateProcessedTimeDuration } from "../../shared/resources/videos/helpers";
 import { resourceStorageLookup } from "../../shared/resourceStorages";
 
-const command: Command = async (context) => {
+export const extractFramePreviews: Command = async (context) => {
   const { logger } = context;
   logger.log(chalk.green("Extracting frame previews..."));
 
@@ -81,6 +81,4 @@ const command: Command = async (context) => {
   }
 };
 
-autoStartCommandIfNeeded(command, __filename);
-
-export default command;
+autoStartCommandIfNeeded(extractFramePreviews, __filename);

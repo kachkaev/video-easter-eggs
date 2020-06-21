@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-import CheckedIcon from "./CheckIcon";
+import { CheckedIcon } from "./CheckIcon";
 
 interface CheckboxProps extends React.HTMLProps<HTMLInputElement> {
   children: React.ReactNode;
@@ -35,7 +35,7 @@ const Label = styled.label`
   }
 `;
 
-const Checkbox: React.FunctionComponent<CheckboxProps> = ({
+export const Checkbox: React.FunctionComponent<CheckboxProps> = ({
   children,
   ref,
   as,
@@ -51,5 +51,3 @@ const Checkbox: React.FunctionComponent<CheckboxProps> = ({
     </CheckboxWrapper>
   );
 };
-
-export default Checkbox;

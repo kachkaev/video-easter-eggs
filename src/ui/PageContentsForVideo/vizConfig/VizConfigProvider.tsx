@@ -1,9 +1,9 @@
 import React from "react";
 
 import { VizConfig, VizConfigContextValue } from "./types";
-import VizConfigContext from "./VizConfigContext";
+import { VizConfigContext } from "./VizConfigContext";
 
-const VizConfigProvider: React.FunctionComponent = ({ children }) => {
+export const VizConfigProvider: React.FunctionComponent = ({ children }) => {
   const [vizConfig, setVizConfig] = React.useState<VizConfig>({
     highlightEasterEggs: true,
     diffWithActiveSection: false,
@@ -23,5 +23,3 @@ const VizConfigProvider: React.FunctionComponent = ({ children }) => {
     </VizConfigContext.Provider>
   );
 };
-
-export default VizConfigProvider;

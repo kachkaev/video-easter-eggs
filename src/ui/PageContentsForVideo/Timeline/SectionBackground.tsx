@@ -187,4 +187,5 @@ const TimelineSectionBackground: React.FunctionComponent<TimelineSectionBackgrou
   );
 };
 
-export default React.memo(TimelineSectionBackground);
+const WrappedTimelineSectionBackground = React.memo(TimelineSectionBackground);
+export { WrappedTimelineSectionBackground as TimelineSectionBackground };

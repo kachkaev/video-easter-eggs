@@ -18,7 +18,7 @@ import {
 import { videoResourceMaterialLookup } from "../../shared/resources/videos";
 import { resourceStorageLookup } from "../../shared/resourceStorages";
 
-const command: Command = async (context) => {
+export const download: Command = async (context) => {
   const { logger } = context;
   logger.log(
     chalk.green("Downloading the video and extracting its metadata..."),
@@ -64,6 +64,4 @@ const command: Command = async (context) => {
   }
 };
 
-autoStartCommandIfNeeded(command, __filename);
-
-export default command;
+autoStartCommandIfNeeded(download, __filename);

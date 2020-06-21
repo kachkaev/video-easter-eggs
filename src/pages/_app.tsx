@@ -1,11 +1,11 @@
-import App from "next/app";
+import { AppProps } from "next/app";
 import React from "react";
 import {
   ReactQueryConfigProvider,
   ReactQueryProviderConfig,
 } from "react-query";
 
-import PageLayout from "../ui/PageLayout";
+import { PageLayout } from "../ui/PageLayout";
 
 const queryConfig: ReactQueryProviderConfig = {
   cacheTime: Number.POSITIVE_INFINITY,
@@ -15,24 +15,21 @@ const queryConfig: ReactQueryProviderConfig = {
   staleTime: Number.POSITIVE_INFINITY,
 };
 
-class MyApp extends App {
-  componentDidMount() {
-    document.body.className = (document.body.className || "").replace(
+const App: React.FunctionComponent<AppProps> = ({ Component, pageProps }) => {
+  React.useEffect(() => {
+    document.body.className = (document.body.className ?? "").replace(
       "no-js",
       "js",
     );
-  }
-  render() {
-    const { Component, pageProps } = this.props;
+  }, []);
 
-    return (
-      <ReactQueryConfigProvider config={queryConfig}>
-        <PageLayout>
-          <Component {...pageProps} />
-        </PageLayout>
-      </ReactQueryConfigProvider>
-    );
-  }
-}
+  return (
+    <ReactQueryConfigProvider config={queryConfig}>
+      <PageLayout>
+        <Component {...pageProps} />
+      </PageLayout>
+    </ReactQueryConfigProvider>
+  );
+};
 
-export default MyApp;
+export default App;

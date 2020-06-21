@@ -1,1 +1,1 @@
-export { default } from "./PageContentsForVideo";
+export * from "./PageContentsForVideo";

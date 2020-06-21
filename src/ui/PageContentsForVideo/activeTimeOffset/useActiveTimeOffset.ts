@@ -1,6 +1,6 @@
 import React from "react";
 
-import ActiveTimeOffsetContext from "./ActiveTimeOffsetContext";
+import { ActiveTimeOffsetContext } from "./ActiveTimeOffsetContext";
 import { ActiveTimeOffsetContextValue } from "./types";
 
 export const useActiveTimeOffset = (): ActiveTimeOffsetContextValue => {

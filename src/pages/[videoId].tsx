@@ -5,7 +5,7 @@ import React from "react";
 
 import { getVideoInfo } from "../shared/io/api";
 import { VideoInfo } from "../shared/resources/videos";
-import PageContentsForVideo from "../ui/PageContentsForVideo";
+import { PageContentsForVideo } from "../ui/PageContentsForVideo";
 
 const VideoPage: NextPage<{
   videoInfo?: VideoInfo;

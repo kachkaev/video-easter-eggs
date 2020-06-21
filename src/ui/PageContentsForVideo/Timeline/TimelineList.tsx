@@ -6,7 +6,7 @@ import styled from "styled-components";
 import { useActiveTimeOffset } from "../activeTimeOffset";
 import { useVideoInfo } from "../videoInfo";
 import { useVizConfig } from "../vizConfig";
-import TimelineListElement from "./TimelineListElement";
+import { TimelineListElement } from "./TimelineListElement";
 import { TimelineListElementData } from "./types";
 
 const SizeWrapper = styled.div`
@@ -21,7 +21,11 @@ const frameStripeWidth = 2;
 const dummyElementCountAtStart = 2;
 const dummyElementCountAtEnd = 2;
 
-const Timeline: React.FunctionComponent<{ children?: never }> = () => {
+export interface TimelineListProps {
+  children?: never;
+}
+
+export const TimelineList: React.FunctionComponent<TimelineListProps> = () => {
   const videoInfo = useVideoInfo();
   const { activeTimeOffset } = useActiveTimeOffset();
   const { labeledSections } = videoInfo;
@@ -113,5 +117,3 @@ const Timeline: React.FunctionComponent<{ children?: never }> = () => {
 
   return timelineList;
 };
-
-export default Timeline;

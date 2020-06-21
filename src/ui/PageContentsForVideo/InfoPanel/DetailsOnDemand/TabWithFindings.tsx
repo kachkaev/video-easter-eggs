@@ -2,10 +2,10 @@ import _ from "lodash";
 import React from "react";
 import styled from "styled-components";
 
-import TimeCode from "../../../shared/TimeCode";
+import { TimeCode } from "../../../shared/TimeCode";
 import { useVideoInfo } from "../../videoInfo";
-import EasterEggIcon from "./EasterEggIcon";
-import TabBody from "./shared/TabBody";
+import { EasterEggIcon } from "./EasterEggIcon";
+import { TabBody } from "./shared/TabBody";
 import { TabProps } from "./types";
 
 const EasterEgg = styled.div`
@@ -67,4 +67,5 @@ const TabWithFindings: React.FunctionComponent<TabProps> = ({
   );
 };
 
-export default React.memo(TabWithFindings);
+const WrappedTabWithFindings = React.memo(TabWithFindings);
+export { WrappedTabWithFindings as TabWithFindings };

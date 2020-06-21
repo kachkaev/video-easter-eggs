@@ -7,7 +7,7 @@ import { getVideoProcessingConfig } from "../../shared/envBasedConfigs";
 import { videoResourceMaterialLookup } from "../../shared/resources/videos";
 import { resourceStorageLookup } from "../../shared/resourceStorages";
 
-const command: Command = async (context) => {
+export const generateEasterEggSummary: Command = async (context) => {
   const { logger } = context;
   logger.log(chalk.green("Generating Easter egg summary..."));
 
@@ -53,6 +53,4 @@ const command: Command = async (context) => {
   logger.log();
 };
 
-autoStartCommandIfNeeded(command, __filename);
-
-export default command;
+autoStartCommandIfNeeded(generateEasterEggSummary, __filename);

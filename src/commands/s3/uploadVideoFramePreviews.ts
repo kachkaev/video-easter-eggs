@@ -19,7 +19,7 @@ import { videoResourceMaterialLookup } from "../../shared/resources/videos";
 import { calculateProcessedTimeDuration } from "../../shared/resources/videos/helpers";
 import { resourceStorageLookup } from "../../shared/resourceStorages";
 
-const command: Command = async (context) => {
+export const uploadVideoFramePreviews: Command = async (context) => {
   const { logger } = context;
   logger.log(chalk.green("Uploading video frame previews to s3..."));
 
@@ -70,6 +70,4 @@ const command: Command = async (context) => {
   }
 };
 
-autoStartCommandIfNeeded(command, __filename);
-
-export default command;
+autoStartCommandIfNeeded(uploadVideoFramePreviews, __filename);

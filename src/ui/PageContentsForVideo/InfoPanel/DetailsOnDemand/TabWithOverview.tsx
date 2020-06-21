@@ -1,12 +1,12 @@
 import React from "react";
 import styled from "styled-components";
 
-import ExternalLink from "../../../shared/ExternalLink";
-import TimeCode from "../../../shared/TimeCode";
+import { ExternalLink } from "../../../shared/ExternalLink";
+import { TimeCode } from "../../../shared/TimeCode";
 import { useVideoInfo } from "../../videoInfo";
 import { useVizConfig } from "../../vizConfig";
-import Checkbox from "./shared/Checkbox";
-import TabBody from "./shared/TabBody";
+import { Checkbox } from "./shared/Checkbox";
+import { TabBody } from "./shared/TabBody";
 import { TabProps } from "./types";
 
 const Nobr = styled.span`
@@ -78,4 +78,5 @@ const TabWithOverview: React.FunctionComponent<TabProps> = ({
   );
 };
 
-export default React.memo(TabWithOverview);
+const WrappedTabWithOverview = React.memo(TabWithOverview);
+export { WrappedTabWithOverview as TabWithOverview };

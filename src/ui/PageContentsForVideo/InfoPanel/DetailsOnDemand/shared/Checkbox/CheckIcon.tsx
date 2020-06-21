@@ -3,7 +3,7 @@ import React from "react";
 // https://www.iconfinder.com/icons/326561/box_check_icon
 // https://www.iconfinder.com/icons/326558/blank_box_check_icon
 
-const CheckedIcon: React.FunctionComponent<
+export const CheckedIcon: React.FunctionComponent<
   React.HTMLAttributes<SVGElement> & { checked: boolean }
 > = ({ checked, ...rest }) => {
   return (
@@ -22,5 +22,3 @@ const CheckedIcon: React.FunctionComponent<
     </svg>
   );
 };
-
-export default CheckedIcon;

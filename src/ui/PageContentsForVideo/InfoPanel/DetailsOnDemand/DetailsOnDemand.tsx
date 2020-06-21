@@ -2,9 +2,9 @@ import React from "react";
 import styled from "styled-components";
 
 import { baseColor, mobileMedia } from "../../../shared/styling";
-import TabWithFindings from "./TabWithFindings";
-import TabWithLinks from "./TabWithLinks";
-import TabWithOverview from "./TabWithOverview";
+import { TabWithFindings } from "./TabWithFindings";
+import { TabWithLinks } from "./TabWithLinks";
+import { TabWithOverview } from "./TabWithOverview";
 
 const Wrapper = styled.div`
   flex-grow: 1;
@@ -113,4 +113,5 @@ const DetailsOnDemand: React.FunctionComponent<{ children?: never }> = () => {
   );
 };
 
-export default React.memo(DetailsOnDemand);
+const WrappedDetailsOnDemand = React.memo(DetailsOnDemand);
+export { WrappedDetailsOnDemand as DetailsOnDemand };

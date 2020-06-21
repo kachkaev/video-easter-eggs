@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-const TabBody = styled.div<{ active?: boolean }>`
+export const TabBody = styled.div<{ active?: boolean }>`
   padding-right: 15px;
   position: absolute;
   top: 0;
@@ -15,5 +15,3 @@ const TabBody = styled.div<{ active?: boolean }>`
     margin-top: 0;
   }
 `;
-
-export default TabBody;

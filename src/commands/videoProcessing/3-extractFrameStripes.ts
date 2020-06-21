@@ -16,7 +16,7 @@ import {
 import { videoResourceMaterialLookup } from "../../shared/resources/videos";
 import { resourceStorageLookup } from "../../shared/resourceStorages";
 
-const command: Command = async (context) => {
+export const extractFrameStripes: Command = async (context) => {
   const { logger } = context;
   logger.log(chalk.green("Extracting frame stripes..."));
 
@@ -72,6 +72,4 @@ const command: Command = async (context) => {
   }
 };
 
-autoStartCommandIfNeeded(command, __filename);
-
-export default command;
+autoStartCommandIfNeeded(extractFrameStripes, __filename);

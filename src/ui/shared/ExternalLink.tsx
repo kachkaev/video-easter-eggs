@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 import { baseColor } from "./styling";
 
-const ExternalLink = styled.a`
+export const ExternalLink = styled.a`
   color: ${baseColor};
   text-decoration: none;
   border-bottom: 1px solid #ccc;
@@ -17,5 +17,3 @@ ExternalLink.defaultProps = {
   rel: "noopener noreferrer",
   target: "_blank",
 };
-
-export default ExternalLink;

@@ -32,7 +32,7 @@ const calculateStripeDifference = (fs1: FrameStripe, fs2: FrameStripe) => {
   return maxChannelDifference;
 };
 
-const command: Command = async (context) => {
+export const extractLabeledSections: Command = async (context) => {
   const { logger } = context;
   logger.log(chalk.green("Extracting labeled sections..."));
 
@@ -146,6 +146,4 @@ const command: Command = async (context) => {
   );
 };
 
-autoStartCommandIfNeeded(command, __filename);
-
-export default command;
+autoStartCommandIfNeeded(extractLabeledSections, __filename);

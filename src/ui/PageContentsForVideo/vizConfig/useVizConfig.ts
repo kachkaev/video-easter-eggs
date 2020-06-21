@@ -1,7 +1,7 @@
 import React from "react";
 
 import { VizConfigContextValue } from "./types";
-import VizConfigContext from "./VizConfigContext";
+import { VizConfigContext } from "./VizConfigContext";
 
 export const useVizConfig = (): VizConfigContextValue => {
   const result = React.useContext(VizConfigContext);

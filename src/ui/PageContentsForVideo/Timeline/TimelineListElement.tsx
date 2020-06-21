@@ -2,7 +2,7 @@ import React from "react";
 
 import { useActiveTimeOffset } from "../activeTimeOffset";
 import { useVideoInfo } from "../videoInfo";
-import Section from "./Section";
+import { Section } from "./Section";
 import { TimelineListElementData } from "./types";
 
 export interface TimelineListElementProps {
@@ -50,4 +50,5 @@ const TimelineListElement: React.FunctionComponent<TimelineListElementProps> = (
   );
 };
 
-export default React.memo(TimelineListElement);
+const WrappedTimelineListElement = React.memo(TimelineListElement);
+export { WrappedTimelineListElement as TimelineListElement };

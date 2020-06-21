@@ -15,4 +15,5 @@ const PlayIcon: React.FunctionComponent<React.HTMLAttributes<SVGElement>> = (
   );
 };
 
-export default PlayIcon;
+const WrappedPlayIcon = React.memo(PlayIcon);
+export { WrappedPlayIcon as PlayIcon };

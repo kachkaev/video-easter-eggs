@@ -27,9 +27,7 @@ const base = css`
   }
 `;
 
-const GlobalStyle = createGlobalStyle`
+export const GlobalStyle = createGlobalStyle`
   ${normalize}
   ${base}
 `;
-
-export default GlobalStyle;
