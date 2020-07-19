@@ -8,11 +8,13 @@ import {
 import { PageLayout } from "../ui/PageLayout";
 
 const queryConfig: ReactQueryProviderConfig = {
-  cacheTime: Number.POSITIVE_INFINITY,
-  refetchAllOnWindowFocus: false,
-  refetchInterval: false,
-  refetchOnMount: false,
-  staleTime: Number.POSITIVE_INFINITY,
+  queries: {
+    cacheTime: Number.POSITIVE_INFINITY,
+    refetchInterval: false,
+    refetchOnMount: false,
+    refetchOnWindowFocus: false,
+    staleTime: Number.POSITIVE_INFINITY,
+  },
 };
 
 const App: React.FunctionComponent<AppProps> = ({ Component, pageProps }) => {

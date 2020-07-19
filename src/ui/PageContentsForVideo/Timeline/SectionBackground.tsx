@@ -81,7 +81,7 @@ const useFrameStripes = (videoInfo: VideoInfo, sectionIndex: number) => {
     ],
     queryFn: getFrameStripes,
     config: {
-      manual: needsSkipping,
+      enabled: !needsSkipping,
     },
   });
 
