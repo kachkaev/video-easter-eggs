@@ -95,7 +95,7 @@
     "husky": "^4.2.5",
     "jest": "^26.0.1",
     "lint-staged": "^10.2.11",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.19",
     "markdownlint-cli": "^0.23.1",
     "next-compose-plugins": "^2.2.0",
     "next-fonts": "^1.2.0",
