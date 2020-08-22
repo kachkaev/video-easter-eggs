@@ -1,16 +1,12 @@
 import { AppProps } from "next/app";
 import React from "react";
-import {
-  ReactQueryConfigProvider,
-  ReactQueryProviderConfig,
-} from "react-query";
+import { ReactQueryConfig, ReactQueryConfigProvider } from "react-query";
 
 import { PageLayout } from "../ui/PageLayout";
 
-const queryConfig: ReactQueryProviderConfig = {
+const queryConfig: ReactQueryConfig = {
   queries: {
     cacheTime: Number.POSITIVE_INFINITY,
-    refetchInterval: false,
     refetchOnMount: false,
     refetchOnWindowFocus: false,
     staleTime: Number.POSITIVE_INFINITY,
