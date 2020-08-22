@@ -21,15 +21,13 @@ module.exports = (phase, rest) =>
         ],
         {
           ...productionConfig,
-          experimental: {
-            redirects: () => [
-              {
-                source: "/",
-                destination: "/lalahey",
-                permanent: false,
-              },
-            ],
-          },
+          redirects: () => [
+            {
+              source: "/",
+              destination: "/lalahey",
+              permanent: false,
+            },
+          ],
           reactStrictMode: true,
           typescript: {
             ignoreDevErrors: true,
