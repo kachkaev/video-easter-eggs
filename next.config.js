@@ -29,9 +29,5 @@ module.exports = (phase, rest) =>
             },
           ],
           reactStrictMode: true,
-          typescript: {
-            ignoreDevErrors: true,
-            ignoreBuildErrors: true,
-          },
         },
       )(phase, rest);
