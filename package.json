@@ -38,6 +38,7 @@
     ]
   },
   "dependencies": {
+    "@kachkaev/react-inline-js": "^0.1.0",
     "@types/tmp": "^0.2.0",
     "aws-sdk": "^2.715.0",
     "chalk": "^4.1.0",

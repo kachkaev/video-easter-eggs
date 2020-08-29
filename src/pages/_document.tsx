@@ -1,18 +1,7 @@
+import { InlineJs } from "@kachkaev/react-inline-js";
 import Document, { Head, Html, Main, NextScript } from "next/document";
 import React from "react";
 import { ServerStyleSheet } from "styled-components";
-
-const InlineJs: React.FunctionComponent<{ code: string; children?: never }> = ({
-  code,
-}) => {
-  return (
-    <script
-      dangerouslySetInnerHTML={{
-        __html: code.replace(/\/\*.*\*\//g, " ").replace(/\s+/g, " "),
-      }}
-    />
-  );
-};
 
 export default class MyDocument extends Document {
   static async getInitialProps(ctx) {
