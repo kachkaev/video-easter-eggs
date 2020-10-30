@@ -75,7 +75,7 @@
     "@babel/plugin-proposal-optional-chaining": "^7.12.1",
     "@hkdobrev/run-if-changed": "^0.3.1",
     "@kachkaev/commands": "^0.1.1",
-    "@kachkaev/eslint-config-react": "^0.2.1",
+    "@kachkaev/eslint-config-react": "^0.2.2",
     "@kachkaev/markdownlint-config": "^0.2.0",
     "@kachkaev/prettier-config": "^1.2.0",
     "@next/bundle-analyzer": "^10.0.0",
