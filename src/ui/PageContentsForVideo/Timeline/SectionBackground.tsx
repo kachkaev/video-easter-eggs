@@ -46,6 +46,7 @@ const useFrameStripes = (videoInfo: VideoInfo, sectionIndex: number) => {
     for (let index = firstSectionIndex; index <= lastSectionIndex; index++) {
       result += videoInfo.labeledSections[index]?.timeDuration ?? 0;
     }
+
     return result;
   }, [videoInfo.labeledSections, firstSectionIndex, lastSectionIndex]);
 
@@ -54,6 +55,7 @@ const useFrameStripes = (videoInfo: VideoInfo, sectionIndex: number) => {
     for (let index = firstSectionIndex; index < sectionIndex; index++) {
       result += videoInfo.labeledSections[index]?.timeDuration ?? 0;
     }
+
     return result;
   }, [firstSectionIndex, sectionIndex, videoInfo.labeledSections]);
 

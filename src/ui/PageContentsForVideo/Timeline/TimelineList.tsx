@@ -37,6 +37,7 @@ export const TimelineList: React.FunctionComponent<TimelineListProps> = () => {
         result = labeledSection.timeDuration;
       }
     });
+
     return result;
   }, [labeledSections]);
 
@@ -74,7 +75,7 @@ export const TimelineList: React.FunctionComponent<TimelineListProps> = () => {
         activeTimeOffset <
         labeledSection.timeOffset + labeledSection.timeDuration,
     );
-    if (sectionIndex == -1) {
+    if (sectionIndex === -1) {
       return;
     }
 

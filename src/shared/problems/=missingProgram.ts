@@ -32,6 +32,7 @@ const dumpMissingProgramProblem = (problem: MissingProgramProblem) => {
       problem.commandPurposes ? ` (${problem.commandPurposes.join(", ")})` : ""
     }`,
   );
+
   return lines.join("\n");
 };
 

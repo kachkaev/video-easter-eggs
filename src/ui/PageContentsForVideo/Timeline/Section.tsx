@@ -218,6 +218,7 @@ const Section: React.FunctionComponent<SectionProps> = ({
           ),
           frameCount,
         );
+
         return (
           <EasterEggMark
             title={labeledEasterEgg.label}

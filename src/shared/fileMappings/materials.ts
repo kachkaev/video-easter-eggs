@@ -26,5 +26,6 @@ export const getFileMappingMaterial = (
   if (!fileMappingMaterial) {
     throw new Error(`Unknown file mapping type ${fileMappingType}`);
   }
+
   return fileMappingMaterial;
 };

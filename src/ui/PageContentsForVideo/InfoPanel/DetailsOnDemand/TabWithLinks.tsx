@@ -9,6 +9,7 @@ const TabWithLinks: React.FunctionComponent<TabProps> = ({
   active: hidden,
 }) => {
   const videoInfo = useVideoInfo();
+
   return (
     <TabBody active={hidden}>
       <p style={{ whiteSpace: "nowrap" }}>

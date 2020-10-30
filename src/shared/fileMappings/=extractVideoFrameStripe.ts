@@ -49,6 +49,7 @@ export const extractVideoFrameStripeMaterial: FileMappingMaterial<
       .slice(1)
       .map((line) => {
         const indexOfHash = line.indexOf("#");
+
         return line.slice(indexOfHash + 1, indexOfHash + 7);
       });
 

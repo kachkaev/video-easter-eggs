@@ -14,5 +14,6 @@ export const getResourceStorage = (
   if (!result) {
     throw new Error("Unsupported resource storage type");
   }
+
   return result;
 };

@@ -12,5 +12,6 @@ export const extractExpectedFilePaths = async (
       ).extractExpectedFilePaths(fileMapping)),
     );
   }
+
   return result;
 };

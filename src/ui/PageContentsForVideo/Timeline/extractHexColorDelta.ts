@@ -38,11 +38,12 @@ const deltaE = (labA, labB) => {
   deltaH = deltaH < 0 ? 0 : Math.sqrt(deltaH);
   const sc = 1.0 + 0.045 * c1;
   const sh = 1.0 + 0.015 * c1;
-  const deltaLKlsl = deltaL / 1.0;
+  const deltaLklsl = deltaL / 1.0;
   const deltaCkcsc = deltaC / sc;
   const deltaHkhsh = deltaH / sh;
   const i =
-    deltaLKlsl * deltaLKlsl + deltaCkcsc * deltaCkcsc + deltaHkhsh * deltaHkhsh;
+    deltaLklsl * deltaLklsl + deltaCkcsc * deltaCkcsc + deltaHkhsh * deltaHkhsh;
+
   return i < 0 ? 0 : Math.sqrt(i);
 };
 
@@ -51,6 +52,7 @@ const hex2rgb = (hexColor: string): number[] => {
   for (let channel = 0; channel < 3; channel += 1) {
     rgb.push(parseInt(hexColor.slice(channel * 2, channel * 2 + 2), 16));
   }
+
   return rgb;
 };
 
@@ -66,5 +68,6 @@ export const extractHexColorDelta = (
   const lab2 = rgb2lab(hex2rgb(hexColor2));
   const delta = Math.max(deltaE(lab1, lab2), deltaE(lab2, lab1));
   const channelValue = 255 - Math.floor(Math.min(delta * 10, 255));
+
   return rgb2hex([channelValue, channelValue, channelValue]);
 };

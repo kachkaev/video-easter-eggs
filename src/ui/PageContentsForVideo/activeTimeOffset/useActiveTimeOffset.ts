@@ -8,5 +8,6 @@ export const useActiveTimeOffset = (): ActiveTimeOffsetContextValue => {
   if (result === undefined) {
     throw new Error("No ActiveTimeOffsetContext value available");
   }
+
   return result;
 };

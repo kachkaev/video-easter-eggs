@@ -37,6 +37,7 @@ const TabWithFindings: React.FunctionComponent<TabProps> = ({
     const nonLoopSections = videoInfo.labeledSections.filter(
       (labeledSection) => labeledSection.label !== "loop",
     );
+
     return _.orderBy(
       [...videoInfo.labeledEasterEggs, ...nonLoopSections],
       (finding) => finding.timeOffset,
@@ -48,6 +49,7 @@ const TabWithFindings: React.FunctionComponent<TabProps> = ({
       {findings.map((finding, index) => {
         const easterEggIndexToDisplay =
           videoInfo.labeledEasterEggs.indexOf(finding) + 1;
+
         return (
           <EasterEgg key={index} data-time={finding.timeOffset}>
             <TimeCode timeOffset={finding.timeOffset} /> (

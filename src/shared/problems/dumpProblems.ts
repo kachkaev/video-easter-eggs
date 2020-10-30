@@ -17,6 +17,7 @@ export const dumpProblems = (problems: Readonly<BaseProblem[]>): string => {
         prevProblem,
       );
       prevProblem = problem;
+
       return extract;
     })
     .join("\n");

@@ -9,5 +9,6 @@ export const initProblems = <Problem = BaseProblem>(): [
   const reportProblem: ReportProblem<Problem> = (problem) => {
     problems.push(problem);
   };
+
   return [getProblems, reportProblem];
 };

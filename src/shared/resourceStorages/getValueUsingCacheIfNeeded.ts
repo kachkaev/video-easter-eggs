@@ -16,7 +16,9 @@ try {
     maxAge: apiResourceStorage.maxDurationOfGet,
     max: 100,
   });
-} catch (e) {}
+} catch {
+  // not using cache below
+}
 
 export const getValueUsingCacheIfNeeded = async <Value = unknown>(
   id: string,
@@ -45,5 +47,6 @@ export const getValueUsingCacheIfNeeded = async <Value = unknown>(
   if (result instanceof Error) {
     throw result;
   }
+
   return result as Value;
 };

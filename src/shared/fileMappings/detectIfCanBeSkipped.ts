@@ -15,6 +15,7 @@ const firstFileIsNotNewer = async (
   } catch (e) {
     //
   }
+
   return false;
 };
 

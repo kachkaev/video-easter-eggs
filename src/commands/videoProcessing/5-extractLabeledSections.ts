@@ -29,6 +29,7 @@ const calculateStripeDifference = (fs1: FrameStripe, fs2: FrameStripe) => {
       }
     }
   }
+
   return maxChannelDifference;
 };
 

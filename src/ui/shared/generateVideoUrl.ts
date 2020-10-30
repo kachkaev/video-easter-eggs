@@ -5,5 +5,6 @@ export const generateVideoUrl = (videoInfo: VideoInfo, timeOffset?: number) => {
   if (typeof timeOffset === "number") {
     result += `&t=${Math.floor(timeOffset / 1000)}`;
   }
+
   return result;
 };

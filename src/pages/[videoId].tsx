@@ -13,6 +13,7 @@ const VideoPage: NextPage<{
   if (!videoInfo) {
     return <ErrorPage statusCode={404} />;
   }
+
   return (
     <>
       <Head>

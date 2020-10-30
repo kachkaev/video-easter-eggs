@@ -24,5 +24,6 @@ export const dumpFileMapping = ({
       fileMappingMaterial.displayTargetPath(fileMapping),
     )}`,
   );
+
   return lines.join("\n");
 };

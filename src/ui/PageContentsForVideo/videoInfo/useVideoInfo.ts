@@ -8,5 +8,6 @@ export const useVideoInfo = (): VideoInfo => {
   if (result === undefined) {
     throw new Error("No VideoInfoContext value available");
   }
+
   return result;
 };

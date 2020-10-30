@@ -21,6 +21,7 @@ export const getResolvedPathToTimeOffsetDependentVideoResource = (
   extension: string,
 ) => {
   const timeOffsetAsDuration = Duration.fromMillis(timeOffset);
+
   return path.join(
     resolvedDirPath,
     timeOffsetAsDuration.toFormat("hh-xx-xx"),

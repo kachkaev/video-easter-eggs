@@ -10,7 +10,7 @@ import { BaseFileMapping, FileMappingMaterial } from "./types";
 
 const generateTempDir = util.promisify<DirOptions, string>(tmp.dir);
 
-const getNFrames = (fileMapping: ExtractVideoFramePreviewsMapping) =>
+const getNumberOfFrames = (fileMapping: ExtractVideoFramePreviewsMapping) =>
   Math.floor(
     (fileMapping.timeOffsetEnd - fileMapping.timeOffsetStart) /
       fileMapping.timeOffsetInterval,
@@ -44,7 +44,7 @@ export const extractVideoFramePreviewsMaterial: FileMappingMaterial<
   displayTargetPath: (fileMapping) =>
     `${fileMapping.getTargetPath(
       fileMapping.timeOffsetStart,
-    )} (N frames: ${getNFrames(fileMapping)}, one each ${
+    )} (N frames: ${getNumberOfFrames(fileMapping)}, one each ${
       fileMapping.timeOffsetInterval
     }ms)`,
 
@@ -57,6 +57,7 @@ export const extractVideoFramePreviewsMaterial: FileMappingMaterial<
     ) {
       filePaths.push(fileMapping.getTargetPath(timeOffset));
     }
+
     return filePaths;
   },
 
@@ -78,7 +79,7 @@ export const extractVideoFramePreviewsMaterial: FileMappingMaterial<
       "-vf",
       `fps=${1000 / fileMapping.timeOffsetInterval}`,
       "-vframes",
-      `${getNFrames(fileMapping)}`,
+      `${getNumberOfFrames(fileMapping)}`,
       path.resolve(tempDir, "%d.jpg"),
     ]);
 

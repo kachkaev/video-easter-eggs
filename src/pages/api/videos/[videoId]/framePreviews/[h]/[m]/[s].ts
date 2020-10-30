@@ -22,6 +22,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
   } catch {
     res.status(404);
     res.send("Wrong time coordinate provided");
+
     return;
   }
 };

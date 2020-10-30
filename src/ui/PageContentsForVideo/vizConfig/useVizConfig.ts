@@ -8,5 +8,6 @@ export const useVizConfig = (): VizConfigContextValue => {
   if (result === undefined) {
     throw new Error("No VizConfigContext value available");
   }
+
   return result;
 };

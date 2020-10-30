@@ -40,5 +40,6 @@ export const getVideoInfo = async (videoId: string): Promise<VideoInfo> => {
     labeledSections,
     labeledEasterEggs,
   };
+
   return info;
 };
