@@ -1,4 +1,4 @@
-import React from "react";
+import * as React from "react";
 
 // https://www.iconfinder.com/icons/326561/box_check_icon
 // https://www.iconfinder.com/icons/326558/blank_box_check_icon

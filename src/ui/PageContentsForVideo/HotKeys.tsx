@@ -1,6 +1,6 @@
 import copy from "copy-to-clipboard";
 import { Duration } from "luxon";
-import React from "react";
+import * as React from "react";
 import { useHotkeys } from "react-hotkeys-hook";
 
 import { generateVideoUrl } from "../shared/generateVideoUrl";

@@ -1,4 +1,4 @@
-import React from "react";
+import * as React from "react";
 
 // https://www.iconfinder.com/icons/2636497/celebration_day_christianity_easter_egg_holiday_line_spring_icon
 const EasterEggIcon: React.FunctionComponent<React.HTMLAttributes<

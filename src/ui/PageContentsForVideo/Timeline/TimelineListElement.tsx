@@ -1,4 +1,4 @@
-import React from "react";
+import * as React from "react";
 
 import { useActiveTimeOffset } from "../activeTimeOffset";
 import { useVideoInfo } from "../videoInfo";

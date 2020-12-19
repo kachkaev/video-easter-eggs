@@ -1,4 +1,4 @@
-import React from "react";
+import * as React from "react";
 
 import { ActiveTimeOffsetContext } from "./ActiveTimeOffsetContext";
 import { ActiveTimeOffsetContextValue } from "./types";

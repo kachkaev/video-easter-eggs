@@ -1,7 +1,7 @@
 import { GetServerSideProps, NextPage } from "next";
 import ErrorPage from "next/error";
 import Head from "next/head";
-import React from "react";
+import * as React from "react";
 
 import { getVideoInfo } from "../shared/io/api";
 import { VideoInfo } from "../shared/resources/videos";

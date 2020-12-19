@@ -1,4 +1,4 @@
-import React from "react";
+import * as React from "react";
 
 import { VizConfig, VizConfigContextValue } from "./types";
 import { VizConfigContext } from "./VizConfigContext";

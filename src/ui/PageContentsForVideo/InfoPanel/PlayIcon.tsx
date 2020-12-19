@@ -1,4 +1,4 @@
-import React from "react";
+import * as React from "react";
 
 // https://www.iconfinder.com/icons/106223/play_icon
 

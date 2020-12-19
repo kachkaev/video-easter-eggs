@@ -1,6 +1,6 @@
 import { InlineJs } from "@kachkaev/react-inline-js";
 import Document, { Head, Html, Main, NextScript } from "next/document";
-import React from "react";
+import * as React from "react";
 import { ServerStyleSheet } from "styled-components";
 
 export default class MyDocument extends Document {

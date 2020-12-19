@@ -1,4 +1,4 @@
-import React from "react";
+import * as React from "react";
 import { useSize } from "react-use";
 import { FixedSizeList } from "react-window";
 import styled from "styled-components";

@@ -1,5 +1,5 @@
 import { Duration } from "luxon";
-import React from "react";
+import * as React from "react";
 import styled from "styled-components";
 
 import { LabeledAnnotation } from "../../../shared/resources/videos/types";
