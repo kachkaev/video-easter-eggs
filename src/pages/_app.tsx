@@ -1,17 +1,19 @@
 import { AppProps } from "next/app";
 import * as React from "react";
-import { ReactQueryConfig, ReactQueryConfigProvider } from "react-query";
+import { QueryClient, QueryClientProvider } from "react-query";
 
 import { PageLayout } from "../ui/PageLayout";
 
-const queryConfig: ReactQueryConfig = {
-  queries: {
-    cacheTime: Number.POSITIVE_INFINITY,
-    refetchOnMount: false,
-    refetchOnWindowFocus: false,
-    staleTime: Number.POSITIVE_INFINITY,
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      cacheTime: Number.POSITIVE_INFINITY,
+      refetchOnMount: false,
+      refetchOnWindowFocus: false,
+      staleTime: Number.POSITIVE_INFINITY,
+    },
   },
-};
+});
 
 const App: React.FunctionComponent<AppProps> = ({ Component, pageProps }) => {
   React.useEffect(() => {
@@ -22,11 +24,11 @@ const App: React.FunctionComponent<AppProps> = ({ Component, pageProps }) => {
   }, []);
 
   return (
-    <ReactQueryConfigProvider config={queryConfig}>
+    <QueryClientProvider client={queryClient}>
       <PageLayout>
         <Component {...pageProps} />
       </PageLayout>
-    </ReactQueryConfigProvider>
+    </QueryClientProvider>
   );
 };
 
