@@ -1,5 +1,5 @@
 import * as React from "react";
-import { QueryFunction, QueryFunctionContext, useQuery } from "react-query";
+import { QueryFunction, useQuery } from "react-query";
 import styled from "styled-components";
 
 import { FrameStripe, VideoInfo } from "../../../shared/resources/videos/types";
@@ -15,9 +15,9 @@ type QueryKey = [
   },
 ];
 
-const getFrameStripes: QueryFunction<FrameStripe[]> = async ({
+const getFrameStripes: QueryFunction<FrameStripe[], QueryKey> = async ({
   queryKey: [, { videoId, firstFrameOffset, frameCount }],
-}: QueryFunctionContext<QueryKey>) => {
+}) => {
   return await (
     await fetch(
       `/api/videos/${videoId}/frameStripes?firstFrameOffset=${firstFrameOffset}&frameCount=${frameCount}`,
@@ -72,7 +72,7 @@ const useFrameStripes = (videoInfo: VideoInfo, sectionIndex: number) => {
 
   const needsSkipping = groupFrameCount === 0 && groupFirstFrameOffset === 0;
 
-  const result = useQuery<FrameStripe[]>({
+  const result = useQuery({
     queryKey: [
       "frameStripes",
       {
@@ -81,7 +81,7 @@ const useFrameStripes = (videoInfo: VideoInfo, sectionIndex: number) => {
         frameCount: groupFrameCount,
       },
     ],
-    queryFn: getFrameStripes,
+    queryFn: getFrameStripes as QueryFunction<FrameStripe[]>,
     enabled: !needsSkipping,
   });
 
